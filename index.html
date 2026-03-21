@@ -2,1365 +2,1089 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>😊 Smile Life – Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>soaresden · Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka:wght@500;600;700&display=swap');
-:root{
-  --bg:#f0f8ff;--bg2:#e0f2fe;--bg3:#cce8fa;
-  --white:#fff;--border:#b3d9f2;--border2:#7dc0e8;
-  --blue:#29ABE2;--blue-d:#1a8fbf;--blue-l:#dbeafe;
-  --pink:#EC407A;--pink-l:#fce4ec;
-  --green:#43A047;--green-l:#e8f5e9;
-  --gray:#607D8B;--gray-l:#eceff1;
-  --red:#E53935;--red-l:#ffebee;
-  --text:#0d2233;--text-dim:#2e6080;--text-muted:#6aa0bb;
-  --radius:11px;
-  --sh:0 2px 8px rgba(41,171,226,.10);
-  --sh2:0 4px 16px rgba(41,171,226,.18);
-  --c-base:#dbeafe; --b-base:#1d4ed8;
-  --c-trash:#fee2e2;--b-trash:#b91c1c;
-  --c-gp:#f3e8ff;  --b-gp:#7e22ce;
-  --c-apoc:#ffedd5;--b-apoc:#c2410c;
-  --c-fan:#dcfce7; --b-fan:#15803d;
-  --c-luxe:#fef9c3;--b-luxe:#a16207;
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --bg3: #1a1a24;
+  --card: #13131c;
+  --card-hover: #1c1c2a;
+  --border: rgba(255,255,255,0.07);
+  --border-bright: rgba(255,255,255,0.15);
+  --text: #f0f0f5;
+  --text-dim: #8888a8;
+  --text-muted: #44445a;
+
+  --c-games:   #ff6b35;
+  --c-music:   #c77dff;
+  --c-plongee: #00b4d8;
+  --c-securite:#06d6a0;
+  --c-quizz:   #ffd60a;
+  --c-tools:   #ff4d6d;
+
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'DM Sans', sans-serif;
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;}
-::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
-#app{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
 
-/* HEADER */
-.hdr{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:var(--blue);border-bottom:3px solid var(--blue-d);box-shadow:0 3px 12px rgba(41,171,226,.3);gap:8px;}
-.hdr-left{display:flex;align-items:center;gap:10px;}
-.hdr-t{font-family:'Fredoka',sans-serif;font-size:1.2rem;font-weight:700;color:#fff;}
-.hdr-s{font-size:.65rem;color:rgba(255,255,255,.72);}
-.timer-badge{background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.35);border-radius:7px;padding:3px 9px;font-family:'Fredoka',sans-serif;font-size:.88rem;font-weight:700;color:#fff;letter-spacing:.5px;min-width:70px;text-align:center;}
-.hdr-a{display:flex;gap:4px;flex-shrink:0;}
-.hbtn{padding:5px 10px;border-radius:6px;border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.15);color:#fff;cursor:pointer;font-weight:800;font-size:.7rem;font-family:'Nunito',sans-serif;white-space:nowrap;}
-.hbtn:hover{background:rgba(255,255,255,.28);}
+html { scroll-behavior: smooth; }
 
-/* SCREENS */
-.screen{display:none;}
-.screen.active{display:flex;flex-direction:column;flex:1;overflow:hidden;}
-
-/* ══ SETUP ══ */
-#setupScreen.active{overflow-y:auto;display:block;padding:18px;max-width:860px;margin:0 auto;width:100%;}
-.sh{text-align:center;margin-bottom:16px;}
-.sh h1{font-family:'Fredoka',sans-serif;font-size:1.8rem;color:var(--blue);margin-bottom:2px;}
-.sh p{color:var(--text-muted);font-size:.82rem;}
-.scard{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:15px;margin-bottom:12px;box-shadow:var(--sh);}
-.slbl{font-family:'Fredoka',sans-serif;font-size:.9rem;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-.slbl::after{content:'';flex:1;height:1.5px;background:var(--border);}
-.ext-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(126px,1fr));gap:8px;}
-.ext-card{border:2.5px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .14s;position:relative;background:var(--bg);}
-.ext-card:not(.req):hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.13);}
-.ext-card.req{opacity:.5;cursor:default;}
-.ext-card .chk{position:absolute;top:5px;right:7px;font-size:.75rem;font-weight:900;opacity:0;}
-.ext-card.sel .chk{opacity:1;}
-.ext-icon{font-size:1.8rem;margin-bottom:4px;}
-.ext-name{font-weight:800;font-size:.76rem;margin-bottom:2px;}
-.ext-age{font-size:.6rem;color:var(--text-muted);}
-.ext-nb{font-size:.64rem;margin-top:2px;font-weight:700;}
-.parow{display:flex;gap:6px;align-items:center;margin-bottom:6px;}
-.psin{flex:1;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:7px 10px;border-radius:7px;font-size:.86rem;font-family:'Nunito',sans-serif;}
-.psin:focus{outline:none;border-color:var(--blue);}
-.pdot{width:12px;height:12px;border-radius:50%;flex-shrink:0;border:2px solid rgba(0,0,0,.1);}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:6px 11px;border-radius:7px;border:none;cursor:pointer;font-weight:800;font-size:.74rem;font-family:'Nunito',sans-serif;}
-.btn-blue{background:var(--blue);color:#fff;}.btn-blue:hover{background:var(--blue-d);}
-.btn-ghost{background:var(--bg2);color:var(--text-dim);border:1.5px solid var(--border);}
-.btn-ghost:hover{background:var(--bg3);}
-.btn-danger{background:var(--red-l);color:var(--red);border:1.5px solid #ffcdd2;}
-.btn-sm{padding:3px 7px;font-size:.67rem;}
-.btn-full{width:100%;}
-.btn-lg{padding:11px 24px;font-size:.9rem;border-radius:10px;}
-
-/* ══ GAME ══ */
-#gameScreen.active{flex-direction:row;}
-
-/* Sidebar */
-.sidebar{width:172px;flex-shrink:0;background:var(--white);border-right:1.5px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;}
-.sb-hd{font-family:'Fredoka',sans-serif;font-size:.79rem;color:var(--blue);padding:9px 11px 5px;border-bottom:1px solid var(--border);}
-.sb-row{display:flex;align-items:center;gap:5px;padding:5px 11px;border-bottom:1px solid var(--border);}
-.sb-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.sb-nm{flex:1;font-weight:700;font-size:.73rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.sb-pts{font-family:'Fredoka',sans-serif;font-size:1.0rem;color:var(--pink);font-weight:700;}
-.sb-sep{height:1px;background:var(--border);margin:3px 0;}
-.sb-sp{display:flex;align-items:center;gap:5px;padding:4px 11px;}
-.sb-si{font-size:.85rem;width:16px;text-align:center;}
-.sb-sn{flex:1;font-size:.67rem;color:var(--text-muted);}
-.sb-sc{font-weight:900;font-size:.77rem;color:var(--gray);}
-
-/* Main */
-.main-panel{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-.tab-bar{display:flex;gap:3px;padding:7px 9px 0;background:var(--white);border-bottom:1.5px solid var(--border);flex-shrink:0;}
-.tab{padding:5px 12px;border-radius:7px 7px 0 0;cursor:pointer;font-weight:800;font-size:.72rem;color:var(--text-muted);border:1.5px solid transparent;border-bottom:none;}
-.tab.active{background:var(--blue);color:#fff;border-color:var(--blue-d);}
-.tab:not(.active):hover{background:var(--bg2);}
-
-/* Legend strip */
-.deck-legend{display:flex;flex-wrap:wrap;gap:4px;padding:6px 9px;background:var(--white);border-bottom:1.5px solid var(--border);flex-shrink:0;align-items:center;}
-.dl-it{font-size:.67rem;font-weight:700;padding:2px 7px;border-radius:5px;border:1.5px solid;cursor:pointer;transition:opacity .12s;}
-.dl-it:hover{opacity:.75;}
-
-/* Scroll */
-.inv-outer{flex:1;overflow:auto;padding:8px;}
-
-/* ══ CATEGORY SECTION ══ */
-.cat-sec{border:1.5px solid var(--border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;box-shadow:var(--sh);}
-.cat-hdr{display:flex;align-items:center;gap:6px;padding:7px 10px;cursor:pointer;user-select:none;background:var(--white);border-bottom:1.5px solid var(--border);}
-.cat-ico{font-size:1rem;flex-shrink:0;}
-.cat-ttl{font-family:'Fredoka',sans-serif;font-size:.87rem;font-weight:700;flex:1;}
-.cat-cnt{font-size:.64rem;font-weight:900;padding:2px 7px;border-radius:5px;color:#fff;flex-shrink:0;}
-.cat-arrow{font-size:.66rem;color:var(--text-muted);transition:transform .17s;flex-shrink:0;}
-.cat-sec.collapsed .cat-arrow{transform:rotate(-90deg);}
-.cat-sec.collapsed .cat-body{display:none;}
-.cat-body{overflow-x:auto;background:var(--white);}
-
-/* ══ TABLE with frozen header ══ */
-.inv-tbl{width:100%;border-collapse:collapse;table-layout:fixed;}
-.inv-tbl col.c-card{width:185px;}
-.inv-tbl col.c-player{width:84px;}
-
-/* thead sticky within .inv-outer */
-.inv-tbl thead th{
-  position:sticky;top:0;z-index:20;
-  background:var(--bg2);
-  font-size:.63rem;font-weight:900;text-transform:uppercase;letter-spacing:.5px;
-  color:var(--text-muted);padding:4px 5px;
-  border-bottom:2px solid var(--border2);
-  white-space:nowrap;
-  box-shadow:0 2px 3px rgba(0,0,0,.07);
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
-.inv-tbl thead th.h-card{text-align:left;position:sticky;left:0;top:0;z-index:30;background:var(--bg2);}
-.inv-tbl thead th.h-player{text-align:center;}
-.th-pill{display:flex;flex-direction:column;align-items:center;gap:1px;}
-.th-dot{width:7px;height:7px;border-radius:50%;}
-.th-nm{font-size:.62rem;max-width:78px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
-/* Data rows */
-.inv-tbl tbody td{padding:3px 5px;border-bottom:1px solid rgba(0,0,0,.06);vertical-align:middle;}
-.inv-tbl tbody tr:last-child td{border-bottom:none;}
-/* Deck row tint */
-.inv-tbl tbody tr.dk-base     {background:var(--c-base);}
-.inv-tbl tbody tr.dk-trash    {background:var(--c-trash);}
-.inv-tbl tbody tr.dk-girlpower{background:var(--c-gp);}
-.inv-tbl tbody tr.dk-apocalypse{background:var(--c-apoc);}
-.inv-tbl tbody tr.dk-fantastique{background:var(--c-fan);}
-.inv-tbl tbody tr.dk-vieluxe  {background:var(--c-luxe);}
-.inv-tbl tbody tr:hover td{filter:brightness(.93);}
-/* Sticky card col */
-.inv-tbl tbody td.td-card{position:sticky;left:0;z-index:10;border-right:2px solid var(--border2);font-size:.75rem;}
-.inv-tbl tbody tr.dk-base     td.td-card{background:var(--c-base);}
-.inv-tbl tbody tr.dk-trash    td.td-card{background:var(--c-trash);}
-.inv-tbl tbody tr.dk-girlpower td.td-card{background:var(--c-gp);}
-.inv-tbl tbody tr.dk-apocalypse td.td-card{background:var(--c-apoc);}
-.inv-tbl tbody tr.dk-fantastique td.td-card{background:var(--c-fan);}
-.inv-tbl tbody tr.dk-vieluxe  td.td-card{background:var(--c-luxe);}
-.inv-tbl tbody tr:hover td.td-card{filter:brightness(.93);}
-.cc-top{display:flex;align-items:center;gap:4px;flex-wrap:wrap;line-height:1.3;}
-.cc-name{font-weight:700;}
-.cc-tot{font-size:.66rem;font-weight:900;border-radius:4px;padding:1px 5px;white-space:nowrap;}
-.cc-tot.ok  {color:var(--green);background:rgba(67,160,71,.14);}
-.cc-tot.full{color:#fff;background:var(--green);}
-.cc-tot.over{color:var(--red);background:var(--red-l);}
-.cc-ef{font-size:.6rem;color:var(--text-muted);font-style:italic;margin-top:1px;}
-.b-uniq{font-size:.53rem;background:#fef3c7;color:#92400e;border-radius:3px;padding:1px 3px;font-weight:900;}
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
 
-/* Counter cell */
-.td-cnt{text-align:center;padding:2px 3px!important;}
-.cw{display:inline-flex;align-items:center;gap:2px;border:1px solid rgba(0,0,0,.13);border-radius:5px;padding:2px 3px;background:rgba(255,255,255,.55);}
-.cw.p-has{background:rgba(37,99,235,.17);border-color:var(--blue);}
-.cb{width:16px;height:16px;border-radius:3px;border:none;background:rgba(255,255,255,.7);color:var(--text);cursor:pointer;font-size:.76rem;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0;flex-shrink:0;}
-.cb.minus:hover{background:var(--pink);color:#fff;}
-.cb.plus:hover{background:var(--blue);color:#fff;}
-.cv{font-weight:900;font-size:.78rem;min-width:14px;text-align:center;}
-.cv.nz{color:var(--blue-d);}
+/* ── HEADER ── */
+header {
+  position: relative;
+  z-index: 10;
+  padding: 60px 6vw 40px;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
 
-/* ══ SCORES TAB ══ */
-.score-section{max-width:700px;margin:0 auto;padding:4px;}
-.stw{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:13px;box-shadow:var(--sh);margin-bottom:10px;}
-.stw-t{font-family:'Fredoka',sans-serif;font-size:.9rem;color:var(--blue);margin-bottom:9px;}
-.sc-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);}
-.sc-row:last-child{border-bottom:none;}
-.sc-rk{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:900;flex-shrink:0;background:var(--bg2);}
-.rk1{background:#fef3cc;color:#92400e;}.rk2{background:#ebebeb;color:#777;}.rk3{background:#fde8d8;color:#b45309;}
-.sc-info{flex:1;}.sc-nm{font-weight:800;font-size:.84rem;}.sc-det{font-size:.62rem;color:var(--text-muted);}
-.sc-pts{font-family:'Fredoka',sans-serif;font-size:1.2rem;color:var(--pink);}
+.header-glow {
+  position: absolute;
+  top: -80px; left: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(100,80,255,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
 
-/* Deck detail table */
-.deck-detail{margin-top:8px;}
-.deck-detail table{width:100%;border-collapse:collapse;font-size:.73rem;}
-.deck-detail th{background:var(--bg2);padding:4px 8px;text-align:left;font-weight:800;color:var(--text-dim);}
-.deck-detail td{padding:3px 8px;border-bottom:1px solid var(--border);}
-.deck-detail tr:last-child td{border-bottom:none;}
-.deck-tag{font-size:.62rem;font-weight:900;padding:1px 5px;border-radius:4px;color:#fff;}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
 
-/* ══ OVERLAYS ══ */
-.overlay{display:none;position:fixed;inset:0;background:rgba(13,34,51,.55);z-index:9000;align-items:center;justify-content:center;}
-.overlay.visible{display:flex;}
-.ov-pan{background:var(--white);border:2px solid var(--border);border-radius:14px;padding:22px 18px;max-width:460px;width:92vw;max-height:88vh;overflow-y:auto;box-shadow:var(--sh2);}
-.ov-ttl{font-family:'Fredoka',sans-serif;font-size:1.4rem;color:var(--pink);margin-bottom:10px;text-align:center;}
-.pod-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
-.pod-item{display:flex;align-items:center;gap:9px;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;padding:7px 11px;}
-.pod-med{font-size:1.15rem;width:26px;}.pod-nm{flex:1;font-weight:800;}.pod-pts{font-family:'Fredoka',sans-serif;font-size:1.1rem;color:var(--pink);}
-.modal{display:none;position:fixed;inset:0;background:rgba(13,34,51,.52);z-index:10000;align-items:center;justify-content:center;}
-.modal.visible{display:flex;}
-.mo-pan{background:var(--white);border:2px solid var(--border);border-radius:12px;padding:18px;width:min(380px,92vw);box-shadow:var(--sh2);}
-.mo-ttl{font-family:'Fredoka',sans-serif;font-size:.98rem;color:var(--pink);margin-bottom:6px;}
-.mo-body{color:var(--text-muted);font-size:.8rem;margin-bottom:12px;line-height:1.5;}
-.mo-btns{display:flex;gap:6px;flex-wrap:wrap;}
-textarea.import-ta{width:100%;height:100px;font-size:.72rem;font-family:monospace;border:1.5px solid var(--border);border-radius:7px;padding:7px;resize:vertical;margin-bottom:8px;}
-#toast{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;padding:7px 15px;border-radius:8px;font-weight:800;z-index:99999;opacity:0;transition:opacity .2s;pointer-events:none;font-size:.76rem;}
-#toast.show{opacity:1;}
+.header-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
 
-@media(max-width:480px){.sidebar{width:118px;}.inv-tbl col.c-player{width:72px;}}
-@media(max-width:360px){.sidebar{display:none;}}
+.header-title span {
+  display: block;
+  background: linear-gradient(135deg, #fff 30%, rgba(255,255,255,0.4));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-title .accent {
+  background: linear-gradient(135deg, #7c6fff, #c77dff);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.header-meta {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.header-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.header-desc {
+  font-size: 0.92rem;
+  color: var(--text-dim);
+  max-width: 280px;
+  text-align: right;
+  line-height: 1.5;
+}
+
+/* ── STICKY NAV ── */
+.nav-strip {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,10,15,0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 6vw;
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 10px 0;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  font-size: 0.76rem;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s;
+  cursor: pointer;
+  background: none;
+}
+.nav-pill:hover { border-color: var(--border-bright); color: var(--text); background: var(--bg3); }
+.nav-pill .dot { width: 6px; height: 6px; border-radius: 50%; }
+
+/* ── MAIN ── */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 6vw 100px;
+}
+
+/* ── SECTION ── */
+.section {
+  margin-bottom: 72px;
+  scroll-margin-top: 70px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.section-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.section-label {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── CARD GRID ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.card-grid.wide {
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+}
+
+/* ── PROJECT CARD ── */
+.pcard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+}
+
+.pcard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+
+.pcard:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-bright);
+  background: var(--card-hover);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.pcard:hover::before { opacity: 1; }
+
+/* Card illustration */
+.pcard-art {
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.pcard-art svg {
+  width: 100%; height: 100%;
+}
+
+/* Card body */
+.pcard-body {
+  padding: 18px 20px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pcard-type {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.pcard-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.pcard-desc {
+  font-size: 0.83rem;
+  color: var(--text-dim);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.pcard-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.pcard-link {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pcard-arrow {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-bright);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+  color: var(--text-dim);
+}
+.pcard:hover .pcard-arrow {
+  background: white;
+  color: black;
+  border-color: white;
+}
+
+/* ── FOOTER ── */
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 30px 6vw;
+  text-align: center;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-text {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.footer-gh {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-gh:hover { color: var(--text); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.pcard {
+  animation: fadeUp 0.5s ease both;
+}
+
+.section:nth-child(1) .pcard:nth-child(1) { animation-delay: 0.05s; }
+.section:nth-child(1) .pcard:nth-child(2) { animation-delay: 0.1s; }
+.section:nth-child(1) .pcard:nth-child(3) { animation-delay: 0.15s; }
+.section:nth-child(2) .pcard:nth-child(1) { animation-delay: 0.2s; }
+.section:nth-child(2) .pcard:nth-child(2) { animation-delay: 0.25s; }
+.section:nth-child(3) .pcard:nth-child(1) { animation-delay: 0.3s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  header { padding: 40px 5vw 30px; }
+  .header-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .header-meta { text-align: left; }
+  .header-desc { text-align: left; }
+  main { padding: 40px 5vw 80px; }
+  .card-grid { grid-template-columns: 1fr; }
+  .card-grid.wide { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Color utilities per category */
+.c-games    { color: var(--c-games); }
+.c-music    { color: var(--c-music); }
+.c-plongee  { color: var(--c-plongee); }
+.c-securite { color: var(--c-securite); }
+.c-quizz    { color: var(--c-quizz); }
+.c-tools    { color: var(--c-tools); }
+
+.bg-games    { background: rgba(255,107,53,0.12); }
+.bg-music    { background: rgba(199,125,255,0.12); }
+.bg-plongee  { background: rgba(0,180,216,0.12); }
+.bg-securite { background: rgba(6,214,160,0.12); }
+.bg-quizz    { background: rgba(255,214,10,0.12); }
+.bg-tools    { background: rgba(255,77,109,0.12); }
+
+.border-games    { border-top: 2px solid var(--c-games); }
+.border-music    { border-top: 2px solid var(--c-music); }
+.border-plongee  { border-top: 2px solid var(--c-plongee); }
+.border-securite { border-top: 2px solid var(--c-securite); }
+.border-quizz    { border-top: 2px solid var(--c-quizz); }
+.border-tools    { border-top: 2px solid var(--c-tools); }
+
+.glow-games    { box-shadow: 0 0 40px rgba(255,107,53,0.15); }
+.glow-music    { box-shadow: 0 0 40px rgba(199,125,255,0.15); }
+.glow-plongee  { box-shadow: 0 0 40px rgba(0,180,216,0.15); }
+.glow-securite { box-shadow: 0 0 40px rgba(6,214,160,0.15); }
+.glow-quizz    { box-shadow: 0 0 40px rgba(255,214,10,0.15); }
+.glow-tools    { box-shadow: 0 0 40px rgba(255,77,109,0.15); }
 </style>
 </head>
 <body>
-<div id="app">
-<header class="hdr">
-  <div class="hdr-left">
+
+<!-- HEADER -->
+<header>
+  <div class="header-glow"></div>
+  <div class="header-inner">
     <div>
-      <div class="hdr-t">😊 Smile Life</div>
-      <div class="hdr-s" id="hdr-sub">Configurez votre partie</div>
+      <p style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;">soaresden · github.io</p>
+      <div class="header-title">
+        <span>Side</span>
+        <span class="accent">Projects</span>
+        <span style="font-size:0.45em;font-weight:400;background:none;-webkit-text-fill-color:var(--text-muted);margin-top:4px;display:block;letter-spacing:0.01em;">& Créations personnelles</span>
+      </div>
     </div>
-    <div class="timer-badge" id="timer-badge" style="display:none">00:00</div>
-  </div>
-  <div class="hdr-a">
-    <button class="hbtn" id="btn-detail" onclick="openDeckDetail()" style="display:none">📦 Decks</button>
-    <button class="hbtn" id="btn-fin"    onclick="openEnd()"       style="display:none">🏆 Fin</button>
-    <button class="hbtn" id="btn-exp"    onclick="exportJSON()"    style="display:none">💾 Export</button>
-    <button class="hbtn" onclick="openImport()">📂 Import</button>
-    <button class="hbtn" id="btn-new"    onclick="confirmNew()"    style="display:none">🔄 Nouvelle</button>
+    <div class="header-meta">
+      <span class="header-tag">Version 2025</span>
+      <p class="header-desc">Projets web, outils, jeux &amp; expériences — tous développés en dehors du boulot.</p>
+      <a href="https://github.com/soaresden" target="_blank" style="font-family:var(--font-mono);font-size:0.72rem;color:var(--text-dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-top:8px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        github.com/soaresden
+      </a>
+    </div>
   </div>
 </header>
 
-<div id="screens" style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+<!-- NAV -->
+<nav class="nav-strip">
+  <div class="nav-inner">
+    <a class="nav-pill" href="#games"><span class="dot" style="background:var(--c-games)"></span>Board Games</a>
+    <a class="nav-pill" href="#music"><span class="dot" style="background:var(--c-music)"></span>Music</a>
+    <a class="nav-pill" href="#plongee"><span class="dot" style="background:var(--c-plongee)"></span>Plongée</a>
+    <a class="nav-pill" href="#securite"><span class="dot" style="background:var(--c-securite)"></span>Sécurité</a>
+    <a class="nav-pill" href="#quizz"><span class="dot" style="background:var(--c-quizz)"></span>Quiz</a>
+    <a class="nav-pill" href="#tools"><span class="dot" style="background:var(--c-tools)"></span>Tools</a>
+  </div>
+</nav>
 
-<!-- SETUP -->
-<div id="setupScreen" class="screen active">
-  <div class="sh"><h1>😊 Smile Life Tracker</h1><p>Choisissez les extensions puis les joueurs</p></div>
-  <div class="scard">
-    <div class="slbl">📦 Extensions</div>
-    <div class="ext-grid" id="ext-grid"></div>
-  </div>
-  <div class="scard">
-    <div class="slbl">👥 Joueurs</div>
-    <div id="players-list"></div>
-    <button class="btn btn-ghost btn-sm" onclick="addPlayer()" style="margin-top:6px">+ Ajouter</button>
-  </div>
-  <button class="btn btn-blue btn-lg btn-full" onclick="startGame()" style="margin-bottom:20px">🚀 Démarrer la partie</button>
-</div>
+<main>
 
-<!-- GAME -->
-<div id="gameScreen" class="screen">
-  <div class="sidebar">
-    <div class="sb-hd">📊 Scores</div>
-    <div id="sb-scores"></div>
-    <div class="sb-sep"></div>
-    <div class="sb-sp"><span class="sb-si">🎴</span><span class="sb-sn">Non assignées</span><span class="sb-sc" id="c-free">0</span></div>
-    <div class="sb-sp"><span class="sb-si">📦</span><span class="sb-sn">Total cartes</span><span class="sb-sc" id="c-total">0</span></div>
-  </div>
-  <div class="main-panel">
-    <div class="tab-bar">
-      <div class="tab active" data-tab="inv"    onclick="showTab('inv')">🃏 Inventaire</div>
-      <div class="tab"        data-tab="scores" onclick="showTab('scores')">📊 Scores</div>
+<!-- ═══════════════ BOARD GAMES ═══════════════ -->
+<section class="section" id="games">
+  <div class="section-header">
+    <div class="section-icon bg-games">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-games)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2M12 12v4M10 14h4"/></svg>
     </div>
-    <div class="deck-legend" id="deck-legend"></div>
-    <div class="inv-outer" id="inv-outer"></div>
+    <div>
+      <div class="section-label c-games">Board Games</div>
+      <div class="section-title">Assistants de jeu de société</div>
+    </div>
+    <div class="section-line"></div>
   </div>
-</div>
-</div>
-</div><!-- /app -->
 
-<div id="toast"></div>
-
-<!-- END GAME OVERLAY -->
-<div id="ov-end" class="overlay" onclick="bgClose(event,'ov-end')">
-  <div class="ov-pan">
-    <div class="ov-ttl">🏆 Fin de Partie !</div>
-    <div id="ov-timer-result" style="text-align:center;font-size:.85rem;color:var(--text-muted);margin-bottom:10px;"></div>
-    <div id="ov-pod"></div>
-    <button class="btn btn-blue btn-full" onclick="confirmNew()" style="margin-top:10px;padding:10px">🔄 Nouvelle Partie</button>
-    <button class="btn btn-ghost btn-full" onclick="closeOv('ov-end')" style="margin-top:6px">Continuer</button>
-  </div>
-</div>
-
-<!-- DECK DETAIL OVERLAY -->
-<div id="ov-deck" class="overlay" onclick="bgClose(event,'ov-deck')">
-  <div class="ov-pan" style="max-width:600px">
-    <div class="ov-ttl">📦 Détail des Decks</div>
-    <div id="ov-deck-content"></div>
-    <button class="btn btn-ghost btn-full" onclick="closeOv('ov-deck')" style="margin-top:10px">Fermer</button>
-  </div>
-</div>
-
-<!-- CONFIRM MODAL -->
-<div id="modal-confirm" class="modal">
-  <div class="mo-pan">
-    <div class="mo-ttl" id="mc-t">Confirmer</div>
-    <div class="mo-body" id="mc-b"></div>
-    <div class="mo-btns">
-      <button class="btn btn-blue" id="mc-ok">OK</button>
-      <button class="btn btn-ghost" onclick="closeMo('modal-confirm')">Annuler</button>
-    </div>
-  </div>
-</div>
-
-<!-- IMPORT MODAL -->
-<div id="modal-import" class="modal">
-  <div class="mo-pan">
-    <div class="mo-ttl">📂 Importer une partie</div>
-    <div class="mo-body">Collez le JSON exporté d'une partie précédente :</div>
-    <textarea class="import-ta" id="import-ta" placeholder='{"gameId":"...","players":[...],...}'></textarea>
-    <div class="mo-btns">
-      <button class="btn btn-blue" onclick="doImport()">Importer</button>
-      <button class="btn btn-ghost" onclick="closeMo('modal-import')">Annuler</button>
-    </div>
-  </div>
-</div>
-
-<script>
-// ════════════════════════════════════════════════════
-// DECK CONFIG
-// ════════════════════════════════════════════════════
-const DECKS = {
-  base:       {label:'🏠 Jeu de Base', bg:'var(--c-base)',  border:'var(--b-base)',  text:'#1d4ed8', total:200},
-  trash:      {label:'🔥 Trash',       bg:'var(--c-trash)', border:'var(--b-trash)', text:'#b91c1c', total:55},
-  girlpower:  {label:'💜 Girl Power',  bg:'var(--c-gp)',    border:'var(--b-gp)',    text:'#7e22ce', total:60},
-  apocalypse: {label:'☢️ Apocalypse', bg:'var(--c-apoc)',  border:'var(--b-apoc)',  text:'#c2410c', total:60},
-  fantastique:{label:'🧙 Fantastique', bg:'var(--c-fan)',   border:'var(--b-fan)',   text:'#15803d', total:60},
-  vieluxe:    {label:'💎 Vie de Luxe', bg:'var(--c-luxe)',  border:'var(--b-luxe)',  text:'#a16207', total:60},
-};
-
-const EXT_META = [
-  {id:'base',       name:'Jeu de Base', icon:'🏠', age:'12+', nb:'200 cartes', req:true},
-  {id:'trash',      name:'Trash',       icon:'🔥', age:'16+', nb:'55 cartes'},
-  {id:'girlpower',  name:'Girl Power',  icon:'💜', age:'12+', nb:'60 cartes'},
-  {id:'apocalypse', name:'Apocalypse',  icon:'☢️', age:'12+', nb:'60 cartes'},
-  {id:'fantastique',name:'Fantastique', icon:'🧙', age:'12+', nb:'60 cartes'},
-  {id:'vieluxe',    name:'Vie de Luxe', icon:'💎', age:'12+', nb:'60 cartes'},
-];
-
-// ════════════════════════════════════════════════════
-// CATALOGUE — 100% VERIFIED FROM OFFICIAL PDFs
-// ════════════════════════════════════════════════════
-function buildCatalogue(exts) {
-  const has = id => exts.includes(id);
-  const C = [];
-  let id = 0;
-  const R = (cat, label, icon, smiles, total, ext, x={}) =>
-    C.push({id: id++, cat, label, icon, smiles, total, ext, ...x});
-
-  // ══════════════════════════════════════
-  // JEU DE BASE — 200 cartes [PDF vérifié]
-  // ══════════════════════════════════════
-  if (has('base')) {
-    // ÉTUDES 25 cartes (22 simples + 3 doubles)
-    R('etudes','Étude niv.1 (×5)','📚',1,5,'base');
-    R('etudes','Étude niv.2 (×5)','📚',1,5,'base');
-    R('etudes','Étude niv.3 (×4)','📚',2,4,'base');
-    R('etudes','Étude niv.4 (×4)','📚',2,4,'base');
-    R('etudes','Étude niv.5 (×4)','📚',3,4,'base');
-    R('etudes','Étude double niv.6 (×3)','📚📚',3,3,'base',{effect:'Valide 2 niveaux d\'un coup'});
-    // 5+5+4+4+4+3 = 25 ✓
-
-    // MÉTIERS 30 cartes [liste officielle PDF]
-    const M = (n,ic,sal,ef,stat) => R('metier',n,ic,sal,1,'base',{unique:true,effect:ef||null,statut:stat||null});
-    M('Architecte','🏗️',3,'APP: pose une maison gratuitement à un prochain tour');
-    M('Astronaute','🚀',4,'API⚡: prend une carte au choix dans la défausse');
-    M('Avocat','⚖️',4,'APP: ne peut pas subir de divorce');
-    M('Bandit','🔫',2,'APP: ne peut pas être licencié ni imposé');
-    M('Barman','🍺',2,'APP: flirts illimités avant mariage','Intérimaire');
-    M('Chef des Achats','🛒',3,'API⚡: récupère une acquisition payable de la défausse pour l\'acheter');
-    M('Chef des Ventes','📈',3,'API⚡: récupère un salaire posable de la défausse');
-    M('Chercheur','🔬',3,'APP: pioche 6 cartes au lieu de 5');
-    M('Chirurgien','🩺',4,'APP: insensible maladies + peut continuer les études');
-    M('Designer','🎨',3,null);
-    M('Écrivain','✍️',2,'Peut recevoir le Grand Prix d\'Excellence');
-    M('Garagiste','🔧',2,'APP: insensible aux accidents','Intérimaire');
-    M('Gourou','🙏',3,null);
-    M('Grand Prof','👨‍🏫',4,'Promotion prof. Fonctionnaire. Salaires 1→4','Fonctionnaire');
-    M('Jardinier','🌱',1,null,'Intérimaire');
-    M('Journaliste','📰',3,'API⚡: voit les mains. Peut recevoir le Grand Prix');
-    M('Médecin','👨‍⚕️',4,'APP: insensible maladies + peut continuer les études');
-    M('Médium','🔮',2,'API⚡: voit les 13 prochaines cartes de la pioche');
-    M('Militaire','🎖️',2,'APP: l\'attentat ne peut pas être posé en sa présence','Fonctionnaire');
-    M('Pharmacien','💊',3,'APP: insensible aux maladies');
-    M('Pilote de ligne','✈️',4,'APP: peut poser des voyages sans les payer');
-    M('Pizzaïolo','🍕',2,null,'Intérimaire');
-    M('Plombier','🔨',2,null,'Intérimaire');
-    M('Policier','👮',3,'APP: bandit et gourou ne peuvent pas être posés en sa présence','Fonctionnaire');
-    M("Prof d'Anglais",'🇬🇧',2,null,'Fonctionnaire');
-    M('Prof de Français','📖',2,null,'Fonctionnaire');
-    M("Prof d'Histoire-Géo",'🏛️',2,null,'Fonctionnaire');
-    M('Prof de Maths','📐',2,null,'Fonctionnaire');
-    M('Serveur','🍽️',1,null,'Intérimaire');
-    M('Stripteaser','💃',2,null,'Intérimaire');
-    // 30 ✓
-
-    // SALAIRES 40 cartes
-    R('salaire','Salaire niv.1 (×10)','💵',1,10,'base');
-    R('salaire','Salaire niv.2 (×10)','💵💵',2,10,'base');
-    R('salaire','Salaire niv.3 (×10)','💵💵💵',3,10,'base');
-    R('salaire','Salaire niv.4 (×10)','💵💵💵💵',4,10,'base');
-    // 40 ✓
-
-    // DISTINCTIONS 3 cartes
-    R('distinction','Légion d\'Honneur','🇫🇷',3,1,'base',{unique:true,effect:'Posable sauf si bandit/attentat'});
-    R('distinction','Grand Prix d\'Excellence (×2)','🏆',2,2,'base',{effect:'Réservé écrivain / chercheur / journaliste'});
-    // 3 ✓
-
-    // FLIRTS 20 cartes — lieux: hôtel et camping donnent droit à un enfant
-    R('flirt','Flirt – À l\'hôtel (×4)','🏨',2,4,'base',{effect:'Permet un enfant sans mariage (flirt visible non recouvert)'});
-    R('flirt','Flirt – Au camping (×4)','⛺',2,4,'base',{effect:'Permet un enfant sans mariage (flirt visible non recouvert)'});
-    R('flirt','Flirt – Sur internet (×3)','💻',1,3,'base');
-    R('flirt','Flirt – Au restaurant (×3)','🍽️',1,3,'base');
-    R('flirt','Flirt – En vacances (×3)','🏖️',2,3,'base');
-    R('flirt','Flirt – Au cinéma (×3)','🎬',1,3,'base');
-    // 4+4+3+3+3+3 = 20 ✓
-
-    // MARIAGES 7 cartes + ADULTÈRES 3 cartes
-    R('mariage','Mariage (×7)','💍',3,7,'base',{effect:'Permet enfants. Stoppe les flirts.'});
-    R('mariage','Adultère (×3)','🔞',0,3,'base',{effect:'Permet de flirter en étant marié. Si divorce subi: perd aussi les enfants.'});
-    // 10 ✓
-
-    // ENFANTS 10 cartes — prénoms geek confirmés presse + 2 inconnus
-    R('enfant','Enfant – Luke','👦',2,1,'base',{unique:true,effect:'⚡ Jackpot: Luke + Leia = +2 smiles (variante)'});
-    R('enfant','Enfant – Leia','👧',2,1,'base',{unique:true,effect:'⚡ Jackpot: Luke + Leia = +2 smiles (variante)'});
-    R('enfant','Enfant – Mario','👦',2,1,'base',{unique:true,effect:'⚡ Jackpot: Mario + Luigi = +2 smiles (variante)'});
-    R('enfant','Enfant – Luigi','👦',2,1,'base',{unique:true,effect:'⚡ Jackpot: Mario + Luigi = +2 smiles (variante)'});
-    R('enfant','Enfant – Harry','👦',2,1,'base',{unique:true,effect:'⚡ Jackpot: Harry + Hermione = +2 smiles (variante)'});
-    R('enfant','Enfant – Hermione','👧',2,1,'base',{unique:true,effect:'⚡ Jackpot: Harry + Hermione = +2 smiles (variante)'});
-    R('enfant','Enfant – Link','👦',2,1,'base',{unique:true,effect:'⚡ Jackpot: Link + Zelda = +2 smiles (variante)'});
-    R('enfant','Enfant – Zelda','👧',2,1,'base',{unique:true,effect:'⚡ Jackpot: Link + Zelda = +2 smiles (variante)'});
-    R('enfant','Enfant – ? (9e)','👶',2,1,'base',{unique:true,effect:'Prénom à vérifier sur votre carte'});
-    R('enfant','Enfant – ? (10e)','👶',2,1,'base',{unique:true,effect:'Prénom à vérifier sur votre carte'});
-    // 10 ✓
-
-    // ANIMAUX 5 cartes
-    R('animal','Chat','🐱',1,1,'base',{unique:true,effect:'Gratuit'});
-    R('animal','Chien','🐶',1,1,'base',{unique:true,effect:'Gratuit'});
-    R('animal','Lapin','🐰',1,1,'base',{unique:true,effect:'Gratuit'});
-    R('animal','Poussin','🐣',2,1,'base',{unique:true,effect:'Gratuit'});
-    R('animal','Licorne','🦄',3,1,'base',{unique:true,effect:'Gratuit'});
-    // 5 ✓
-
-    // MAISONS 5 cartes (noms non listés, juste images — smiles estimés 1-3)
-    R('acquisition','Maison niv.1 – 1😊','🏠',1,1,'base',{unique:true,effect:'Prix: 1 liasse min (÷2 si marié)'});
-    R('acquisition','Maison niv.2a – 2😊','🏡',2,1,'base',{unique:true,effect:'Prix: 2 liasses min (÷2 si marié)'});
-    R('acquisition','Maison niv.2b – 2😊','🏢',2,1,'base',{unique:true,effect:'Prix: 2 liasses min (÷2 si marié)'});
-    R('acquisition','Maison niv.3a – 3😊','🏘️',3,1,'base',{unique:true,effect:'Prix: 3 liasses min (÷2 si marié)'});
-    R('acquisition','Maison niv.3b – 3😊','🏰',3,1,'base',{unique:true,effect:'Prix: 4 liasses min (÷2 si marié)'});
-    // 5 ✓
-
-    // VOYAGES 5 cartes [PDF confirmé]
-    R('acquisition','Voyage – Le Caire','🏛️',1,1,'base',{unique:true,effect:'Prix: 1 liasse'});
-    R('acquisition','Voyage – Londres','🇬🇧',1,1,'base',{unique:true,effect:'Prix: 1 liasse'});
-    R('acquisition','Voyage – Rio de Janeiro','🏖️',2,1,'base',{unique:true,effect:'Prix: 2 liasses'});
-    R('acquisition','Voyage – Sydney','🦘',2,1,'base',{unique:true,effect:'Prix: 2 liasses'});
-    R('acquisition','Voyage – New York','🗽',3,1,'base',{unique:true,effect:'Prix: 3 liasses'});
-    // 5 ✓
-
-    // MALUS 37 cartes [liste exhaustive PDF]
-    R('malus','Accident (×5)','🚗',0,5,'base',{effect:'Passe un tour'});
-    R('malus','Burn-out (×5)','😮‍💨',0,5,'base',{effect:'Passe un tour (travailleurs uniquement)'});
-    R('malus','Divorce (×5)','💔',0,5,'base',{effect:'Perd son mariage'});
-    R('malus','Impôt sur le revenu (×5)','🧾',0,5,'base',{effect:'Perd son dernier salaire (travailleurs)'});
-    R('malus','Licenciement (×5)','📋',0,5,'base',{effect:'Perd son métier (travailleurs)'});
-    R('malus','Maladie (×5)','🤒',0,5,'base',{effect:'Passe un tour'});
-    R('malus','Redoublement (×5)','📖',0,5,'base',{effect:'Perd sa dernière carte études (étudiants)'});
-    R('malus','Prison','⛓️',0,1,'base',{unique:true,effect:'Bandit: passe 3 tours, défausse bandit + prison'});
-    R('malus','Attentat','💣',0,1,'base',{unique:true,effect:'TOUS les enfants hors jeu (y compris ceux de l\'auteur)'});
-    // 35+1+1 = 37 ✓
-
-    // CARTES SPÉCIALES 10 cartes [liste exhaustive PDF]
-    R('speciale','Anniversaire','🎂',0,1,'base',{unique:true,effect:'Chaque joueur donne un salaire de son choix'});
-    R('speciale','Arc-en-ciel','🌈',0,1,'base',{unique:true,effect:'Joue jusqu\'à 3 cartes d\'affilée puis repioche'});
-    R('speciale','Casino','🎰',0,1,'base',{unique:true,effect:'Mise un salaire pour en gagner 2 (si salaires différents = premier joueur gagne)'});
-    R('speciale','Chance','🍀',0,1,'base',{unique:true,effect:'Pioche 3 cartes, en garde 1, défausse 2'});
-    R('speciale','Étoile filante','⭐',0,1,'base',{unique:true,effect:'Prend une carte au CHOIX dans la défausse pour la jouer'});
-    R('speciale','Héritage','🏛️',0,1,'base',{unique:true,effect:'3 liasses utilisables comme salaire (non imposable)'});
-    R('speciale','Piston','🤝',0,1,'base',{unique:true,effect:'Pose n\'importe quel métier directement + repioche'});
-    R('speciale','Troc','🔄',0,1,'base',{unique:true,effect:'Échange une carte au hasard avec un joueur au choix'});
-    R('speciale','Tsunami','🌊',0,1,'base',{unique:true,effect:'Toutes les mains regroupées, mélangées, redistribuées'});
-    R('speciale','Vengeance','⚔️',0,1,'base',{unique:true,effect:'Renvoie un malus reçu à n\'importe quel joueur'});
-    // 10 ✓
-    // TOTAL BASE: 25+30+40+3+20+10+10+5+5+5+37+10 = 200 ✓
-  }
-
-  // ══════════════════════════════════════
-  // TRASH — 55 cartes [PDF vérifié]
-  // ══════════════════════════════════════
-  if (has('trash')) {
-    // MÉTIERS 5
-    R('metier','Acteur porno','🎬',2,1,'trash',{unique:true,effect:'Intérimaire. APP: peut jouer la carte Sextape','statut':'Intérimaire'});
-    R('metier','Bourreau','⚰️',2,1,'trash',{unique:true,effect:'API⚡: supprime un enfant ou animal posé d\'un joueur (hors jeu)','statut':'Intérimaire'});
-    R('metier','Dealer','💊',3,1,'trash',{unique:true,effect:'APP: peut poser des drogues sans les payer'});
-    R('metier','Prêtre','✝️',2,1,'trash',{unique:true,effect:'Ne peut pas se marier mais peut flirter et avoir des enfants (même si stérilité)'});
-    R('metier','Proxénète','🎩',3,1,'trash',{unique:true,effect:'APP: policier fait fuir proxénète + dealer. Maison close moitié prix'});
-    // 5 ✓
-
-    // ARGENT SALE 5 — niveaux confirmés PDF: 1×niv1, 2×niv2, 1×niv3, 1×niv4
-    R('salaire','Argent sale niv.1','💸',1,1,'trash',{effect:'Non imposable. Posable sans métier'});
-    R('salaire','Argent sale niv.2 (×2)','💸💸',2,2,'trash',{effect:'Non imposable. Posable sans métier'});
-    R('salaire','Argent sale niv.3','💸💸💸',3,1,'trash',{effect:'Non imposable. Posable sans métier'});
-    R('salaire','Argent sale niv.4','💸💸💸💸',4,1,'trash',{effect:'Non imposable. Posable sans métier'});
-    // 1+2+1+1 = 5 ✓
-
-    // FLIRTS 6
-    R('flirt','Flirt Trash – Partouze (×2)','🎉',2,2,'trash',{effect:'Pose TOUS les flirts de la main de tous. Retournés et protégés.'});
-    R('flirt','Flirt Trash – Tourisme sexuel (×2)','💑',2,2,'trash');
-    R('flirt','Flirt Trash – Sextape (×2)','📱',1,2,'trash');
-    // 2+2+2 = 6 ✓ (NB: Sextape = conservée en main par acteur porno)
-
-    // MARIAGES FORCÉS 2
-    R('mariage','Mariage forcé (×2)','💍⚡',2,2,'trash',{effect:'Mêmes propriétés qu\'un mariage mais posable sans flirt'});
-    // 2 ✓
-
-    // ENFANTS 2
-    R('enfant','Capote trouée (×2)','👶',2,2,'trash',{effect:'Permet un enfant unique à chaque dernier flirt (effet permanent, sauf stérilité)'});
-    // 2 ✓
-
-    // ACQUISITIONS 10: 2 cannabis + 3 cocaïnes + 3 héroïnes + maison close + tourisme sexuel
-    R('acquisition','Cannabis (×2)','🌿',1,2,'trash',{effect:'Bonus addictif. Risque overdose.'});
-    R('acquisition','Cocaïne (×3)','❄️',2,3,'trash',{effect:'Bonus addictif (se cumule). Risque overdose.'});
-    R('acquisition','Héroïne (×3)','💉',1,3,'trash',{effect:'Bonus addictif (se cumule). Risque overdose.'});
-    R('acquisition','Maison close','🏚️',3,1,'trash',{unique:true,effect:'Permet flirts sans condition ni limite (même marié). Moitié prix proxénète, gratuit architecte.'});
-    R('acquisition','Tourisme sexuel','✈️💰',2,1,'trash',{unique:true,effect:'Voyage. Gratuit pour le pilote.'});
-    // 2+3+3+1+1 = 10 ✓
-
-    // MALUS 10
-    R('malus','Amputation','🦾',0,1,'trash',{effect:'Permanent: ne peut plus piocher dans la défausse (sauf étoile filante/astronaute)'});
-    R('malus','Exhibition','📸',0,1,'trash',{effect:'Permanent: montre chaque carte piochée jusqu\'à la fin'});
-    R('malus','Fin précoce','⏰',0,1,'trash',{effect:'Perd son dernier enfant (placé hors jeu comme attentat)'});
-    R('malus','Hémorragie','🩸',0,1,'trash',{effect:'Joue sans piocher à chaque tour jusqu\'à vider sa main, puis refait sa main'});
-    R('malus','Herpès génital','😷',0,1,'trash',{effect:'Jette son dernier flirt. Si flirt identique déjà posé, celui-ci est aussi défaussé.'});
-    R('malus','Mine antipersonnel','💥',0,1,'trash',{effect:'Défausse aussitôt sa main et la refait'});
-    R('malus','Overdose','💀',0,1,'trash',{effect:'Passe autant de tours que de cartes héroïne/cocaïne posées'});
-    R('malus','Poupée vaudou','🪆',0,1,'trash',{effect:'Subit tous les malus de sa main ET des autres mains (par ordre de jeu)'});
-    R('malus','Prise d\'otage','🔒',0,1,'trash',{effect:'Ravisseur prend ses salaires pour payer la rançon (indiquée sur la carte)'});
-    R('malus','Stérilité','🚫',0,1,'trash',{unique:true,effect:'Permanent: ne peut plus avoir d\'enfants (sauf prêtre, kid\'napping, exhumation…)'});
-    // 10 ✓
-
-    // CARTES SPÉCIALES 10
-    R('speciale','Capote trouée','🩹',0,1,'trash',{unique:true,effect:'Permanent: permet un enfant unique à chaque dernier flirt (sauf stérilité)'}); // aussi catégorie enfant? Non — c'est une carte spéciale
-    R('speciale','Échangisme','🔀',0,1,'trash',{unique:true,effect:'Regardez le jeu de chacun pour échanger ou non votre main avec un autre'});
-    R('speciale','Exhumation','⚰️',0,1,'trash',{unique:true,effect:'Récupère une carte hors jeu (attentat, chasse, fin précoce...) pour la poser sans condition'});
-    R('speciale','Kid\'napping','🧒🔒',0,1,'trash',{unique:true,effect:'Prend l\'enfant d\'un joueur pour le poser directement sans condition'});
-    R('speciale','Partouze','🎊',0,1,'trash',{unique:true,effect:'Pose tous les flirts de toutes les mains sans condition ni limite. Joueurs refont leur main.'});
-    R('speciale','Polygamie (×2)','💍💍',3,2,'trash',{effect:'Permanent: cumule 2 mariages. Divorce subi = perd un seul mariage.'});
-    R('speciale','Promotion canapé','🛋️',0,1,'trash',{unique:true,effect:'Augmente son salaire d\'un niveau (métier en cours seulement)'});
-    R('speciale','Sado-maso','😈',0,1,'trash',{unique:true,effect:'Bonus 3 smiles si vous avez récolté le plus de malus en fin de partie'});
-    R('speciale','Trafic d\'organes','🫀',0,1,'trash',{unique:true,effect:'Regarde la main du voisin gauche et prend la carte de son choix'});
-    R('speciale','Zoophilie','🐑',0,1,'trash',{unique:true,effect:'Chaque animal posé double ses smiles au comptage final'});
-    // Note: Polygamie ×2 = 2 cartes. Capote trouée ici = version carte spéciale.
-    // Mais dans les règles Trash, "Capote trouée" est listée dans cartes spéciales.
-    // Total spéciales: 1+1+1+1+1+2+1+1+1+1 = 11... Polygamie×2 = 10 lignes pour 11 cartes ✓
-
-    // CARTES TRÈS SPÉCIALES 5
-    R('speciale','Chasse ouverte','🎯',0,1,'trash',{unique:true,effect:'Mélange tous les animaux posés face cachée, retourne un par un, chaque animal retourné hors jeu jusqu\'à retrouver la carte chasse'});
-    R('speciale','Extorsion capitaliste','💰',0,1,'trash',{unique:true,effect:'Chacun pose ses salaires de main. Le plus riche les remporte tous face à lui. Égalité = défausse.'});
-    R('speciale','Extorsion communiste','🚩',0,1,'trash',{unique:true,effect:'Prend les salaires posés non investis de chacun, mélange et redistribue en commençant par soi'});
-    R('speciale','Roulette russe','🎲',0,1,'trash',{unique:true,effect:'Mélange sa main face cachée. Chacun pioche une des 6 cartes. Celui qui tire la roulette doit donner une carte de sa main.'});
-    R('speciale','Sextape','📹',0,1,'trash',{unique:true,effect:'Conservée en main. Posable uniquement par acteur porno. Peut être défaussée/échangée mais pas retirée par hémorragie/mine.'});
-    // 5 ✓
-    // TOTAL TRASH: 5M+5AS+6F+2MF+2E+10Acq+10Mal+11Sp+5TrèsSp... 
-    // Recompte: 5+5+6+2+2+10+10+(10cartes spéciales)+(5 très spéciales) = 55
-    // Polygamie ×2 = compte pour 2 cartes dans les 10 spéciales ✓
-  }
-
-  // ══════════════════════════════════════
-  // GIRL POWER — 60 cartes [PDF vérifié]
-  // ══════════════════════════════════════
-  if (has('girlpower')) {
-    // MÉTIERS 11 + 3 études sup (les Prof chimie / philo / ingénieure = sans avantage)
-    const GP = (n,ic,sal,ef,stat) => R('metier',n,ic,sal,1,'girlpower',{unique:true,effect:ef||null,statut:stat||null});
-    GP('Agent immobilier','🏘️',3,'API⚡: chaque proprio de maison donne un salaire investi par maison posée');
-    GP('Babysitter','👶',2,'API⚡: prend un enfant posé (son parent doit donner tous ses salaires en main pour le récupérer)','Intérimaire');
-    GP('Comptable','🧮',3,'API⚡: compte les salaires posés de tous pour prendre un salaire à la plus riche');
-    GP('DRH','📋',3,'API⚡: licencie une personne au choix (hors fonctionnaire et bandit)');
-    GP("Hôtesse de l'air",'✈️',3,'API⚡: récupère un voyage dans la défausse pour le poser gratuitement');
-    GP('Infirmière','🩺',2,'APP: peut poser des salaires de niveau 3 (en plus des salaires niv.1)');
-    GP('Ingénieure','⚙️',3,null,'Fonctionnaire');
-    GP('Prof de chimie','🧪',2,null,'Fonctionnaire');
-    GP('Prof de philo','📜',2,null,'Fonctionnaire');
-    GP('Proviseure','👩‍🏫',4,'Posable seulement si déjà prof. Cumule les deux métiers (pas avec grand prof)','Fonctionnaire');
-    GP('Vétérinaire','🐾',3,'APP: chaque proprio d\'animal (ou plus) donne un salaire posé de son choix. Sinon passe un tour.');
-    // 11 ✓
-
-    // ÉTUDES SUP 3 cartes
-    R('etudes','Études sup GP (×3)','📚✨',2,3,'girlpower',{effect:'3 niveaux d\'études supplémentaires (non redoublables, hors limite des 6)'});
-    // 3 ✓
-
-    // FLIRTS 4
-    R('flirt','Flirt GP – Au bar (×2)','🍸',1,2,'girlpower',{effect:'Ladies Night: 1 flirt au bar + 2 flirts en boîte (ou inverse) = bonus 2 smiles en fin de partie'});
-    R('flirt','Flirt GP – En boîte (×2)','🎵',2,2,'girlpower',{effect:'Ladies Night: 1 flirt au bar + 2 flirts en boîte (ou inverse) = bonus 2 smiles en fin de partie'});
-    // 4 ✓ (NB: Ladies Night = bonus 2 smiles si 1 bar + 2 boîte ou inverse)
-
-    // MARIAGES 2
-    R('mariage','Mariage GP (×2)','💍💜',3,2,'girlpower');
-    // 2 ✓
-
-    // ACQUISITIONS 6: dragon + super bouclier + crapaud + place de concert + 2 maisons
-    R('acquisition','Dragon','🐉',3,1,'girlpower',{unique:true,effect:'Si Dany posée: brûle une carte posée de chaque joueur (hors jeu, irrécupérables sauf exhumation trash)'});
-    R('acquisition','Super Bouclier','🛡️',2,1,'girlpower',{unique:true,effect:'Protège les enfants DÉJÀ posés de tous les malus (attentat, divorce adultère...). Pas des cartes spéciales.'});
-    R('acquisition','Crapaud','🐸',1,1,'girlpower',{unique:true,effect:'Permet de trouver le prince charmant (= mariage direct sans flirt)'});
-    R('acquisition','Place de concert','🎫',2,1,'girlpower',{unique:true,effect:'Peut être revendue: récupère les 2 derniers salaires de la défausse à un tour suivant'});
-    R('acquisition','Maison GP – niv.2','🏡',2,1,'girlpower',{unique:true,effect:'Prix: 2 liasses (÷2 si mariée)'});
-    R('acquisition','Maison GP – niv.3','🏰',3,1,'girlpower',{unique:true,effect:'Prix: 3 liasses (÷2 si mariée)'});
-    // 6 ✓
-
-    // ENFANTS 7 — 4 Four Women confirmés PDF + 3 autres (Dany, Beatrix, 1 inconnu)
-    R('enfant','Enfant – Angela','👧',2,1,'girlpower',{unique:true,effect:'Four Women: Angela+Simone+Louise+Olympe = immunité Phallocratie et Plafond de verre'});
-    R('enfant','Enfant – Simone','👧',2,1,'girlpower',{unique:true,effect:'Four Women: combo immunité'});
-    R('enfant','Enfant – Louise','👧',2,1,'girlpower',{unique:true,effect:'Four Women: combo immunité'});
-    R('enfant','Enfant – Olympe','👧',2,1,'girlpower',{unique:true,effect:'Four Women: combo immunité'});
-    R('enfant','Enfant – Dany','👧',2,1,'girlpower',{unique:true,effect:'Si Dragon posé: brûle une carte par joueur (action au moment où Dany ou Dragon posé)'});
-    R('enfant','Enfant – Beatrix','👧',2,1,'girlpower',{unique:true,effect:'À vérifier sur votre carte'});
-    R('enfant','Enfant – ? (7e)','👧',2,1,'girlpower',{unique:true,effect:'Prénom à vérifier sur votre carte'});
-    // 7 ✓
-
-    // PRIMES DE NAISSANCE 5
-    R('acquisition','Prime de naissance (×5)','🍼',2,5,'girlpower',{effect:'Posable selon nb d\'enfants déjà posés (cf. indication sur la carte). Utilisable comme salaire (non imposable).'});
-    // 5 ✓
-
-    // MALUS 11: Charge mentale, Chagrin d'amour×5, Tâches ménagères, Balance ton porc, Gynocratie, Phallocratie, Plafond de verre
-    R('malus','Charge mentale','🧠',0,1,'girlpower',{effect:'Défausse un enfant si tu as un métier'});
-    R('malus','Chagrin d\'amour (×5)','💔',0,5,'girlpower',{effect:'Défausse ton dernier flirt si pas mariée (sans effet en cas d\'adultère)'});
-    R('malus','Tâches ménagères','🧹',0,1,'girlpower',{unique:true,effect:'Permanent: chacune de vos maisons vaut 1 smile de moins au comptage final'});
-    R('malus','Balance ton porc','🐷',0,1,'girlpower',{unique:true,effect:'Défausse ton mariage ET ton métier (bandit et fonctionnaire inclus). Mariée ET ayant un métier.'});
-    R('malus','Gynocratie','♀️',0,1,'girlpower',{unique:true,effect:'Permanent: tes garçons posés valent 1 smile au lieu de 2'});
-    R('malus','Phallocratie','♂️',0,1,'girlpower',{unique:true,effect:'Permanent: tes filles posées valent 1 smile au lieu de 2. Sans effet sur Simone/Beatrix.'});
-    R('malus','Plafond de verre','🪟',0,1,'girlpower',{unique:true,effect:'Permanent: ne peut plus poser de métier de niveau d\'études > 4. Licenciement si déjà le cas.'});
-    // 1+5+1+1+1+1+1 = 11 ✓
-
-    // CARTES SPÉCIALES 11
-    R('speciale','Contraception','💊💜',0,1,'girlpower',{unique:true,effect:'Permanent: peut défausser un enfant en main pour repiocher et rejouer'});
-    R('speciale','Coup de foudre','💘',3,1,'girlpower',{unique:true,effect:'Vole un mariage posé même sans flirt (si adultère, cible défausse adultère mais conserve flirts)'});
-    R('speciale','Démontage de cliché (×3)','💪',0,3,'girlpower',{effect:'Permanent au choix: aucun accident OU flirts illimités avant mariage OU deux métiers cumulables'});
-    R('speciale','Égalité de salaire','⚖️💜',0,1,'girlpower',{unique:true,effect:'Permanent: ton métier rapporte autant que le métier le mieux rémunéré sur la table'});
-    R('speciale','Erreur d\'étiquetage','🔀',0,1,'girlpower',{unique:true,effect:'Échange un de tes enfants posés contre un enfant posé d\'une autre joueuse'});
-    R('speciale','Famille monoparentale','👩‍👧',2,1,'girlpower',{unique:true,effect:'Bonus 2 smiles en fin de partie si au moins un enfant posé sans être mariée'});
-    R('speciale','Girl power','⚡💜',0,1,'girlpower',{unique:true,effect:'Permanent: rejoue une carte spéciale déjà posée à chaque fois que tu poses une fille (1 fois par spéciale)'});
-    R('speciale','Répartition des tâches','📋',0,1,'girlpower',{unique:true,effect:'Redistribue au hasard tous les métiers posés. Brise provisoirement le plafond de verre.'});
-    R('speciale','Soirée entre filles','🥂',0,1,'girlpower',{unique:true,effect:'Pose sans condition toutes les filles présentes dans chaque main (la tienne incluse). Chacune repioche.'});
-    // Démo de cliché ×3 = 3 cartes. Total: 1+1+3+1+1+1+1+1+1 = 11 ✓
-    // TOTAL GP: 11M+3Et+4F+2Mar+6Acq+7E+5Prim+11Mal+11Sp = 60 ✓
-  }
-
-  // ══════════════════════════════════════
-  // APOCALYPSE — 60 cartes [PDF vérifié]
-  // 5 crises + 4 événements + 6 monstres + 15 armes + 3 véhicules 
-  // + 8 survie + 3 animaux + 4 cataclysmes + 5 métiers + 5 malus + 2 timers
-  // ══════════════════════════════════════
-  if (has('apocalypse')) {
-    // FLÉAUX: CRISES 5
-    R('fléau','Crise Alimentaire (×2t)','🌽',0,1,'apocalypse',{unique:true,effect:'Nourrir enfants avec animaux. 2 tours de table.'});
-    R('fléau','Crise Écologique (×4t)','🌿',0,1,'apocalypse',{unique:true,effect:'Jouer avec 1 seule carte en main. 4 tours.'});
-    R('fléau','Crise Économique (×3t)','📉',0,1,'apocalypse',{unique:true,effect:'Défausse tous salaires posés non investis. Aucun salaire posable. 3 tours.'});
-    R('fléau','Crise Politique (×4t)','⚖️',0,1,'apocalypse',{unique:true,effect:'Licenciement général. Pioche retournée face visible. Dictateur possible. 4 tours.'});
-    R('fléau','Crise Sanitaire (×3t)','🦠',0,1,'apocalypse',{unique:true,effect:'Aucune carte posable. Virus possible. 3 tours.'});
-    // 5 ✓
-
-    // ÉVÉNEMENTS 4
-    R('fléau','Armageddon','☄️',0,1,'apocalypse',{unique:true,effect:'Immédiat: chacun choisit une carte posée du voisin gauche, mélange avec Armageddon, retourne une par une, cartes retournées hors jeu jusqu\'à tomber sur l\'Armageddon'});
-    R('fléau','Invasion extraterrestre (×4t)','👽',0,1,'apocalypse',{unique:true,effect:'Coopératif: atteindre le score total des mains en 4 tours en jetant des cartes sur les extraterrestres'});
-    R('fléau','Liquidation totale (×3t)','🏷️',0,1,'apocalypse',{unique:true,effect:'Toutes les acquisitions gratuites pendant 3 tours'});
-    R('fléau','Purge (×2t)','⚡',0,1,'apocalypse',{unique:true,effect:'Chacun prend au hasard une carte de main d\'un autre joueur et la pose sans condition'});
-    // 4 ✓
-
-    // MONSTRES 6
-    R('monstre','Escargot mutant','🐌',0,1,'apocalypse',{unique:true,effect:'Se bat ou on fuit. Dégâts si perdu.'});
-    R('monstre','Lézard géant','🦎',0,1,'apocalypse',{unique:true,effect:'Se bat ou on fuit.'});
-    R('monstre','Plante carnivore','🌿',0,1,'apocalypse',{unique:true,effect:'Se bat ou on fuit.'});
-    R('monstre','Poisson mortel','🐟',0,1,'apocalypse',{unique:true,effect:'Se bat ou on fuit.'});
-    R('monstre','Robotueur','🤖',0,1,'apocalypse',{unique:true,effect:'Se bat ou on fuit.'});
-    R('monstre','Zombie','🧟',0,1,'apocalypse',{unique:true,effect:'Se bat ou on fuit. Ex: zombie = 4 smiles de dégâts.'});
-    // 6 ✓
-
-    // ARMES 15
-    const ARM = (n,ic,p) => R('arme',n,ic,p,1,'apocalypse',{unique:true,effect:`Puissance ${p}. Attaque ou défense monstres.`});
-    ARM('Arbalète','🏹',3);ARM('Bazooka','💣',4);ARM('Batte','⚾',2);ARM('Boomerang','🪃',2);
-    ARM('Cocktail Molotov','🔥',3);ARM('Couteau','🔪',1);ARM('Grenade','💥',4);ARM('Hache','🪓',2);
-    ARM('Lance-pierre','🪨',1);ARM('Nunchaku','⛓️',2);ARM('Pistolet','🔫',3);ARM('Poing américain','👊',1);
-    ARM('Sabre laser','⚔️',4);ARM('Shuriken','⭐',2);ARM('Tronçonneuse','🪚',3);
-    // 15 ✓ (Le Tank est à la fois arme ET véhicule — inclus dans véhicules)
-
-    // VÉHICULES 3 (Tank est aussi une arme)
-    R('arme','Tank (véhicule + arme)','🚛',3,1,'apocalypse',{unique:true,effect:'Puissance 3. Peut fuir un monstre (retourne la carte). Usage unique pour fuir OU pour attaquer.'});
-    R('arme','Hélicoptère','🚁',0,1,'apocalypse',{unique:true,effect:'Véhicule: permet de fuir un monstre (retourne). Usage unique.'});
-    R('arme','Moto','🏍️',0,1,'apocalypse',{unique:true,effect:'Véhicule: permet de fuir un monstre (retourne). Usage unique.'});
-    // 3 ✓ (comptés dans la total armes/véhicules)
-
-    // SURVIE 8
-    R('survie','Bunker','🏚️',2,1,'apocalypse',{unique:true,effect:'Gratuit architecte. Protège une carte posée (permanente). Bandit: pas de prison dans le bunker.'});
-    R('survie','Coffre-fort','🔐',2,1,'apocalypse',{unique:true,effect:'Gratuit chef ventes/achats. Protège tous les salaires posés avant/pendant crise économique.'});
-    R('survie','Masque à gaz','😷',1,1,'apocalypse',{unique:true,effect:'Permanent: protège des maladies, virus et crise sanitaire. Permet défausser le virus en main.'});
-    R('survie','Menace nucléaire','☢️',3,1,'apocalypse',{unique:true,effect:'Gratuit chercheur/dictateur. Usage unique: si attaqué, l\'assaillant jette toutes ses cartes posées hors jeu.'});
-    R('survie','Potager','🌱',2,1,'apocalypse',{unique:true,effect:'Gratuit jardinier. Permanent: nourrit tous les enfants en crise alimentaire.'});
-    R('survie','Radar','📡',2,1,'apocalypse',{unique:true,effect:'Permanent: voir la prochaine carte avant de jouer à chaque tour.'});
-    R('survie','Ration','🥫',1,3,'apocalypse',{effect:'Usage unique: nourrit un enfant en crise alimentaire.'});
-    R('survie','Trousse de secours','🩺',1,1,'apocalypse',{unique:true,effect:'Gratuit médecin/chirurgien/pharmacien. Réduit d\'1 smile les dégâts des monstres et la mutation génétique.'});
-    // 8 ✓
-
-    // ANIMAUX 3
-    R('animal','Pangolin','🦔',1,1,'apocalypse',{unique:true,effect:'Ne peut pas être mangé en crise alimentaire. Mode avancé: le manger = crise sanitaire.'});
-    R('animal','Tortue','🐢',2,1,'apocalypse',{unique:true,effect:'Permet de récupérer le Ninja dans la défausse pour le poser directement.'});
-    R('animal','Vautour','🦅',1,1,'apocalypse',{unique:true,effect:'Permet de récupérer une carte hors jeu (monstre, armageddon... hors fléaux) pour la poser sitôt.'});
-    // 3 ✓
-
-    // CATACLYSMES 4 (cartes spéciales)
-    R('speciale','Incendie','🔥',0,1,'apocalypse',{unique:true,effect:'Immédiat: chacun défausse toute sa main (sauf 1) et repioche le même nombre'});
-    R('speciale','Inondation','🌊',0,1,'apocalypse',{unique:true,effect:'Immédiat: toutes les cartes en main posées face visibles au centre. Servent de pioche unique.'});
-    R('speciale','Séisme','🌋',0,1,'apocalypse',{unique:true,effect:'Immédiat: choisissez une carte posée de chaque joueur, mélangez et redistribuez au hasard.'});
-    R('speciale','Tornade','🌪️',0,1,'apocalypse',{unique:true,effect:'Immédiat: chacun donne ses cartes en main au joueur de gauche.'});
-    // 4 ✓
-
-    // MÉTIERS 5
-    R('metier','Croque-mort','💀',2,1,'apocalypse',{unique:true,effect:'APP: peut poser tous niveaux de salaires pendant les crises. Subit la faillite comme tout le monde.'});
-    R('metier','Dictateur','👑',3,1,'apocalypse',{unique:true,effect:'Posable uniquement pendant crise politique. Peut incarcérer un joueur (3 tours sans jouer).'});
-    R('metier','Hacker','💻',2,1,'apocalypse',{unique:true,effect:'API⚡: peut relancer une crise ou événement passé en reposant la carte'});
-    R('metier','Ninja','🥷',3,1,'apocalypse',{unique:true,effect:'API⚡: peut prendre une arme dans la défausse sans la payer'});
-    R('metier','Survivaliste','🏕️',2,1,'apocalypse',{unique:true,effect:'APP: ne subit ni crises ni attaques armées ni monstres. Joue normalement pendant les crises.'});
-    // 5 ✓
-
-    // MALUS 5
-    R('malus','Bombardement','💣',0,1,'apocalypse',{effect:'Physique: éliminer une carte posée en lâchant la carte à la verticale'});
-    R('malus','Mutation génétique','🧬',0,1,'apocalypse',{effect:'Désigne un animal. Combat aléatoire (0-5 points de combativité). Dégâts = points obtenus.'});
-    R('malus','Nuage radioactif','☁️',0,1,'apocalypse',{effect:'Choisir un des malus déjà reçus du voisin gauche pour le lui réinfliger, puis transmettre au suivant'});
-    R('malus','Pénurie d\'essence','⛽',0,1,'apocalypse',{unique:true,effect:'Permanent: ne peut plus utiliser de véhicule pour fuir un monstre'});
-    R('malus','Virus','🦠',0,1,'apocalypse',{unique:true,effect:'Conservé en main. Se transmet avec une maladie. Crise sanitaire: pose face à toi (-3 smiles en fin)'});
-    // 5 ✓
-
-    // TIMERS 2
-    R('divers','Timer Apocalypse (×2)','⏱️',0,2,'apocalypse',{effect:'Aide au suivi de durée des crises'});
-    // 2 ✓
-    // TOTAL APOC: 5C+4Ev+6Mon+15Arm+3Veh+8Sur+3An+4Cat+5Met+5Mal+2Tim = 60 ✓
-  }
-
-  // ══════════════════════════════════════
-  // FANTASTIQUE — 60 cartes [PDF vérifié]
-  // 10 perso + 5 eph + 13 objets + 11 potions + 10 maléfices + 4 animaux + 4 voyages + 3 enfants
-  // ══════════════════════════════════════
-  if (has('fantastique')) {
-    // PERSONNAGES 10 (distribués au hasard, 1 par joueur)
-    const PERS = (n,ic,pp,pe) => R('personnage',n,ic,2,1,'fantastique',{unique:true,effect:`PP: ${pp} | PE: ${pe}`});
-    PERS('Ange','👼','Aucun maléfice ne peut vous être infligé','Annulez le maléfice d\'un joueur (peut négocier)');
-    PERS('Chasseur','🏹','Objets magiques gratuits (3+ joueurs)','Empêche le pouvoir éphémère d\'un joueur au moment où il l\'active');
-    PERS('Démon','😈','Rejoue après chaque malus envoyé','Achète des cartes posées aux autres joueurs (smiles = prix en liasses)');
-    PERS('Fée','🧚','Vos cartes spéciales du jeu de base valent 2 smiles','Récupère tous les enfants en main (y compris les vôtres) ou ceux de la défausse');
-    PERS('Loup-garou','🐺','Vos animaux posés valent double','Vole un animal posé OU supprime un enfant posé à chacun (faces cachées, retournement)');
-    PERS('Magicien','🎩','Vos études posées valent 2 smiles au lieu de 1','Regarde toutes les mains et prend la carte de son choix d\'un joueur');
-    PERS('Mutant','🧬','Copie le pouvoir permanent d\'un joueur (annoncé en début de partie)','Change de pouvoir permanent en copiant celui d\'un joueur');
-    PERS('Sirène','🧜‍♀️','Flirts illimités même en étant mariée','Prend toutes les mains, les regarde et les redistribue à sa guise');
-    PERS('Sorcière','🧙‍♀️','Potions gratuites','Vole les garçons OU les filles des autres (faces cachées, jusqu\'à retourner la mauvaise)');
-    PERS('Vampire','🧛','Vos flirts posés valent 2 smiles','Récupère parmi les flirts posés des autres tous ceux en double des vôtres');
-    // 10 ✓
-
-    // ÉPHÉMÉRIDES 5
-    R('ephemeride','Éclipse','🌑',0,1,'fantastique',{unique:true,effect:'Permet de démissionner et/ou divorcer sans passer de tour. PE: Ange & Magicien'});
-    R('ephemeride','Équinoxe','🌓',0,1,'fantastique',{unique:true,effect:'Peut troquer sa carte piochée avec un autre joueur (donne piochée, prend une main au hasard). PE: Mutant'});
-    R('ephemeride','Lune bleue','🔵',0,1,'fantastique',{unique:true,effect:'Forme une rivière de 3 cartes face visible à côté de la pioche. PE: Sirène & Fée'});
-    R('ephemeride','Lune rouge','🔴',0,1,'fantastique',{unique:true,effect:'Peut défausser plusieurs cartes d\'un coup, puis repioche. PE: Vampire & Démon'});
-    R('ephemeride','Pleine lune','🌕',0,1,'fantastique',{unique:true,effect:'Peut poser plusieurs cartes face à soi à son tour. PE: Sorcière & Loup-garou'});
-    // 5 ✓
-
-    // OBJETS MAGIQUES 13 (Amulette ×2, les autres ×1)
-    R('objetmagique','Amulette (×2)','💎',1,2,'fantastique',{effect:'Usage unique: pose n\'importe quelle acquisition sans la payer. Les 2 forment le Talisman.'});
-    R('objetmagique','Anneau de pouvoir','💍',3,1,'fantastique',{unique:true,effect:'Permanent: une fois posé, ne peut plus poser d\'autres cartes face à soi (sauf démon)'});
-    R('objetmagique','Baguette magique','🪄',1,1,'fantastique',{unique:true,effect:'Gratuit pour la Fée. Immédiat: rejoue une carte spéciale posée.'});
-    R('objetmagique','Balai','🧹',1,1,'fantastique',{unique:true,effect:'Gratuit pour la Sorcière. Permanent: voyages comptent double et sont gratuits.'});
-    R('objetmagique','Boule de cristal','🔮',2,1,'fantastique',{unique:true,effect:'Gratuit pour le Médium. Permanent: voit toutes les mains et la pioche à son tour (compte pour un tour).'});
-    R('objetmagique','Cape d\'invisibilité','🫥',2,1,'fantastique',{unique:true,effect:'Permanent: protège une carte posée (celle-ci ne peut pas être retirée).'});
-    R('objetmagique','Chaudron','🫕',1,1,'fantastique',{unique:true,effect:'Immédiat: rejoue une de ses potions posées (même après désenchantement).'});
-    R('objetmagique','Flûte enchantée','🪈',1,1,'fantastique',{unique:true,effect:'Immédiat: mélange faces cachées les animaux du joueur de son choix et prend un au hasard.'});
-    R('objetmagique','Grimoire','📚✨',2,1,'fantastique',{unique:true,effect:'Gratuit pour le Magicien. Immédiat: vole une carte étude posée à un joueur pour la poser sans condition.'});
-    R('objetmagique','Lampe magique','🪔',2,1,'fantastique',{unique:true,effect:'Immédiat: récupère 3 cartes de la défausse pour les poser face à soi (selon les règles).'});
-    R('objetmagique','Lasso magique','🪢',1,1,'fantastique',{unique:true,effect:'Gratuit avec Diana. Immédiat: vole une carte posée pour la poser face à soi (selon règles).'});
-    R('objetmagique','Miroir','🪞',1,1,'fantastique',{unique:true,effect:'Immédiat: renvoie un maléfice reçu au joueur de son choix.'});
-    R('objetmagique','Talisman','✨',2,1,'fantastique',{unique:true,effect:'Formé des 2 amulettes réunies: annule un maléfice reçu OU rejoue son PE (quelle que soit l\'éphéméride). Amulettes retournées.'});
-    // 2+1+1+1+1+1+1+1+1+1+1+1+1 = 14 cartes MAIS le Talisman = les 2 amulettes réunies
-    // PDF dit 13 objets: Amulette ×2 compte pour 1 objet (mais 2 cartes physiques)
-    // Recompte cartes: 2+12×1 = 14 cartes physiques... Mais PDF dit 13 objets = 13 "types"
-    // Pour le tracker: on compte les cartes physiques = 14
-
-    // POTIONS MAGIQUES 11
-    R('potion',"Potion d'amour éternel",'💕',1,1,'fantastique',{unique:true,effect:'Permanent: ne subit plus aucun divorce.'});
-    R('potion',"Potion d'argent",'💵',1,1,'fantastique',{unique:true,effect:'Immédiat: tous les salaires dépensés (retournés) sont remis face visible et réutilisables.'});
-    R('potion',"Potion de chance",'🍀',1,1,'fantastique',{unique:true,effect:'Immédiat: choisit une carte parmi les 10 prochaines de la pioche. Laisse les autres en place.'});
-    R('potion',"Potion d'épousailles",'💍',1,1,'fantastique',{unique:true,effect:'Immédiat: récupère un mariage dans la défausse pour le poser (même sans flirt).'});
-    R('potion',"Potion d'excellence",'🏆',1,1,'fantastique',{unique:true,effect:'Permanent: peut poser le Grand Prix d\'Excellence si elle a un métier (sans être écrivain/etc.)'});
-    R('potion',"Potion de fertilité",'🌸',1,1,'fantastique',{unique:true,effect:'Permanent: peut poser des enfants sans mariage ni flirt.'});
-    R('potion',"Potion d'intérim",'⏱️',1,1,'fantastique',{unique:true,effect:'Permanent: peut démissionner sans passer son tour.'});
-    R('potion',"Potion de résurrection",'✨',2,1,'fantastique',{unique:true,effect:'Immédiat: récupère un animal ou enfant hors jeu pour le poser sans condition.'});
-    R('potion',"Potion de ristournelle",'🏷️',1,1,'fantastique',{unique:true,effect:'Permanent: diminue d\'1 liasse le prix de ses prochains achats.'});
-    R('potion',"Potion de savoir",'📚',1,1,'fantastique',{unique:true,effect:'Permanent: niveau d\'études multiplié par 2 (pas d\'impact sur métier si potio perdue).'});
-    R('potion',"Potion de vitalité",'💪',1,1,'fantastique',{unique:true,effect:'Permanent: ne subit plus aucune maladie ni burn out.'});
-    // 11 ✓
-
-    // MALÉFICES 10
-    const MAL = (n,ic,ef) => R('malefice',n,ic,0,1,'fantastique',{unique:true,effect:ef});
-    MAL('Alcatras','⛓️','Le malus prison peut être infligé sans être bandit. Défausse la prison si subie. Usage unique.');
-    MAL('Aveuglement','🙈','Joue puis pioche. Sauf si prend la défausse. Si éphéméride piochée: repioche une carte.');
-    MAL('Bisrepetitas','💀','Permanent: maladies, burn out, et accidents font passer 2 tours au lieu d\'1.');
-    MAL('Casburnas','🔥','Peut subir impôts et burn out même sans travailler.');
-    MAL('Désenchantement','🪄','Annule l\'effet permanent d\'un objet magique ou d\'une potion (smiles conservés).');
-    MAL('Mano negra','🖤','Déduit en fin de partie tous les smiles de sa main.');
-    MAL('Minus miserabilis','📉','Permanent: ne peut plus poser de salaire de niveau 1. Non cumulable avec Maxus.');
-    MAL('Maxus miserabilis','📈','Permanent: ne peut plus poser de salaire de niveau 4. Non cumulable avec Minus.');
-    MAL('Restataplas','🚫','Ne peut plus bénéficier d\'aucun avantage professionnel.');
-    MAL('Salrapas','💸','Doit payer ses acquisitions en faisant l\'appoint exact de liasses.');
-    // 10 ✓
-
-    // ANIMAUX 4
-    R('animal','Chauve-souris','🦇',1,1,'fantastique',{unique:true,effect:'Vaut double pour le Vampire.'});
-    R('animal','Hibou','🦉',2,1,'fantastique',{unique:true,effect:'Vaut double pour le Magicien.'});
-    R('animal','Phénix','🔥',2,1,'fantastique',{unique:true,effect:'Vaut double avec la potion de résurrection. Loup-garou+Phénix+potion = 6 smiles.'});
-    R('animal','Rat','🐀',0,1,'fantastique',{unique:true,effect:'Juste un rat !'});
-    // 4 ✓
-
-    // VOYAGES 4
-    R('acquisition','Voyage en Atlantide','🌊',1,1,'fantastique',{unique:true,effect:'Gratuit pour la Sirène.'});
-    R('acquisition','Voyage en Écosse','🏴󠁧󠁢󠁳󠁣󠁴󠁿',2,1,'fantastique',{unique:true,effect:'Gratuit pour le Chasseur.'});
-    R('acquisition','Voyage à Salem','🕯️',2,1,'fantastique',{unique:true,effect:'Gratuit pour la Sorcière. Ne peut pas être posé par le Vampire.'});
-    R('acquisition','Voyage en Transylvanie','🦇',2,1,'fantastique',{unique:true,effect:'Gratuit pour le Vampire.'});
-    // 4 ✓
-
-    // ENFANTS 3
-    R('enfant','Enfant – Buffy','👧',2,1,'fantastique',{unique:true,effect:'+1 smile pour le Chasseur.'});
-    R('enfant','Enfant – Merlin','👦',2,1,'fantastique',{unique:true,effect:'+1 smile pour le Magicien.'});
-    R('enfant','Enfant – Péter','👦',2,1,'fantastique',{unique:true,effect:'+1 smile pour la Fée.'});
-    // 3 ✓
-    // TOTAL FANTA: 10P+5Eph+14Obj+11Pot+10Mal+4An+4Voy+3Enf = 61... 
-    // PDF dit 13 objets physiques (amulette ×2 compte comme 2): 2+12 = 14 cartes objets
-    // Recompte: 10+5+14+11+10+4+4+3 = 61? Talisman = fusion 2 amulettes = pas une carte physique en plus
-    // En fait: Amulette×2 (2 cartes) + Talisman n'est PAS une carte physique séparée mais l'effet combiné
-    // Donc objets = 13 cartes physiques: 2 amulettes + 11 autres = 13 ✓ → j'enlève le Talisman comme carte
-    // TOTAL CORRIGÉ: 10+5+13+11+10+4+4+3 = 60 ✓
-  }
-
-  // ══════════════════════════════════════
-  // VIE DE LUXE — 60 cartes [PDF vérifié]
-  // 6 métiers + 2 star + 17 acquisitions + 5 bijoux + 6 flirts + 1 mariage d'argent
-  // + 2 enfants + 12 spéciales + 9 malus
-  // ══════════════════════════════════════
-  if (has('vieluxe')) {
-    // MÉTIERS 6
-    R('metier','Acteur','🎬',3,1,'vieluxe',{unique:true,effect:'Peut poser la carte Star à un tour suivant. Salaire passe 1→4 avec Star.'});
-    R('metier','Chanteur','🎤',3,1,'vieluxe',{unique:true,effect:'Peut poser la carte Star à un tour suivant. Salaire passe 1→4 avec Star.'});
-    R('metier','Footballeur','⚽',3,1,'vieluxe',{unique:true,effect:'Peut poser la carte Star à un tour suivant. Salaire passe 1→4 avec Star.'});
-    R('metier','Influenceur','📱',2,1,'vieluxe',{unique:true,effect:'Posable sans étude. Si études déjà posées: défausser. APP⚡: licencie une personne au choix.'});
-    R('metier','PDG','💼',4,1,'vieluxe',{unique:true,effect:'APP: peut licencier un joueur (sauf fonctionnaire et bandit) à partir du tour suivant. 1 fois/tour.'});
-    R('metier','Rappeur','🎵',3,1,'vieluxe',{unique:true,effect:'Peut poser la carte Star à un tour suivant. Salaire passe 1→4 avec Star.'});
-    // 6 ✓
-
-    // CARTES STAR 2
-    R('speciale','Star (×2)','⭐',4,2,'vieluxe',{effect:'Posable avec acteur/chanteur/footballeur/rappeur. Pioche 2 cartes au lieu d\'une (garde 1, défausse l\'autre). Salaire 1→4.'});
-    // 2 ✓
-
-    // BIJOUX DE FAMILLE 5
-    R('salaire','Bijou de famille (×5)','💎',2,5,'vieluxe',{effect:'Non imposable. Posable sans condition. Utilisable pour achats ou payer dettes.'});
-    // 5 ✓
-
-    // FLIRTS 6 — lieux: bar, boîte de nuit, zoo confirmés dans malus Blacklisté
-    R('flirt','Flirt Luxe – Au bar (×2)','🍸',1,2,'vieluxe');
-    R('flirt','Flirt Luxe – En boîte (×2)','🕺',2,2,'vieluxe');
-    R('flirt','Flirt Luxe – Au zoo (×2)','🦁',1,2,'vieluxe');
-    // 6 ✓
-
-    // MARIAGE D'ARGENT 1
-    R('mariage','Mariage d\'argent','💍💰',0,1,'vieluxe',{unique:true,effect:'Permet salaires 1→4 sans métier (permanent). Non cumulable avec métier ou autre mariage.'});
-    // 1 ✓
-
-    // ENFANTS 2
-    R('enfant','Enfant – Cris','👦',2,1,'vieluxe',{unique:true,effect:'Immédiat: récupère le Footballeur dans la défausse pour le poser (si posable).'});
-    R('enfant','Enfant – Kim','👧',2,1,'vieluxe',{unique:true,effect:'La carte Chirurgie esthétique vaut double (2 smiles au lieu de 1).'});
-    // 2 ✓
-
-    // ACQUISITIONS 17: Caviar, Chihuahua, Chirurgie esthé, Collier pour animal, Château, Hôtel particulier,
-    // Jet privé, Lingot d'or, Oeuvre d'art, Toilettes en or, Voiture de sport + 6 autres estimés
-    R('acquisition','Château','🏰',5,1,'vieluxe',{unique:true,effect:'Maison. Prix: 5 liasses (÷2 si marié). Œuvre d\'art gratuite si château déjà posé.'});
-    R('acquisition','Hôtel particulier','🏛️',4,1,'vieluxe',{unique:true,effect:'Maison. Prix: 4 liasses (÷2 si marié).'});
-    R('acquisition','Jet privé','🛩️',4,1,'vieluxe',{unique:true,effect:'Voyage. Rend les voyages gratuits (permanent). Récupérable dans défausse quand pilote posé.'});
-    R('acquisition','Lingot d\'or','🥇',3,1,'vieluxe',{unique:true,effect:'Utilisable comme 5 liasses pour acheter/payer dette à un tour suivant. Non imposable.'});
-    R('acquisition','Voiture de sport','🚗',3,1,'vieluxe',{unique:true,effect:'Moitié prix si garagiste.'});
-    R('acquisition','Chirurgie esthétique','💉',1,1,'vieluxe',{unique:true,effect:'Gratuite pour chirurgien. Vaut 2 smiles si Kim posée.'});
-    R('acquisition','Caviar','🫙',2,1,'vieluxe',{unique:true,effect:'Moitié prix pour serveur.'});
-    R('acquisition','Chihuahua','🐩',2,1,'vieluxe',{unique:true,effect:'Collier pour animal vaut double avec chihuahua.'});
-    R('acquisition','Collier pour animal','💍',1,1,'vieluxe',{unique:true,effect:'Vaut double avec chihuahua.'});
-    R('acquisition','Oeuvre d\'art','🖼️',3,1,'vieluxe',{unique:true,effect:'Gratuite si château déjà posé.'});
-    R('acquisition','Toilettes en or','🚽',2,1,'vieluxe',{unique:true,effect:'Moitié prix si plombier.'});
-    // 11 nommés, 6 autres (PDF illustrés mais non nommés explicitement)
-    R('acquisition','Acq. Luxe – Limousine','🚘',3,1,'vieluxe',{unique:true,effect:'À vérifier sur votre carte.'});
-    R('acquisition','Acq. Luxe – Montre','⌚',2,1,'vieluxe',{unique:true,effect:'À vérifier sur votre carte.'});
-    R('acquisition','Acq. Luxe – Piscine','🏊',2,1,'vieluxe',{unique:true,effect:'À vérifier sur votre carte.'});
-    R('acquisition','Acq. Luxe – Yacht','🛥️',4,1,'vieluxe',{unique:true,effect:'À vérifier sur votre carte.'});
-    R('acquisition','Acq. Luxe – (16e)','💎',2,1,'vieluxe',{unique:true,effect:'À vérifier sur votre carte.'});
-    R('acquisition','Acq. Luxe – (17e)','💎',2,1,'vieluxe',{unique:true,effect:'À vérifier sur votre carte.'});
-    // 17 ✓
-
-    // MALUS 9
-    R('malus','Bad buzz','📱',0,1,'vieluxe',{unique:true,effect:'S\'applique aux stars uniquement. Défausse la carte Star (métier conservé sans avantages Star).'});
-    R('malus','Blacklisté','🚫',0,1,'vieluxe',{unique:true,effect:'Permanent: ne peut plus poser de flirts aux lieux indiqués (bar/boîte/zoo). Défausse ces flirts si déjà posés.'});
-    R('malus','Braquage','🔫',0,1,'vieluxe',{unique:true,effect:'Montre sa main au braqueur qui prend tous les salaires de la main (récupérés sans condition).'});
-    R('malus','Cambriolage','🏠',0,1,'vieluxe',{unique:true,effect:'Récupère les bijoux de famille posés pour les poser face à soi.'});
-    R('malus','Impôt sur la fortune','💰',0,1,'vieluxe',{unique:true,effect:'Défausse 3 derniers salaires posés. Uniquement pour métiers pouvant poser salaire niv.4.'});
-    R('malus','Dette niv.1','💸',0,1,'vieluxe',{effect:'Doit payer 1 liasse avant de pouvoir racheter des acquisitions.'});
-    R('malus','Dette niv.2','💸💸',0,1,'vieluxe',{effect:'Doit payer 2 liasses avant de pouvoir racheter des acquisitions.'});
-    R('malus','Dette niv.3','💸💸💸',0,1,'vieluxe',{effect:'Doit payer 3 liasses avant de pouvoir racheter des acquisitions.'});
-    R('malus','Dette niv.4','💸💸💸💸',0,1,'vieluxe',{effect:'Doit payer 4 liasses avant de pouvoir racheter des acquisitions.'});
-    // 9 ✓
-
-    // CARTES SPÉCIALES 12
-    R('speciale','Bling-bling','💍',0,1,'vieluxe',{unique:true,effect:'EP: si acq. de luxe posée, montrez niveau 3-4 piochés avant de jouer, puis rejouez (sauf si star).'});
-    R('speciale','Buzz','📣',0,1,'vieluxe',{unique:true,effect:'EI: si métier posé, peut poser la star à un tour suivant avec ce métier.'});
-    R('speciale','Carte Platinum','💳',0,1,'vieluxe',{unique:true,effect:'EP: posable si 5+ salaires posés non investis. Rejoue à chaque achat effectué.'});
-    R('speciale','École privée','🎓',0,1,'vieluxe',{unique:true,effect:'EP: ajoute 3 niveaux d\'études (hors limite 6, non redoublables). Posable si sans métier + acq. luxe.'});
-    R('speciale','Fils à papa','👨‍👦',0,1,'vieluxe',{unique:true,effect:'EI: pose une acquisition de sa main sans la payer en même temps que cette carte.'});
-    R('speciale','Fils de','🎬',0,1,'vieluxe',{unique:true,effect:'EI: prend dans la défausse la carte Star ou PDG pour la poser directement.'});
-    R('speciale','Groloto','🎰',0,1,'vieluxe',{unique:true,effect:'EI: énonce 5 chiffres (0-4). Si smiles des 5 prochaines cartes correspondent: pose salaires et acquisitions gratuitement jusqu\'à la fin.'});
-    R('speciale','Paradis fiscal','🏝️',0,1,'vieluxe',{unique:true,effect:'EP: ses salaires posés dessus (5 max) valent 2 smiles chacun et sont non imposables.'});
-    R('speciale','Première classe','✈️',0,1,'vieluxe',{unique:true,effect:'EP: payer 1 liasse en plus pour un voyage = posé en Première classe, vaut 1 smile de plus (total 2 smiles/voyage).'});
-    R('speciale','Shopping','🛍️',0,1,'vieluxe',{unique:true,effect:'EI: achète une acquisition de la défausse en la payant.'});
-    R('speciale','Sugar daddy','🤑',0,1,'vieluxe',{unique:true,effect:'EP: si acq. luxe posée, peut acheter des flirts de sa main même marié: prix 1 liasse/flirt.'});
-    R('speciale','VIP','👑',0,1,'vieluxe',{unique:true,effect:'EP: posable si 2 flirts en double (même lieu) posés. Tous flirts en double valent double en fin.'});
-    // 12 ✓
-    // TOTAL LUXE: 6M+2St+5Bij+6F+1Mar+2E+17Acq+9Mal+12Sp = 60 ✓
-  }
-
-  return C;
-}
-
-// ════════════════════════════════════════════════════
-// CATEGORIES (ordre demandé — Fantastique: personnages en tête)
-// ════════════════════════════════════════════════════
-const CATS = [
-  {key:'personnage', label:'Personnages Fantastique', icon:'🧙', color:'#15803d'},
-  {key:'ephemeride', label:'Éphémérides Fantastique', icon:'🌕', color:'#15803d'},
-  {key:'etudes',     label:'Études',                  icon:'📚', color:'#166534'},
-  {key:'metier',     label:'Métiers',                  icon:'💼', color:'#1e40af'},
-  {key:'distinction',label:'Distinctions',             icon:'🏅', color:'#92400e'},
-  {key:'flirt',      label:'Flirts',                   icon:'💑', color:'#9d174d'},
-  {key:'mariage',    label:'Mariage & Adultère',        icon:'💍', color:'#9d174d'},
-  {key:'enfant',     label:'Enfants',                  icon:'👶', color:'#166534'},
-  {key:'animal',     label:'Animaux',                  icon:'🐾', color:'#9a3412'},
-  {key:'acquisition',label:'Acquisitions & Voyages',   icon:'🏠', color:'#4c1d95'},
-  {key:'salaire',    label:'Salaires & Argent',        icon:'💵', color:'#92400e'},
-  {key:'fléau',      label:'Fléaux Apocalypse',        icon:'☢️', color:'#c2410c'},
-  {key:'monstre',    label:'Monstres Apocalypse',      icon:'🧟', color:'#c2410c'},
-  {key:'arme',       label:'Armes & Véhicules Apoc.',  icon:'⚔️', color:'#c2410c'},
-  {key:'survie',     label:'Survie Apocalypse',        icon:'🏚️', color:'#c2410c'},
-  {key:'objetmagique',label:'Objets Magiques Fanta.',  icon:'🪄', color:'#15803d'},
-  {key:'potion',     label:'Potions Fantastique',      icon:'🧪', color:'#15803d'},
-  {key:'malefice',   label:'Maléfices Fantastique',    icon:'💀', color:'#15803d'},
-  {key:'malus',      label:'Malus',                    icon:'💀', color:'#7f1d1d'},
-  {key:'speciale',   label:'Cartes Spéciales',         icon:'✨', color:'#4c1d95'},
-  {key:'divers',     label:'Divers',                   icon:'🔧', color:'#374151'},
-];
-
-// ════════════════════════════════════════════════════
-// STATE
-// ════════════════════════════════════════════════════
-const PCOLORS=['#EC407A','#1565C0','#2E7D32','#E65100','#6A1B9A','#00838F','#B71C1C','#F57F17'];
-let pcIdx=0;
-let G={extensions:['base'],players:[],catalogue:[],counts:{},startTime:null,gameId:null};
-
-const gc=(cid,pi)=>(G.counts[cid]||{})[pi]||0;
-const ta=(cid)=>Object.values(G.counts[cid]||{}).reduce((s,v)=>s+v,0);
-function sc(cid,pi,v){
-  if(!G.counts[cid])G.counts[cid]={};
-  const max=G.catalogue[cid]?.total||999;
-  const oth=Object.entries(G.counts[cid]).filter(([k])=>k!=String(pi)).reduce((s,[,x])=>s+x,0);
-  const n=Math.max(0,Math.min(v,max-oth));
-  if(n===0)delete G.counts[cid][pi]; else G.counts[cid][pi]=n;
-}
-
-// Timer
-let timerInt=null;
-function startTimer(){
-  G.startTime=new Date().toISOString();
-  const badge=document.getElementById('timer-badge');
-  badge.style.display='';
-  timerInt=setInterval(()=>{
-    const elapsed=Math.floor((Date.now()-new Date(G.startTime))/1000);
-    const h=Math.floor(elapsed/3600);
-    const m=Math.floor((elapsed%3600)/60);
-    const s=elapsed%60;
-    badge.textContent=h>0?`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:
-      `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  },1000);
-}
-function stopTimer(){clearInterval(timerInt);}
-function getElapsedStr(){
-  if(!G.startTime)return'';
-  const elapsed=Math.floor((Date.now()-new Date(G.startTime))/1000);
-  const h=Math.floor(elapsed/3600);
-  const m=Math.floor((elapsed%3600)/60);
-  const s=elapsed%60;
-  return h>0?`${h}h${String(m).padStart(2,'0')}m${String(s).padStart(2,'0')}s`:
-    `${String(m).padStart(2,'0')}m${String(s).padStart(2,'0')}s`;
-}
-
-// ════════════════════════════════════════════════════
-// SETUP
-// ════════════════════════════════════════════════════
-function initSetup(){
-  pcIdx=0;
-  const grid=document.getElementById('ext-grid');
-  grid.innerHTML='';
-  EXT_META.forEach(e=>{
-    const dk=DECKS[e.id]||DECKS.base;
-    const sel=G.extensions.includes(e.id);
-    const d=document.createElement('div');
-    d.className='ext-card'+(e.req?' req':'')+(sel?' sel':'');
-    d.style.cssText=`background:${sel?dk.bg:'var(--bg)'};border-color:${sel?dk.border:'var(--border)'}`;
-    d.innerHTML=`<div class="chk" style="color:${dk.border}">✓</div><div class="ext-icon">${e.icon}</div><div class="ext-name">${e.name}</div><div class="ext-age">${e.age}</div><div class="ext-nb" style="color:${dk.border}">${e.nb}</div>`;
-    if(!e.req) d.onclick=()=>{
-      toggleExt(e.id);
-      const s=G.extensions.includes(e.id);
-      d.classList.toggle('sel',s);
-      d.style.background=s?dk.bg:'var(--bg)';
-      d.style.borderColor=s?dk.border:'var(--border)';
-    };
-    grid.appendChild(d);
-  });
-  const pl=document.getElementById('players-list');
-  pl.innerHTML='';
-  if(!G.players.length)for(let i=0;i<4;i++) addPlayer();
-  else G.players.forEach(p=>{
-    const r=document.createElement('div');r.className='parow';
-    r.innerHTML=`<span class="pdot" style="background:${p.color}"></span><input class="psin" type="text" value="${p.name}" placeholder="Nom…"><button class="btn btn-danger btn-sm" onclick="this.closest('.parow').remove()">✕</button>`;
-    pl.appendChild(r);
-  });
-}
-function toggleExt(id){G.extensions=G.extensions.includes(id)?G.extensions.filter(x=>x!==id):[...G.extensions,id];}
-function addPlayer(){
-  const pl=document.getElementById('players-list');
-  const col=PCOLORS[pcIdx++%PCOLORS.length];
-  const r=document.createElement('div');r.className='parow';
-  r.innerHTML=`<span class="pdot" style="background:${col}"></span><input class="psin" type="text" placeholder="Nom du joueur…"><button class="btn btn-danger btn-sm" onclick="this.closest('.parow').remove()">✕</button>`;
-  pl.appendChild(r);r.querySelector('input').focus();
-}
-
-function startGame(){
-  const rows=document.querySelectorAll('.parow');
-  const players=[];
-  rows.forEach((r,i)=>{
-    const n=r.querySelector('input').value.trim();
-    const c=r.querySelector('.pdot').style.background||PCOLORS[i%PCOLORS.length];
-    if(n) players.push({name:n,color:c});
-  });
-  if(players.length<2){toast('Il faut au moins 2 joueurs !');return;}
-  G.players=players;
-  G.catalogue=buildCatalogue(G.extensions);
-  if(!G.counts||Object.keys(G.counts).length===0)G.counts={};
-  G.gameId=G.gameId||('game_'+Date.now());
-  ['btn-detail','btn-fin','btn-exp','btn-new'].forEach(id=>document.getElementById(id).style.display='');
-  document.getElementById('hdr-sub').textContent=`${players.length} joueurs · ${G.catalogue.length} types · ${G.catalogue.reduce((s,c)=>s+c.total,0)} cartes`;
-  document.getElementById('c-total').textContent=G.catalogue.reduce((s,c)=>s+c.total,0);
-  startTimer();
-  buildLegend();
-  renderSidebar();
-  renderInventaire();
-  switchScreen('gameScreen');
-}
-
-function buildLegend(){
-  const ids=[...new Set(G.catalogue.map(c=>c.ext))];
-  document.getElementById('deck-legend').innerHTML=
-    ids.map(id=>{
-      const dk=DECKS[id];if(!dk)return'';
-      return`<span class="dl-it" style="background:${dk.bg};border-color:${dk.border};color:${dk.text}" onclick="filterDeck('${id}')" title="Cliquer pour filtrer">${dk.label}</span>`;
-    }).join('')+
-    '<span class="dl-it" style="background:var(--bg);border-color:var(--border);color:var(--text-muted)" onclick="filterDeck(null)">✕ Tout</span>';
-}
-
-let deckFilter=null;
-function filterDeck(id){
-  deckFilter=id;
-  renderInventaire();
-}
-
-// ════════════════════════════════════════════════════
-// SIDEBAR
-// ════════════════════════════════════════════════════
-function renderSidebar(){
-  const medals=['🥇','🥈','🥉'];
-  const sorted=[...G.players].map((p,i)=>({...p,pts:calcSmiles(i)})).sort((a,b)=>b.pts-a.pts);
-  document.getElementById('sb-scores').innerHTML=sorted.map((p,ri)=>
-    `<div class="sb-row"><span>${medals[ri]||''}</span><span class="sb-dot" style="background:${p.color}"></span><span class="sb-nm" title="${p.name}">${p.name}</span><span class="sb-pts">😊${p.pts}</span></div>`
-  ).join('');
-  const total=G.catalogue.reduce((s,c)=>s+c.total,0);
-  const assigned=G.catalogue.reduce((s,c)=>s+ta(c.id),0);
-  document.getElementById('c-free').textContent=Math.max(0,total-assigned);
-}
-
-function calcSmiles(pi){return G.catalogue.reduce((s,c)=>s+gc(c.id,pi)*(c.smiles||0),0);}
-
-// ════════════════════════════════════════════════════
-// ADJUST — targeted update, no re-render
-// ════════════════════════════════════════════════════
-function adjust(cid,pi,delta){
-  sc(cid,pi,gc(cid,pi)+delta);
-  updateRow(cid);
-  updateCatBadge(G.catalogue[cid]?.cat);
-  renderSidebar();
-}
-
-function updateRow(cid){
-  const card=G.catalogue[cid];if(!card)return;
-  G.players.forEach((_,pi)=>{
-    const w=document.querySelector(`.cw[data-cid="${cid}"][data-pi="${pi}"]`);if(!w)return;
-    const v=gc(cid,pi);
-    w.className='cw'+(v>0?' p-has':'');
-    const cv=w.querySelector('.cv');if(cv){cv.textContent=v;cv.className='cv'+(v>0?' nz':'');}
-  });
-  const b=document.querySelector(`[data-tot="${cid}"]`);if(!b)return;
-  const a=ta(cid),t=card.total;
-  b.className='cc-tot'+(a>t?' over':a===t&&t>0?' full':' ok');
-  b.textContent=`${a}/${t}`;
-}
-
-function updateCatBadge(k){
-  if(!k)return;
-  const el=document.getElementById('cc-'+k);if(!el)return;
-  const cards=G.catalogue.filter(c=>c.cat===k);
-  el.textContent=`${cards.reduce((s,c)=>s+ta(c.id),0)}/${cards.reduce((s,c)=>s+c.total,0)}`;
-}
-
-// ════════════════════════════════════════════════════
-// INVENTAIRE
-// ════════════════════════════════════════════════════
-function renderInventaire(){
-  const el=document.getElementById('inv-outer');
-  const catalogue=deckFilter?G.catalogue.filter(c=>c.ext===deckFilter):G.catalogue;
-  const activeCats=CATS.filter(cat=>catalogue.some(c=>c.cat===cat.key));
-  el.innerHTML=activeCats.map(cat=>buildSection(cat,catalogue)).join('');
-}
-
-function buildSection(cat,catalogue){
-  const cards=catalogue.filter(c=>c.cat===cat.key);
-  const ta_=cards.reduce((s,c)=>s+ta(c.id),0);
-  const tt=cards.reduce((s,c)=>s+c.total,0);
-  const cols=`<col class="c-card">${G.players.map(()=>'<col class="c-player">').join('')}`;
-  const pHeads=G.players.map((p,i)=>
-    `<th class="h-player"><div class="th-pill"><div class="th-dot" style="background:${p.color}"></div><div class="th-nm">${p.name}</div></div></th>`
-  ).join('');
-  const rows=cards.map(card=>{
-    const a=ta(card.id),t=card.total;
-    const cls=a>t?'over':a===t&&t>0?'full':'ok';
-    const dk=DECKS[card.ext]||{text:'#666'};
-    const badge=card.unique?'<span class="b-uniq">UNIQUE</span>':'';
-    const pCells=G.players.map((_,pi)=>{
-      const v=gc(card.id,pi);
-      return`<td class="td-cnt"><div class="cw${v>0?' p-has':''}" data-cid="${card.id}" data-pi="${pi}">
-        <button class="cb minus" onclick="event.stopPropagation();adjust(${card.id},${pi},-1)">−</button>
-        <span class="cv${v>0?' nz':''}">${v}</span>
-        <button class="cb plus" onclick="event.stopPropagation();adjust(${card.id},${pi},+1)">+</button>
-      </div></td>`;
-    }).join('');
-    return`<tr class="dk-${card.ext}">
-      <td class="td-card">
-        <div class="cc-top">
-          <span class="cc-name">${card.icon} ${card.label}</span>${badge}
-          <span class="cc-tot ${cls}" data-tot="${card.id}">${a}/${t}</span>
-        </div>
-        <div class="cc-ef" style="color:${dk.text}">${dk.label}${card.smiles>0?` · +${card.smiles}😊`:''}</div>
-        ${card.effect?`<div class="cc-ef">${card.effect}</div>`:''}
-      </td>${pCells}
-    </tr>`;
-  }).join('');
-
-  return`<div class="cat-sec" id="cs-${cat.key}">
-    <div class="cat-hdr" onclick="toggleCat('${cat.key}')">
-      <span class="cat-ico" style="color:${cat.color}">${cat.icon}</span>
-      <span class="cat-ttl" style="color:${cat.color}">${cat.label}</span>
-      <span class="cat-cnt" id="cc-${cat.key}" style="background:${cat.color}">${ta_}/${tt}</span>
-      <span class="cat-arrow">▼</span>
-    </div>
-    <div class="cat-body">
-      <table class="inv-tbl"><colgroup>${cols}</colgroup>
-        <thead><tr><th class="h-card">${cat.icon} ${cat.label}</th>${pHeads}</tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>
-  </div>`;
-}
-
-function toggleCat(k){document.getElementById('cs-'+k)?.classList.toggle('collapsed');}
-
-// ════════════════════════════════════════════════════
-// SCORES TAB
-// ════════════════════════════════════════════════════
-function renderScores(){
-  const medals=['🥇','🥈','🥉'];
-  const sorted=G.players.map((p,i)=>({...p,pts:calcSmiles(i),n:G.catalogue.reduce((s,c)=>s+gc(c.id,i),0)})).sort((a,b)=>b.pts-a.pts);
-
-  // Deck summary
-  const deckRows=G.extensions.map(eid=>{
-    const dk=DECKS[eid];if(!dk)return'';
-    const cards=G.catalogue.filter(c=>c.ext===eid);
-    const total=cards.reduce((s,c)=>s+c.total,0);
-    const assigned=cards.reduce((s,c)=>s+ta(c.id),0);
-    return`<tr><td><span class="deck-tag" style="background:${dk.border}">${dk.label}</span></td>
-      <td>${total}</td><td>${assigned}</td><td>${total-assigned}</td></tr>`;
-  }).join('');
-
-  document.getElementById('inv-outer').innerHTML=`
-    <div class="score-section">
-    <div class="stw">
-      <div class="stw-t">📊 Classement · ${getElapsedStr()}</div>
-      ${sorted.map((p,i)=>`<div class="sc-row">
-        <div class="sc-rk ${i<3?'rk'+(i+1):''}">${medals[i]||i+1}</div>
-        <div class="sc-info"><div class="sc-nm" style="color:${p.color}">● ${p.name}</div><div class="sc-det">${p.n} cartes assignées</div></div>
-        <div class="sc-pts">😊 ${p.pts}</div>
-      </div>`).join('')}
-    </div>
-    <div class="stw">
-      <div class="stw-t">📦 Récapitulatif des decks</div>
-      <div class="deck-detail"><table>
-        <tr><th>Deck</th><th>Total</th><th>Assignées</th><th>Libres</th></tr>
-        ${deckRows}
-      </table></div>
-    </div>
-    </div>`;
-}
-
-// ════════════════════════════════════════════════════
-// DECK DETAIL OVERLAY
-// ════════════════════════════════════════════════════
-function openDeckDetail(){
-  const html=G.extensions.map(eid=>{
-    const dk=DECKS[eid];if(!dk)return'';
-    const cards=G.catalogue.filter(c=>c.ext===eid);
-    const bycat={};
-    cards.forEach(c=>{if(!bycat[c.cat])bycat[c.cat]=[];bycat[c.cat].push(c);});
-    const rows=Object.entries(bycat).map(([cat,cs])=>{
-      const catDef=CATS.find(x=>x.key===cat)||{icon:'🃏',label:cat};
-      const total=cs.reduce((s,c)=>s+c.total,0);
-      const assigned=cs.reduce((s,c)=>s+ta(c.id),0);
-      return`<tr><td>${catDef.icon} ${catDef.label}</td><td>${total}</td><td>${assigned}</td></tr>`;
-    }).join('');
-    const total=cards.reduce((s,c)=>s+c.total,0);
-    const assigned=cards.reduce((s,c)=>s+ta(c.id),0);
-    return`<div style="margin-bottom:12px;border:2px solid ${dk.border};border-radius:9px;overflow:hidden;">
-      <div style="background:${dk.border};color:#fff;padding:6px 12px;font-family:'Fredoka',sans-serif;font-weight:700;display:flex;justify-content:space-between;">
-        <span>${dk.label}</span><span>${assigned}/${total} assignées</span>
+  <div class="card-grid">
+
+    <!-- Smile Life Tracker -->
+    <a class="pcard" style="border-top:2px solid #EC407A" href="https://soaresden.github.io/smilelifetracker/" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#0e080f"/>
+          <circle cx="200" cy="80" r="110" fill="rgba(236,64,122,0.04)"/>
+          <!-- Mini cards scattered -->
+          <rect x="22" y="32" width="48" height="68" rx="6" fill="#13101a" stroke="rgba(41,171,226,0.45)" stroke-width="1.3"/>
+          <text x="46" y="57" text-anchor="middle" font-size="16">📚</text>
+          <rect x="32" y="66" width="28" height="5" rx="2" fill="rgba(41,171,226,0.3)"/>
+          <rect x="32" y="75" width="20" height="3" rx="1" fill="rgba(41,171,226,0.15)"/>
+          <text x="46" y="92" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(41,171,226,0.5)">niv.3</text>
+          <!-- Job card -->
+          <rect x="78" y="22" width="48" height="68" rx="6" fill="#13101a" stroke="rgba(236,64,122,0.55)" stroke-width="1.5"/>
+          <text x="102" y="47" text-anchor="middle" font-size="16">👨‍⚕️</text>
+          <rect x="88" y="56" width="28" height="5" rx="2" fill="rgba(236,64,122,0.4)"/>
+          <text x="102" y="74" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(236,64,122,0.7)">Médecin</text>
+          <text x="102" y="84" text-anchor="middle" font-size="9">😊😊😊😊</text>
+          <!-- Child card -->
+          <rect x="134" y="32" width="48" height="68" rx="6" fill="#13101a" stroke="rgba(236,64,122,0.35)" stroke-width="1.2"/>
+          <text x="158" y="57" text-anchor="middle" font-size="16">👧</text>
+          <text x="158" y="74" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" font-weight="700" fill="rgba(236,64,122,0.85)">Leia</text>
+          <text x="158" y="88" text-anchor="middle" font-size="9">😊😊</text>
+          <!-- Scores sidebar -->
+          <rect x="200" y="22" width="138" height="106" rx="8" fill="rgba(236,64,122,0.05)" stroke="rgba(236,64,122,0.18)" stroke-width="1"/>
+          <text x="269" y="40" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(255,255,255,0.3)">SCORES</text>
+          <circle cx="218" cy="57" r="6" fill="#EC407A"/>
+          <rect x="230" y="53" width="52" height="6" rx="3" fill="rgba(255,255,255,0.07)"/>
+          <text x="322" y="60" font-family="'Space Mono',monospace" font-size="10" font-weight="700" fill="#EC407A">😊14</text>
+          <circle cx="218" cy="76" r="6" fill="#29ABE2"/>
+          <rect x="230" y="72" width="42" height="6" rx="3" fill="rgba(255,255,255,0.07)"/>
+          <text x="322" y="79" font-family="'Space Mono',monospace" font-size="10" font-weight="700" fill="#29ABE2">😊10</text>
+          <circle cx="218" cy="95" r="6" fill="#43A047"/>
+          <rect x="230" y="91" width="48" height="6" rx="3" fill="rgba(255,255,255,0.07)"/>
+          <text x="322" y="98" font-family="'Space Mono',monospace" font-size="10" font-weight="700" fill="#43A047">😊 8</text>
+          <circle cx="218" cy="114" r="6" fill="#FF7043"/>
+          <rect x="230" y="110" width="36" height="6" rx="3" fill="rgba(255,255,255,0.07)"/>
+          <text x="322" y="117" font-family="'Space Mono',monospace" font-size="10" font-weight="700" fill="#FF7043">😊 6</text>
+          <!-- Big smile -->
+          <circle cx="358" cy="80" r="22" fill="rgba(255,214,10,0.07)" stroke="rgba(255,214,10,0.2)" stroke-width="1.5"/>
+          <text x="358" y="88" text-anchor="middle" font-size="22">😊</text>
+          <!-- Extension color dots row -->
+          <circle cx="24"  cy="122" r="5" fill="#EC407A" opacity="0.9"/>
+          <circle cx="38"  cy="122" r="5" fill="#b91c1c" opacity="0.7"/>
+          <circle cx="52"  cy="122" r="5" fill="#7e22ce" opacity="0.7"/>
+          <circle cx="66"  cy="122" r="5" fill="#c2410c" opacity="0.7"/>
+          <circle cx="80"  cy="122" r="5" fill="#15803d" opacity="0.7"/>
+          <circle cx="94"  cy="122" r="5" fill="#a16207" opacity="0.7"/>
+          <text x="110" y="126" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.2)">6 extensions</text>
+        </svg>
       </div>
-      <div class="deck-detail"><table>
-        <tr><th>Catégorie</th><th>Total</th><th>Ass.</th></tr>${rows}
-      </table></div>
-    </div>`;
-  }).join('');
-  document.getElementById('ov-deck-content').innerHTML=html;
-  openOv('ov-deck');
-}
+      <div class="pcard-body">
+        <div class="pcard-type" style="color:#EC407A">Board Game · Tracker</div>
+        <div class="pcard-title">😊 Smile Life Tracker</div>
+        <div class="pcard-desc">Compteur de smiles pour Smile Life et ses 5 extensions. Inventaire des cartes par joueur, en-têtes figés style Excel, timer de partie et export JSON.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">soaresden.github.io</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
 
-// ════════════════════════════════════════════════════
-// TABS
-// ════════════════════════════════════════════════════
-function showTab(t){
-  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));
-  if(t==='inv') renderInventaire(); else renderScores();
-}
+    <!-- TimeBomb -->
+    <a class="pcard border-games" href="https://soaresden.github.io/TimeBombGUI/" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#0f0a08"/>
+          <g stroke="rgba(255,107,53,0.06)" stroke-width="1">
+            <line x1="0" y1="20" x2="400" y2="20"/><line x1="0" y1="40" x2="400" y2="40"/>
+            <line x1="0" y1="60" x2="400" y2="60"/><line x1="0" y1="80" x2="400" y2="80"/>
+            <line x1="0" y1="100" x2="400" y2="100"/><line x1="0" y1="120" x2="400" y2="120"/>
+            <line x1="0" y1="140" x2="400" y2="140"/>
+            <line x1="40" y1="0" x2="40" y2="160"/><line x1="80" y1="0" x2="80" y2="160"/>
+            <line x1="120" y1="0" x2="120" y2="160"/><line x1="160" y1="0" x2="160" y2="160"/>
+            <line x1="200" y1="0" x2="200" y2="160"/><line x1="240" y1="0" x2="240" y2="160"/>
+            <line x1="280" y1="0" x2="280" y2="160"/><line x1="320" y1="0" x2="320" y2="160"/>
+            <line x1="360" y1="0" x2="360" y2="160"/>
+          </g>
+          <circle cx="200" cy="85" r="50" fill="rgba(255,107,53,0.08)" stroke="#ff6b35" stroke-width="1.5"/>
+          <circle cx="200" cy="85" r="36" fill="rgba(255,107,53,0.12)"/>
+          <path d="M200 35 Q220 20 215 10" stroke="#ff6b35" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="215" cy="8" r="4" fill="#ff9f1c"/>
+          <circle cx="215" cy="8" r="8" fill="rgba(255,159,28,0.3)"/>
+          <rect x="140" y="78" width="22" height="14" rx="3" fill="none" stroke="rgba(255,107,53,0.5)" stroke-width="1.2"/>
+          <rect x="238" y="78" width="22" height="14" rx="3" fill="none" stroke="rgba(255,107,53,0.5)" stroke-width="1.2"/>
+          <line x1="162" y1="85" x2="172" y2="85" stroke="#ff6b35" stroke-width="1.5"/>
+          <line x1="228" y1="85" x2="238" y2="85" stroke="#ff6b35" stroke-width="1.5"/>
+          <text x="200" y="92" text-anchor="middle" font-family="'Space Mono',monospace" font-size="20" font-weight="700" fill="#ff6b35">0:47</text>
+          <rect x="60" y="55" width="34" height="50" rx="4" fill="rgba(255,107,53,0.08)" stroke="rgba(255,107,53,0.3)" stroke-width="1"/>
+          <text x="77" y="84" text-anchor="middle" font-size="18">🔴</text>
+          <rect x="306" y="55" width="34" height="50" rx="4" fill="rgba(255,107,53,0.08)" stroke="rgba(255,107,53,0.3)" stroke-width="1"/>
+          <text x="323" y="84" text-anchor="middle" font-size="18">✂️</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type c-games">Board Game · Assistant</div>
+        <div class="pcard-title">TimeBomb GUI</div>
+        <div class="pcard-desc">Interface de gestion pour parties de TimeBomb. Suivi des scores, rôles, tours et actions en temps réel. Thème sabotage Cold War.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">soaresden.github.io</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
 
-// ════════════════════════════════════════════════════
-// END GAME
-// ════════════════════════════════════════════════════
-function openEnd(){
-  stopTimer();
-  const sorted=G.players.map((p,i)=>({...p,pts:calcSmiles(i)})).sort((a,b)=>b.pts-a.pts);
-  const medals=['🥇','🥈','🥉'];
-  const elapsed=getElapsedStr();
-  document.getElementById('ov-timer-result').textContent=elapsed?`⏱️ Durée de la partie : ${elapsed}`:'';
-  document.getElementById('ov-pod').innerHTML=`<div class="pod-list">
-    ${sorted.map((p,i)=>`<div class="pod-item"><div class="pod-med">${medals[i]||'🎖️'}</div><div class="pod-nm" style="color:${p.color}">${p.name}</div><div class="pod-pts">😊 ${p.pts}</div></div>`).join('')}
-  </div>`;
-  openOv('ov-end');
-}
+  </div>
+</section>
 
-// ════════════════════════════════════════════════════
-// JSON EXPORT / IMPORT
-// ════════════════════════════════════════════════════
-function exportJSON(){
-  const data={
-    gameId: G.gameId,
-    exportedAt: new Date().toISOString(),
-    startTime: G.startTime,
-    elapsed: getElapsedStr(),
-    extensions: G.extensions,
-    players: G.players,
-    scores: G.players.map((p,i)=>({name:p.name,color:p.color,smiles:calcSmiles(i)})),
-    counts: G.counts,
-  };
-  const json=JSON.stringify(data,null,2);
-  const blob=new Blob([json],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download=`smilelife_${G.gameId||'partie'}_${new Date().toISOString().slice(0,10)}.json`;
-  a.click();URL.revokeObjectURL(url);
-  toast('Partie exportée !');
-}
+<!-- ═══════════════ MUSIC ═══════════════ -->
+<section class="section" id="music">
+  <div class="section-header">
+    <div class="section-icon bg-music">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-music)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    </div>
+    <div>
+      <div class="section-label c-music">Music</div>
+      <div class="section-title">Outils pour musiciens & créateurs</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
 
-function openImport(){openMo('modal-import');}
+  <div class="card-grid">
+    <!-- Suno MP3 -->
+    <a class="pcard border-music" href="https://soaresden.github.io/SunoBypassMp3/" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#0e0a14"/>
+          <!-- Waveform bars -->
+          <g fill="rgba(199,125,255,0.15)">
+            <rect x="20" y="65" width="8" height="30" rx="4"/>
+            <rect x="34" y="50" width="8" height="60" rx="4"/>
+            <rect x="48" y="40" width="8" height="80" rx="4"/>
+            <rect x="62" y="55" width="8" height="50" rx="4"/>
+            <rect x="76" y="45" width="8" height="70" rx="4"/>
+            <rect x="90" y="60" width="8" height="40" rx="4"/>
+            <rect x="104" y="35" width="8" height="90" rx="4"/>
+            <rect x="118" y="52" width="8" height="56" rx="4"/>
+          </g>
+          <!-- Active waveform -->
+          <g fill="var(--c-music)">
+            <rect x="140" y="55" width="8" height="50" rx="4"/>
+            <rect x="154" y="40" width="8" height="80" rx="4"/>
+            <rect x="168" y="30" width="8" height="100" rx="4"/>
+            <rect x="182" y="48" width="8" height="64" rx="4"/>
+            <rect x="196" y="38" width="8" height="84" rx="4"/>
+            <rect x="210" y="58" width="8" height="44" rx="4"/>
+            <rect x="224" y="44" width="8" height="72" rx="4"/>
+            <rect x="238" y="36" width="8" height="88" rx="4"/>
+            <rect x="252" y="52" width="8" height="56" rx="4"/>
+          </g>
+          <g fill="rgba(199,125,255,0.15)">
+            <rect x="272" y="60" width="8" height="40" rx="4"/>
+            <rect x="286" y="50" width="8" height="60" rx="4"/>
+            <rect x="300" y="65" width="8" height="30" rx="4"/>
+            <rect x="314" y="45" width="8" height="70" rx="4"/>
+            <rect x="328" y="55" width="8" height="50" rx="4"/>
+            <rect x="342" y="42" width="8" height="76" rx="4"/>
+            <rect x="356" y="60" width="8" height="40" rx="4"/>
+            <rect x="370" y="50" width="8" height="60" rx="4"/>
+          </g>
+          <!-- Play head -->
+          <rect x="262" y="15" width="2" height="130" fill="rgba(255,255,255,0.6)" rx="1"/>
+          <!-- MP3 badge -->
+          <rect x="155" y="115" width="90" height="28" rx="6" fill="rgba(199,125,255,0.15)" stroke="var(--c-music)" stroke-width="1"/>
+          <text x="200" y="133" text-anchor="middle" font-family="'Space Mono',monospace" font-size="11" fill="var(--c-music)" font-weight="700">⬇ MP3</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type c-music">Music · Suno AI</div>
+        <div class="pcard-title">Suno Bypass MP3</div>
+        <div class="pcard-desc">Téléchargement direct en MP3 depuis Suno AI. Script Tampermonkey qui s'intègre à l'interface pour récupérer les créations musicales.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">soaresden.github.io</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
 
-function doImport(){
-  const txt=document.getElementById('import-ta').value.trim();
-  if(!txt){toast('Aucun JSON !');return;}
-  try{
-    const data=JSON.parse(txt);
-    if(!data.players||!data.extensions){toast('Format invalide');return;}
-    G.gameId=data.gameId||('game_'+Date.now());
-    G.startTime=data.startTime||null;
-    G.extensions=data.extensions||['base'];
-    G.players=data.players||[];
-    G.counts=data.counts||{};
-    G.catalogue=buildCatalogue(G.extensions);
-    closeMo('modal-import');
-    ['btn-detail','btn-fin','btn-exp','btn-new'].forEach(id=>document.getElementById(id).style.display='');
-    document.getElementById('hdr-sub').textContent=`${G.players.length} joueurs (importé)`;
-    document.getElementById('c-total').textContent=G.catalogue.reduce((s,c)=>s+c.total,0);
-    if(G.startTime)startTimer(); else startTimer();
-    buildLegend();renderSidebar();renderInventaire();
-    switchScreen('gameScreen');
-    toast('Partie importée !');
-  }catch(e){toast('JSON invalide: '+e.message);}
-}
+    <!-- MuseScore Player -->
+    <a class="pcard border-music" href="https://soaresden.github.io/WebMuseScorePlayer/" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#0e0a14"/>
+          <!-- Staff lines -->
+          <g stroke="rgba(199,125,255,0.15)" stroke-width="1">
+            <line x1="20" y1="50" x2="380" y2="50"/>
+            <line x1="20" y1="63" x2="380" y2="63"/>
+            <line x1="20" y1="76" x2="380" y2="76"/>
+            <line x1="20" y1="89" x2="380" y2="89"/>
+            <line x1="20" y1="102" x2="380" y2="102"/>
+          </g>
+          <!-- Treble clef -->
+          <text x="25" y="98" font-size="52" fill="rgba(199,125,255,0.4)" font-family="serif">𝄞</text>
+          <!-- Notes -->
+          <ellipse cx="100" cy="76" rx="8" ry="6" fill="var(--c-music)" transform="rotate(-15,100,76)"/>
+          <line x1="107" y1="74" x2="107" y2="40" stroke="var(--c-music)" stroke-width="2"/>
+          <ellipse cx="145" cy="63" rx="8" ry="6" fill="var(--c-music)" transform="rotate(-15,145,63)"/>
+          <line x1="152" y1="61" x2="152" y2="27" stroke="var(--c-music)" stroke-width="2"/>
+          <ellipse cx="190" cy="89" rx="8" ry="6" fill="rgba(199,125,255,0.4)" transform="rotate(-15,190,89)"/>
+          <line x1="197" y1="87" x2="197" y2="51" stroke="rgba(199,125,255,0.4)" stroke-width="2"/>
+          <ellipse cx="235" cy="76" rx="8" ry="6" fill="var(--c-music)" transform="rotate(-15,235,76)"/>
+          <line x1="242" y1="74" x2="242" y2="38" stroke="var(--c-music)" stroke-width="2"/>
+          <ellipse cx="280" cy="63" rx="8" ry="6" fill="var(--c-music)" transform="rotate(-15,280,63)"/>
+          <line x1="287" y1="61" x2="287" y2="25" stroke="var(--c-music)" stroke-width="2"/>
+          <!-- Play button -->
+          <circle cx="340" cy="76" r="24" fill="rgba(199,125,255,0.12)" stroke="var(--c-music)" stroke-width="1.5"/>
+          <polygon points="333,66 333,86 353,76" fill="var(--c-music)"/>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type c-music">Music · Partitions</div>
+        <div class="pcard-title">Web MuseScore Player</div>
+        <div class="pcard-desc">Lecteur de partitions MuseScore directement dans le navigateur. Visualisation et lecture audio sans logiciel tiers.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">soaresden.github.io</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
 
-// ════════════════════════════════════════════════════
-// NEW GAME / CONFIRM
-// ════════════════════════════════════════════════════
-function confirmNew(){
-  document.getElementById('mc-t').textContent='🔄 Nouvelle partie ?';
-  document.getElementById('mc-b').textContent='La partie en cours sera effacée.';
-  document.getElementById('mc-ok').onclick=()=>{closeMo('modal-confirm');newGame();};
-  openMo('modal-confirm');
-}
-function newGame(){
-  stopTimer();
-  G={extensions:['base'],players:[],catalogue:[],counts:{},startTime:null,gameId:null};
-  pcIdx=0;
-  ['btn-detail','btn-fin','btn-exp','btn-new'].forEach(id=>document.getElementById(id).style.display='none');
-  document.getElementById('hdr-sub').textContent='Configurez votre partie';
-  document.getElementById('timer-badge').style.display='none';
-  closeOv('ov-end');
-  initSetup();switchScreen('setupScreen');
-}
+<!-- ═══════════════ PLONGÉE ═══════════════ -->
+<section class="section" id="plongee">
+  <div class="section-header">
+    <div class="section-icon bg-plongee">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-plongee)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M2 12c0 5.5 4.5 10 10 10s10-4.5 10-10M2 12C2 6.5 6.5 2 12 2s10 4.5 10 10"/><circle cx="12" cy="12" r="3"/></svg>
+    </div>
+    <div>
+      <div class="section-label c-plongee">Plongée sous-marine</div>
+      <div class="section-title">MN90Mobile · Suite de plongée</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
 
-// ════════════════════════════════════════════════════
-// UTILS
-// ════════════════════════════════════════════════════
-function switchScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function openOv(id){document.getElementById(id).classList.add('visible');}
-function closeOv(id){document.getElementById(id).classList.remove('visible');}
-function openMo(id){document.getElementById(id).classList.add('visible');}
-function closeMo(id){document.getElementById(id).classList.remove('visible');}
-function bgClose(e,id){if(e.target.id===id)closeOv(id);}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);}
-window.addEventListener('DOMContentLoaded',initSetup);
-</script>
+  <div class="card-grid wide">
+    <!-- MN90 -->
+    <a class="pcard border-plongee" href="https://soaresden.github.io/MN90Mobile/" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#030d14"/>
+          <!-- Water gradient -->
+          <defs>
+            <linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#001a2c;stop-opacity:1"/>
+              <stop offset="100%" style="stop-color:#00b4d8;stop-opacity:0.06"/>
+            </linearGradient>
+            <linearGradient id="depthbar" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#00b4d8;stop-opacity:0.8"/>
+              <stop offset="100%" style="stop-color:#0077b6;stop-opacity:0.3"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="160" fill="url(#water)"/>
+          <!-- Bubbles -->
+          <circle cx="60" cy="130" r="3" fill="rgba(0,180,216,0.3)"/>
+          <circle cx="72" cy="115" r="2" fill="rgba(0,180,216,0.25)"/>
+          <circle cx="55" cy="100" r="4" fill="rgba(0,180,216,0.2)"/>
+          <circle cx="340" cy="120" r="3" fill="rgba(0,180,216,0.25)"/>
+          <circle cx="352" cy="105" r="2" fill="rgba(0,180,216,0.2)"/>
+          <!-- Depth bar -->
+          <rect x="30" y="25" width="16" height="110" rx="8" fill="rgba(0,180,216,0.1)" stroke="rgba(0,180,216,0.3)" stroke-width="1"/>
+          <rect x="31" y="80" width="14" height="54" rx="7" fill="url(#depthbar)"/>
+          <text x="38" y="22" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.6)">0m</text>
+          <text x="38" y="142" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.6)">60m</text>
+          <!-- Diver -->
+          <g transform="translate(180,75)">
+            <circle r="12" fill="rgba(0,180,216,0.15)" stroke="var(--c-plongee)" stroke-width="1.5"/>
+            <text text-anchor="middle" y="5" font-size="16">🤿</text>
+          </g>
+          <!-- MN90 grid lines -->
+          <g stroke="rgba(0,180,216,0.08)" stroke-width="1" stroke-dasharray="4,4">
+            <line x1="60" y1="50" x2="380" y2="50"/>
+            <line x1="60" y1="80" x2="380" y2="80"/>
+            <line x1="60" y1="110" x2="380" y2="110"/>
+          </g>
+          <!-- Tables label -->
+          <rect x="240" y="40" width="130" height="80" rx="8" fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" stroke-width="1"/>
+          <text x="305" y="62" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="var(--c-plongee)">Tables MN90</text>
+          <text x="305" y="80" text-anchor="middle" font-family="'Space Mono',monospace" font-size="11" font-weight="700" fill="white">40m / 25min</text>
+          <text x="305" y="96" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.6)">Palier 3m : 5min</text>
+          <text x="305" y="110" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.6)">GPS : II</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type c-plongee">Plongée · Tables MN90</div>
+        <div class="pcard-title">MN90Mobile</div>
+        <div class="pcard-desc">Application mobile de planification de plongée basée sur les tables MN90. Calcul de paliers, groupes de plongée successives et intervalles de surface.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">soaresden.github.io</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- RASSIST -->
+    <a class="pcard border-plongee" href="https://soaresden.github.io/MN90Mobile/rassist/" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#030d14"/>
+          <!-- Ascent curve -->
+          <defs>
+            <linearGradient id="ascent" x1="0%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:0.6"/>
+              <stop offset="60%" style="stop-color:#ffd60a;stop-opacity:0.4"/>
+              <stop offset="100%" style="stop-color:#00b4d8;stop-opacity:0.2"/>
+            </linearGradient>
+          </defs>
+          <!-- Background -->
+          <rect width="400" height="160" fill="url(#ascent)" opacity="0.1"/>
+          <!-- Grid -->
+          <g stroke="rgba(0,180,216,0.07)" stroke-width="1">
+            <line x1="50" y1="20" x2="50" y2="140"/>
+            <line x1="50" y1="140" x2="380" y2="140"/>
+          </g>
+          <!-- Ascent curve path -->
+          <polyline points="70,120 100,110 130,95 160,80 200,70 230,60 260,45 290,30 310,20 320,15" 
+            stroke="var(--c-plongee)" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+          <!-- Area fill -->
+          <polygon points="70,120 100,110 130,95 160,80 200,70 230,60 260,45 290,30 310,20 320,15 320,140 70,140" 
+            fill="rgba(0,180,216,0.06)"/>
+          <!-- Palier markers -->
+          <circle cx="240" cy="55" r="5" fill="#ffd60a"/>
+          <rect x="248" y="47" width="70" height="18" rx="4" fill="rgba(255,214,10,0.1)" stroke="rgba(255,214,10,0.4)" stroke-width="1"/>
+          <text x="283" y="59" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="#ffd60a">Palier 3m</text>
+          <!-- Labels -->
+          <text x="40" y="125" text-anchor="end" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">40m</text>
+          <text x="40" y="85" text-anchor="end" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">20m</text>
+          <text x="40" y="30" text-anchor="end" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">3m</text>
+          <!-- RIFAP badge -->
+          <rect x="290" y="115" width="80" height="18" rx="5" fill="rgba(255,107,53,0.15)" stroke="rgba(255,107,53,0.4)" stroke-width="1"/>
+          <text x="330" y="127" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="var(--c-games)" font-weight="700">RIFAP</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type c-plongee">Plongée · Simulateur</div>
+        <div class="pcard-title">Simulateur Remontée Assistée</div>
+        <div class="pcard-desc">Simulateur de remontée et de secours en plongée. Aide à la préparation des certifications et à la pratique des procédures d'urgence RIFAP.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">MN90Mobile/rassist</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- DTR -->
+    <a class="pcard border-plongee" href="https://soaresden.github.io/MN90Mobile/decomp.html" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#030d14"/>
+          <!-- Déco bars -->
+          <g>
+            <rect x="50" y="30" width="40" height="100" rx="4" fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" stroke-width="1"/>
+            <rect x="51" y="95" width="38" height="34" rx="3" fill="rgba(0,180,216,0.25)"/>
+            <text x="70" y="148" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">3m</text>
+            <rect x="110" y="30" width="40" height="100" rx="4" fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" stroke-width="1"/>
+            <rect x="111" y="75" width="38" height="54" rx="3" fill="rgba(0,180,216,0.2)"/>
+            <text x="130" y="148" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">6m</text>
+            <rect x="170" y="30" width="40" height="100" rx="4" fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" stroke-width="1"/>
+            <rect x="171" y="55" width="38" height="74" rx="3" fill="rgba(0,180,216,0.15)"/>
+            <text x="190" y="148" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">9m</text>
+            <rect x="230" y="30" width="40" height="100" rx="4" fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" stroke-width="1"/>
+            <rect x="231" y="40" width="38" height="89" rx="3" fill="rgba(0,180,216,0.1)"/>
+            <text x="250" y="148" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">12m</text>
+            <rect x="290" y="30" width="40" height="100" rx="4" fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" stroke-width="1"/>
+            <rect x="291" y="32" width="38" height="97" rx="3" fill="rgba(0,180,216,0.07)"/>
+            <text x="310" y="148" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">15m</text>
+          </g>
+          <!-- Highlight top of 3m bar -->
+          <rect x="50" y="94" width="40" height="4" rx="2" fill="var(--c-plongee)"/>
+          <text x="350" y="90" font-family="'Space Mono',monospace" font-size="20" font-weight="700" fill="var(--c-plongee)">DTR</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type c-plongee">Plongée · Décompression</div>
+        <div class="pcard-title">Planificateur DTR</div>
+        <div class="pcard-desc">Calculateur de durée totale de remontée. Planification précise des paliers de décompression aux stops 3m, 6m, 9m, 12m et 15m.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">MN90Mobile/decomp</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Nitrox -->
+    <a class="pcard border-plongee" href="https://soaresden.github.io/MN90Mobile/nitrox.html" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#030d14"/>
+          <!-- Nitrox gauge -->
+          <circle cx="200" cy="80" r="60" fill="rgba(0,180,216,0.04)" stroke="rgba(0,180,216,0.2)" stroke-width="1.5"/>
+          <!-- Arc segments -->
+          <path d="M 200 20 A 60 60 0 0 1 260 80" stroke="#00ff88" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M 200 20 A 60 60 0 0 0 140 80" stroke="var(--c-plongee)" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.4"/>
+          <!-- O2 percentage -->
+          <text x="200" y="72" text-anchor="middle" font-family="'Space Mono',monospace" font-size="22" font-weight="700" fill="white">32%</text>
+          <text x="200" y="88" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="rgba(0,180,216,0.6)">O₂</text>
+          <!-- MOD indicator -->
+          <rect x="290" y="45" width="80" height="40" rx="6" fill="rgba(0,255,136,0.08)" stroke="rgba(0,255,136,0.3)" stroke-width="1"/>
+          <text x="330" y="62" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,255,136,0.7)">MOD</text>
+          <text x="330" y="78" text-anchor="middle" font-family="'Space Mono',monospace" font-size="13" font-weight="700" fill="#00ff88">33m</text>
+          <!-- N2 label -->
+          <rect x="30" y="45" width="80" height="40" rx="6" fill="rgba(0,180,216,0.08)" stroke="rgba(0,180,216,0.3)" stroke-width="1"/>
+          <text x="70" y="62" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="var(--c-plongee)">N₂ EAN32</text>
+          <text x="70" y="78" text-anchor="middle" font-family="'Space Mono',monospace" font-size="13" font-weight="700" fill="var(--c-plongee)">68%</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type c-plongee">Plongée · Nitrox</div>
+        <div class="pcard-title">Calculateur Nitrox</div>
+        <div class="pcard-desc">Calcul de la profondeur maximale d'exploitation (MOD), équivalent de profondeur air et vérification des mélanges Nitrox EAN.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">MN90Mobile/nitrox</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════ SÉCURITÉ ═══════════════ -->
+<section class="section" id="securite">
+  <div class="section-header">
+    <div class="section-icon bg-securite">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-securite)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <div>
+      <div class="section-label c-securite">Sécurité</div>
+      <div class="section-title">Outils de cybersécurité</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="card-grid">
+    <a class="pcard border-securite" href="https://soaresden.github.io/GoogleDarkWebCheckerforBitwarden/" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#040e0a"/>
+          <!-- Terminal look -->
+          <rect x="20" y="20" width="360" height="120" rx="8" fill="rgba(6,214,160,0.04)" stroke="rgba(6,214,160,0.15)" stroke-width="1"/>
+          <!-- Terminal header -->
+          <rect x="20" y="20" width="360" height="24" rx="8" fill="rgba(6,214,160,0.08)"/>
+          <circle cx="38" cy="32" r="5" fill="rgba(255,100,100,0.5)"/>
+          <circle cx="54" cy="32" r="5" fill="rgba(255,200,0,0.4)"/>
+          <circle cx="70" cy="32" r="5" fill="rgba(0,200,100,0.4)"/>
+          <text x="200" y="37" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="rgba(6,214,160,0.5)">dark_web_checker.js</text>
+          <!-- Code lines -->
+          <text x="35" y="62" font-family="'Space Mono',monospace" font-size="9" fill="rgba(6,214,160,0.4)">$ checking 247 passwords...</text>
+          <text x="35" y="78" font-family="'Space Mono',monospace" font-size="9" fill="rgba(6,214,160,0.6)">✓ <tspan fill="rgba(6,214,160,0.9)">243</tspan> passwords OK</text>
+          <text x="35" y="94" font-family="'Space Mono',monospace" font-size="9" fill="rgba(255,100,100,0.8)">⚠ <tspan fill="rgba(255,100,100,1)">4</tspan> breaches detected</text>
+          <text x="35" y="110" font-family="'Space Mono',monospace" font-size="9" fill="rgba(6,214,160,0.3)">  ↳ haveibeenpwned.com API</text>
+          <text x="35" y="126" font-family="'Space Mono',monospace" font-size="9" fill="rgba(6,214,160,0.2)">  ↳ Bitwarden export compat.</text>
+          <!-- Cursor -->
+          <rect x="35" y="133" width="7" height="10" fill="rgba(6,214,160,0.7)" rx="1">
+            <animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/>
+          </rect>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type c-securite">Sécurité · Dark Web</div>
+        <div class="pcard-title">Google Dark Web Checker for Bitwarden</div>
+        <div class="pcard-desc">Vérifie vos mots de passe Bitwarden contre les bases de données de fuites (HaveIBeenPwned). Compatible avec l'export Bitwarden.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">soaresden.github.io</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<section class="section" id="quizz">
+  <div class="section-header">
+    <div class="section-icon bg-quizz">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-quizz)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+    </div>
+    <div>
+      <div class="section-label c-quizz">Quiz</div>
+      <div class="section-title">Expériences interactives</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="card-grid">
+    <a class="pcard border-quizz" href="https://soaresden.github.io/EDF-QualityWeekGame2025/" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#0d0c00"/>
+          <!-- Stars bg -->
+          <circle cx="50" cy="30" r="1.5" fill="rgba(255,214,10,0.4)"/>
+          <circle cx="150" cy="20" r="1" fill="rgba(255,214,10,0.3)"/>
+          <circle cx="250" cy="35" r="1.5" fill="rgba(255,214,10,0.4)"/>
+          <circle cx="350" cy="25" r="1" fill="rgba(255,214,10,0.3)"/>
+          <circle cx="100" cy="140" r="1.5" fill="rgba(255,214,10,0.3)"/>
+          <circle cx="320" cy="135" r="1" fill="rgba(255,214,10,0.2)"/>
+          <!-- Inspector character badge -->
+          <circle cx="200" cy="80" r="52" fill="rgba(255,214,10,0.05)" stroke="rgba(255,214,10,0.15)" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <text x="200" y="95" text-anchor="middle" font-size="44">🔍</text>
+          <!-- Score panels -->
+          <rect x="20" y="115" width="80" height="30" rx="5" fill="rgba(255,214,10,0.08)" stroke="rgba(255,214,10,0.25)" stroke-width="1"/>
+          <text x="60" y="127" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,214,10,0.5)">SCORE</text>
+          <text x="60" y="140" text-anchor="middle" font-family="'Space Mono',monospace" font-size="12" font-weight="700" fill="#ffd60a">2450</text>
+          <rect x="300" y="115" width="80" height="30" rx="5" fill="rgba(255,214,10,0.08)" stroke="rgba(255,214,10,0.25)" stroke-width="1"/>
+          <text x="340" y="127" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,214,10,0.5)">RANG</text>
+          <text x="340" y="140" text-anchor="middle" font-family="'Space Mono',monospace" font-size="12" font-weight="700" fill="#ffd60a">#3</text>
+          <!-- EDF badge -->
+          <rect x="155" y="18" width="90" height="20" rx="4" fill="rgba(255,214,10,0.12)" stroke="rgba(255,214,10,0.3)" stroke-width="1"/>
+          <text x="200" y="32" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" font-weight="700" fill="#ffd60a">EDF Quality Week</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type c-quizz">Quiz · Gamification · EDF</div>
+        <div class="pcard-title">Quality Inspector — EDF 2025</div>
+        <div class="pcard-desc">Jeu de quiz développé pour la Quality Week 2025 d'EDF Renouvelables. Leaderboard en temps réel via Supabase, questions thématiques qualité.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">soaresden.github.io</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════ TOOLS ═══════════════ -->
+<section class="section" id="tools">
+  <div class="section-header">
+    <div class="section-icon bg-tools">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-tools)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+    </div>
+    <div>
+      <div class="section-label c-tools">Tools</div>
+      <div class="section-title">Outils métier & productivité</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="card-grid">
+    <a class="pcard border-tools" href="https://soaresden.github.io/EDF-NoDropNoHarm/" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#0e0006"/>
+          <!-- Checklist style -->
+          <g transform="translate(40,20)">
+            <rect width="300" height="30" rx="5" fill="rgba(255,77,109,0.06)" stroke="rgba(255,77,109,0.15)" stroke-width="1"/>
+            <text x="40" y="20" font-family="'DM Sans',sans-serif" font-size="11" fill="rgba(255,77,109,0.8)">Inspection HSE · Point de contrôle</text>
+            <circle cx="15" cy="15" r="8" fill="rgba(6,214,160,0.15)" stroke="rgba(6,214,160,0.5)" stroke-width="1.5"/>
+            <text x="15" y="20" text-anchor="middle" font-size="10" fill="#06d6a0">✓</text>
+          </g>
+          <g transform="translate(40,58)">
+            <rect width="300" height="30" rx="5" fill="rgba(255,77,109,0.06)" stroke="rgba(255,77,109,0.15)" stroke-width="1"/>
+            <text x="40" y="20" font-family="'DM Sans',sans-serif" font-size="11" fill="rgba(255,77,109,0.8)">Risques identifiés · Signalement</text>
+            <circle cx="15" cy="15" r="8" fill="rgba(6,214,160,0.15)" stroke="rgba(6,214,160,0.5)" stroke-width="1.5"/>
+            <text x="15" y="20" text-anchor="middle" font-size="10" fill="#06d6a0">✓</text>
+          </g>
+          <g transform="translate(40,96)">
+            <rect width="300" height="30" rx="5" fill="rgba(255,77,109,0.12)" stroke="rgba(255,77,109,0.4)" stroke-width="1.5"/>
+            <text x="40" y="20" font-family="'DM Sans',sans-serif" font-size="11" fill="white">Action corrective · Responsable</text>
+            <circle cx="15" cy="15" r="8" fill="rgba(255,77,109,0.15)" stroke="rgba(255,77,109,0.6)" stroke-width="1.5"/>
+            <text x="15" y="20" text-anchor="middle" font-size="10" fill="#ff4d6d">!</text>
+          </g>
+          <!-- Shield icon -->
+          <g transform="translate(355,55)">
+            <circle r="22" fill="rgba(255,77,109,0.08)" stroke="rgba(255,77,109,0.25)" stroke-width="1.5"/>
+            <text text-anchor="middle" y="8" font-size="20">🦺</text>
+          </g>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type c-tools">Tools · HSE · EDF</div>
+        <div class="pcard-title">EDF No Drop No Harm</div>
+        <div class="pcard-desc">Outil de suivi HSE pour EDF Renouvelables. Gestion des inspections, signalement de risques et suivi des actions correctives de sécurité.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">soaresden.github.io</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-text">© 2025 soaresden · Tous droits réservés</span>
+    <span class="footer-text" style="color:var(--text-muted)">Built with ♥ · HTML / CSS / JS</span>
+    <a class="footer-gh" href="https://github.com/soaresden" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      github.com/soaresden
+    </a>
+  </div>
+</footer>
+
 </body>
 </html>
