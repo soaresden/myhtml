@@ -43,7 +43,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ── NOISE TEXTURE OVERLAY ── */
 body::before {
   content: '';
   position: fixed;
@@ -228,7 +227,7 @@ main {
 }
 
 .card-grid.wide {
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
 }
 
 /* ── PROJECT CARD ── */
@@ -263,7 +262,6 @@ main {
 }
 .pcard:hover::before { opacity: 1; }
 
-/* Card illustration */
 .pcard-art {
   height: 160px;
   position: relative;
@@ -275,7 +273,6 @@ main {
   width: 100%; height: 100%;
 }
 
-/* Card body */
 .pcard-body {
   padding: 18px 20px 20px;
   flex: 1;
@@ -339,6 +336,24 @@ main {
   border-color: white;
 }
 
+/* ── BADGE NEW ── */
+.badge-new {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(0,180,216,0.15);
+  border: 1px solid rgba(0,180,216,0.4);
+  color: var(--c-plongee);
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
 /* ── FOOTER ── */
 footer {
   position: relative;
@@ -388,10 +403,14 @@ footer {
 
 .section:nth-child(1) .pcard:nth-child(1) { animation-delay: 0.05s; }
 .section:nth-child(1) .pcard:nth-child(2) { animation-delay: 0.1s; }
-.section:nth-child(1) .pcard:nth-child(3) { animation-delay: 0.15s; }
-.section:nth-child(2) .pcard:nth-child(1) { animation-delay: 0.2s; }
-.section:nth-child(2) .pcard:nth-child(2) { animation-delay: 0.25s; }
-.section:nth-child(3) .pcard:nth-child(1) { animation-delay: 0.3s; }
+.section:nth-child(2) .pcard:nth-child(1) { animation-delay: 0.15s; }
+.section:nth-child(2) .pcard:nth-child(2) { animation-delay: 0.2s; }
+.section:nth-child(3) .pcard:nth-child(1) { animation-delay: 0.1s; }
+.section:nth-child(3) .pcard:nth-child(2) { animation-delay: 0.15s; }
+.section:nth-child(3) .pcard:nth-child(3) { animation-delay: 0.2s; }
+.section:nth-child(3) .pcard:nth-child(4) { animation-delay: 0.25s; }
+.section:nth-child(3) .pcard:nth-child(5) { animation-delay: 0.3s; }
+.section:nth-child(3) .pcard:nth-child(6) { animation-delay: 0.35s; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
@@ -406,9 +425,9 @@ footer {
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .card-grid { grid-template-columns: repeat(2, 1fr); }
+  .card-grid.wide { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Color utilities per category */
 .c-games    { color: var(--c-games); }
 .c-music    { color: var(--c-music); }
 .c-plongee  { color: var(--c-plongee); }
@@ -429,18 +448,10 @@ footer {
 .border-securite { border-top: 2px solid var(--c-securite); }
 .border-quizz    { border-top: 2px solid var(--c-quizz); }
 .border-tools    { border-top: 2px solid var(--c-tools); }
-
-.glow-games    { box-shadow: 0 0 40px rgba(255,107,53,0.15); }
-.glow-music    { box-shadow: 0 0 40px rgba(199,125,255,0.15); }
-.glow-plongee  { box-shadow: 0 0 40px rgba(0,180,216,0.15); }
-.glow-securite { box-shadow: 0 0 40px rgba(6,214,160,0.15); }
-.glow-quizz    { box-shadow: 0 0 40px rgba(255,214,10,0.15); }
-.glow-tools    { box-shadow: 0 0 40px rgba(255,77,109,0.15); }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="header-glow"></div>
   <div class="header-inner">
@@ -463,7 +474,6 @@ footer {
   </div>
 </header>
 
-<!-- NAV -->
 <nav class="nav-strip">
   <div class="nav-inner">
     <a class="nav-pill" href="#games"><span class="dot" style="background:var(--c-games)"></span>Board Games</a>
@@ -498,24 +508,20 @@ footer {
         <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
           <rect width="400" height="160" fill="#0e080f"/>
           <circle cx="200" cy="80" r="110" fill="rgba(236,64,122,0.04)"/>
-          <!-- Mini cards scattered -->
           <rect x="22" y="32" width="48" height="68" rx="6" fill="#13101a" stroke="rgba(41,171,226,0.45)" stroke-width="1.3"/>
           <text x="46" y="57" text-anchor="middle" font-size="16">📚</text>
           <rect x="32" y="66" width="28" height="5" rx="2" fill="rgba(41,171,226,0.3)"/>
           <rect x="32" y="75" width="20" height="3" rx="1" fill="rgba(41,171,226,0.15)"/>
           <text x="46" y="92" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(41,171,226,0.5)">niv.3</text>
-          <!-- Job card -->
           <rect x="78" y="22" width="48" height="68" rx="6" fill="#13101a" stroke="rgba(236,64,122,0.55)" stroke-width="1.5"/>
           <text x="102" y="47" text-anchor="middle" font-size="16">👨‍⚕️</text>
           <rect x="88" y="56" width="28" height="5" rx="2" fill="rgba(236,64,122,0.4)"/>
           <text x="102" y="74" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(236,64,122,0.7)">Médecin</text>
           <text x="102" y="84" text-anchor="middle" font-size="9">😊😊😊😊</text>
-          <!-- Child card -->
           <rect x="134" y="32" width="48" height="68" rx="6" fill="#13101a" stroke="rgba(236,64,122,0.35)" stroke-width="1.2"/>
           <text x="158" y="57" text-anchor="middle" font-size="16">👧</text>
           <text x="158" y="74" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" font-weight="700" fill="rgba(236,64,122,0.85)">Leia</text>
           <text x="158" y="88" text-anchor="middle" font-size="9">😊😊</text>
-          <!-- Scores sidebar -->
           <rect x="200" y="22" width="138" height="106" rx="8" fill="rgba(236,64,122,0.05)" stroke="rgba(236,64,122,0.18)" stroke-width="1"/>
           <text x="269" y="40" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(255,255,255,0.3)">SCORES</text>
           <circle cx="218" cy="57" r="6" fill="#EC407A"/>
@@ -530,10 +536,8 @@ footer {
           <circle cx="218" cy="114" r="6" fill="#FF7043"/>
           <rect x="230" y="110" width="36" height="6" rx="3" fill="rgba(255,255,255,0.07)"/>
           <text x="322" y="117" font-family="'Space Mono',monospace" font-size="10" font-weight="700" fill="#FF7043">😊 6</text>
-          <!-- Big smile -->
           <circle cx="358" cy="80" r="22" fill="rgba(255,214,10,0.07)" stroke="rgba(255,214,10,0.2)" stroke-width="1.5"/>
           <text x="358" y="88" text-anchor="middle" font-size="22">😊</text>
-          <!-- Extension color dots row -->
           <circle cx="24"  cy="122" r="5" fill="#EC407A" opacity="0.9"/>
           <circle cx="38"  cy="122" r="5" fill="#b91c1c" opacity="0.7"/>
           <circle cx="52"  cy="122" r="5" fill="#7e22ce" opacity="0.7"/>
@@ -614,55 +618,59 @@ footer {
   </div>
 
   <div class="card-grid">
-    <!-- Suno MP3 -->
+    <!-- Suno Tempo Boost -->
     <a class="pcard border-music" href="https://soaresden.github.io/SunoBypassMp3/" target="_blank">
       <div class="pcard-art">
         <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
           <rect width="400" height="160" fill="#0e0a14"/>
-          <!-- Waveform bars -->
-          <g fill="rgba(199,125,255,0.15)">
-            <rect x="20" y="65" width="8" height="30" rx="4"/>
-            <rect x="34" y="50" width="8" height="60" rx="4"/>
-            <rect x="48" y="40" width="8" height="80" rx="4"/>
-            <rect x="62" y="55" width="8" height="50" rx="4"/>
-            <rect x="76" y="45" width="8" height="70" rx="4"/>
-            <rect x="90" y="60" width="8" height="40" rx="4"/>
-            <rect x="104" y="35" width="8" height="90" rx="4"/>
-            <rect x="118" y="52" width="8" height="56" rx="4"/>
+          <!-- Speed lines bg -->
+          <g stroke="rgba(199,125,255,0.06)" stroke-width="1">
+            <line x1="0" y1="0" x2="400" y2="160"/>
+            <line x1="40" y1="0" x2="400" y2="120"/>
+            <line x1="80" y1="0" x2="400" y2="80"/>
+            <line x1="120" y1="0" x2="400" y2="40"/>
+            <line x1="160" y1="0" x2="400" y2="0"/>
           </g>
-          <!-- Active waveform -->
+          <!-- Waveform original (slow, muted) -->
+          <g fill="rgba(199,125,255,0.2)" opacity="0.6">
+            <rect x="20" y="68" width="10" height="24" rx="5"/>
+            <rect x="38" y="58" width="10" height="44" rx="5"/>
+            <rect x="56" y="50" width="10" height="60" rx="5"/>
+            <rect x="74" y="62" width="10" height="36" rx="5"/>
+            <rect x="92" y="55" width="10" height="50" rx="5"/>
+            <rect x="110" y="65" width="10" height="30" rx="5"/>
+          </g>
+          <!-- Arrow -->
+          <g transform="translate(135,72)">
+            <line x1="0" y1="8" x2="30" y2="8" stroke="rgba(199,125,255,0.6)" stroke-width="2"/>
+            <polyline points="22,2 30,8 22,14" fill="none" stroke="rgba(199,125,255,0.6)" stroke-width="2" stroke-linejoin="round"/>
+          </g>
+          <!-- Waveform accéléré (compressed) -->
           <g fill="var(--c-music)">
-            <rect x="140" y="55" width="8" height="50" rx="4"/>
-            <rect x="154" y="40" width="8" height="80" rx="4"/>
-            <rect x="168" y="30" width="8" height="100" rx="4"/>
-            <rect x="182" y="48" width="8" height="64" rx="4"/>
-            <rect x="196" y="38" width="8" height="84" rx="4"/>
-            <rect x="210" y="58" width="8" height="44" rx="4"/>
-            <rect x="224" y="44" width="8" height="72" rx="4"/>
-            <rect x="238" y="36" width="8" height="88" rx="4"/>
-            <rect x="252" y="52" width="8" height="56" rx="4"/>
+            <rect x="180" y="55" width="7" height="50" rx="3"/>
+            <rect x="193" y="40" width="7" height="80" rx="3"/>
+            <rect x="206" y="30" width="7" height="100" rx="3"/>
+            <rect x="219" y="48" width="7" height="64" rx="3"/>
+            <rect x="232" y="38" width="7" height="84" rx="3"/>
+            <rect x="245" y="58" width="7" height="44" rx="3"/>
+            <rect x="258" y="44" width="7" height="72" rx="3"/>
+            <rect x="271" y="34" width="7" height="92" rx="3"/>
           </g>
-          <g fill="rgba(199,125,255,0.15)">
-            <rect x="272" y="60" width="8" height="40" rx="4"/>
-            <rect x="286" y="50" width="8" height="60" rx="4"/>
-            <rect x="300" y="65" width="8" height="30" rx="4"/>
-            <rect x="314" y="45" width="8" height="70" rx="4"/>
-            <rect x="328" y="55" width="8" height="50" rx="4"/>
-            <rect x="342" y="42" width="8" height="76" rx="4"/>
-            <rect x="356" y="60" width="8" height="40" rx="4"/>
-            <rect x="370" y="50" width="8" height="60" rx="4"/>
-          </g>
-          <!-- Play head -->
-          <rect x="262" y="15" width="2" height="130" fill="rgba(255,255,255,0.6)" rx="1"/>
-          <!-- MP3 badge -->
-          <rect x="155" y="115" width="90" height="28" rx="6" fill="rgba(199,125,255,0.15)" stroke="var(--c-music)" stroke-width="1"/>
-          <text x="200" y="133" text-anchor="middle" font-family="'Space Mono',monospace" font-size="11" fill="var(--c-music)" font-weight="700">⬇ MP3</text>
+          <!-- 2x badge -->
+          <rect x="285" y="55" width="45" height="28" rx="6" fill="rgba(199,125,255,0.2)" stroke="var(--c-music)" stroke-width="1.5"/>
+          <text x="307" y="73" text-anchor="middle" font-family="'Space Mono',monospace" font-size="13" font-weight="700" fill="var(--c-music)">2x</text>
+          <!-- "Restore in Suno editor" hint -->
+          <rect x="30" y="118" width="220" height="22" rx="5" fill="rgba(199,125,255,0.07)" stroke="rgba(199,125,255,0.2)" stroke-width="1"/>
+          <text x="140" y="132" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(199,125,255,0.55)">→ Réajuster le tempo dans l'éditeur Suno</text>
+          <!-- Shield bypass icon -->
+          <circle cx="358" cy="80" r="22" fill="rgba(199,125,255,0.08)" stroke="rgba(199,125,255,0.25)" stroke-width="1.5"/>
+          <text x="358" y="88" text-anchor="middle" font-size="20">🛡️</text>
         </svg>
       </div>
       <div class="pcard-body">
         <div class="pcard-type c-music">Music · Suno AI</div>
-        <div class="pcard-title">Suno Bypass MP3</div>
-        <div class="pcard-desc">Téléchargement direct en MP3 depuis Suno AI. Script Tampermonkey qui s'intègre à l'interface pour récupérer les créations musicales.</div>
+        <div class="pcard-title">Suno Tempo Boost</div>
+        <div class="pcard-desc">Accélérateur de tempo MP3 par lot pour contourner la détection audio de Suno. Modifie la vitesse du fichier, puis l'éditeur Suno permet de la rétablir au tempo original indiqué dans le nom du fichier.</div>
         <div class="pcard-footer">
           <span class="pcard-link">soaresden.github.io</span>
           <span class="pcard-arrow">→</span>
@@ -675,7 +683,6 @@ footer {
       <div class="pcard-art">
         <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
           <rect width="400" height="160" fill="#0e0a14"/>
-          <!-- Staff lines -->
           <g stroke="rgba(199,125,255,0.15)" stroke-width="1">
             <line x1="20" y1="50" x2="380" y2="50"/>
             <line x1="20" y1="63" x2="380" y2="63"/>
@@ -683,9 +690,7 @@ footer {
             <line x1="20" y1="89" x2="380" y2="89"/>
             <line x1="20" y1="102" x2="380" y2="102"/>
           </g>
-          <!-- Treble clef -->
           <text x="25" y="98" font-size="52" fill="rgba(199,125,255,0.4)" font-family="serif">𝄞</text>
-          <!-- Notes -->
           <ellipse cx="100" cy="76" rx="8" ry="6" fill="var(--c-music)" transform="rotate(-15,100,76)"/>
           <line x1="107" y1="74" x2="107" y2="40" stroke="var(--c-music)" stroke-width="2"/>
           <ellipse cx="145" cy="63" rx="8" ry="6" fill="var(--c-music)" transform="rotate(-15,145,63)"/>
@@ -696,7 +701,6 @@ footer {
           <line x1="242" y1="74" x2="242" y2="38" stroke="var(--c-music)" stroke-width="2"/>
           <ellipse cx="280" cy="63" rx="8" ry="6" fill="var(--c-music)" transform="rotate(-15,280,63)"/>
           <line x1="287" y1="61" x2="287" y2="25" stroke="var(--c-music)" stroke-width="2"/>
-          <!-- Play button -->
           <circle cx="340" cy="76" r="24" fill="rgba(199,125,255,0.12)" stroke="var(--c-music)" stroke-width="1.5"/>
           <polygon points="333,66 333,86 353,76" fill="var(--c-music)"/>
         </svg>
@@ -728,12 +732,12 @@ footer {
   </div>
 
   <div class="card-grid wide">
-    <!-- MN90 -->
+
+    <!-- MN90 Planner -->
     <a class="pcard border-plongee" href="https://soaresden.github.io/MN90Mobile/" target="_blank">
       <div class="pcard-art">
         <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
           <rect width="400" height="160" fill="#030d14"/>
-          <!-- Water gradient -->
           <defs>
             <linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" style="stop-color:#001a2c;stop-opacity:1"/>
@@ -745,29 +749,24 @@ footer {
             </linearGradient>
           </defs>
           <rect width="400" height="160" fill="url(#water)"/>
-          <!-- Bubbles -->
           <circle cx="60" cy="130" r="3" fill="rgba(0,180,216,0.3)"/>
           <circle cx="72" cy="115" r="2" fill="rgba(0,180,216,0.25)"/>
           <circle cx="55" cy="100" r="4" fill="rgba(0,180,216,0.2)"/>
           <circle cx="340" cy="120" r="3" fill="rgba(0,180,216,0.25)"/>
           <circle cx="352" cy="105" r="2" fill="rgba(0,180,216,0.2)"/>
-          <!-- Depth bar -->
           <rect x="30" y="25" width="16" height="110" rx="8" fill="rgba(0,180,216,0.1)" stroke="rgba(0,180,216,0.3)" stroke-width="1"/>
           <rect x="31" y="80" width="14" height="54" rx="7" fill="url(#depthbar)"/>
           <text x="38" y="22" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.6)">0m</text>
           <text x="38" y="142" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.6)">60m</text>
-          <!-- Diver -->
           <g transform="translate(180,75)">
             <circle r="12" fill="rgba(0,180,216,0.15)" stroke="var(--c-plongee)" stroke-width="1.5"/>
             <text text-anchor="middle" y="5" font-size="16">🤿</text>
           </g>
-          <!-- MN90 grid lines -->
           <g stroke="rgba(0,180,216,0.08)" stroke-width="1" stroke-dasharray="4,4">
             <line x1="60" y1="50" x2="380" y2="50"/>
             <line x1="60" y1="80" x2="380" y2="80"/>
             <line x1="60" y1="110" x2="380" y2="110"/>
           </g>
-          <!-- Tables label -->
           <rect x="240" y="40" width="130" height="80" rx="8" fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" stroke-width="1"/>
           <text x="305" y="62" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="var(--c-plongee)">Tables MN90</text>
           <text x="305" y="80" text-anchor="middle" font-family="'Space Mono',monospace" font-size="11" font-weight="700" fill="white">40m / 25min</text>
@@ -778,96 +777,128 @@ footer {
       <div class="pcard-body">
         <div class="pcard-type c-plongee">Plongée · Tables MN90</div>
         <div class="pcard-title">MN90Mobile</div>
-        <div class="pcard-desc">Application mobile de planification de plongée basée sur les tables MN90. Calcul de paliers, groupes de plongée successives et intervalles de surface.</div>
+        <div class="pcard-desc">Application mobile de planification de plongée basée sur les tables MN90. Calcul de paliers, autonomie bouteille, groupes de plongées successives et intervalles de surface.</div>
         <div class="pcard-footer">
-          <span class="pcard-link">soaresden.github.io</span>
+          <span class="pcard-link">MN90Mobile</span>
           <span class="pcard-arrow">→</span>
         </div>
       </div>
     </a>
 
-    <!-- RASSIST -->
-    <a class="pcard border-plongee" href="https://soaresden.github.io/MN90Mobile/rassist/" target="_blank">
+    <!-- 3D Remontée Assistée — NOUVEAU -->
+    <a class="pcard border-plongee" href="https://soaresden.github.io/MN90Mobile/3dassist/index.html" target="_blank">
       <div class="pcard-art">
         <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
           <rect width="400" height="160" fill="#030d14"/>
-          <!-- Ascent curve -->
           <defs>
-            <linearGradient id="ascent" x1="0%" y1="100%" x2="0%" y2="0%">
-              <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:0.6"/>
-              <stop offset="60%" style="stop-color:#ffd60a;stop-opacity:0.4"/>
-              <stop offset="100%" style="stop-color:#00b4d8;stop-opacity:0.2"/>
-            </linearGradient>
+            <radialGradient id="ocean3d" cx="50%" cy="40%" r="60%">
+              <stop offset="0%" style="stop-color:#0077b6;stop-opacity:0.25"/>
+              <stop offset="100%" style="stop-color:#03045e;stop-opacity:0.6"/>
+            </radialGradient>
           </defs>
-          <!-- Background -->
-          <rect width="400" height="160" fill="url(#ascent)" opacity="0.1"/>
-          <!-- Grid -->
-          <g stroke="rgba(0,180,216,0.07)" stroke-width="1">
-            <line x1="50" y1="20" x2="50" y2="140"/>
-            <line x1="50" y1="140" x2="380" y2="140"/>
+          <rect width="400" height="160" fill="url(#ocean3d)"/>
+          <!-- 3D perspective grid (ocean floor) -->
+          <g stroke="rgba(0,180,216,0.12)" stroke-width="1">
+            <line x1="200" y1="130" x2="20" y2="155"/>
+            <line x1="200" y1="130" x2="380" y2="155"/>
+            <line x1="200" y1="130" x2="80" y2="155"/>
+            <line x1="200" y1="130" x2="320" y2="155"/>
+            <line x1="200" y1="130" x2="140" y2="155"/>
+            <line x1="200" y1="130" x2="260" y2="155"/>
+            <ellipse cx="200" cy="150" rx="180" ry="8" fill="rgba(0,180,216,0.04)" stroke="rgba(0,180,216,0.1)" stroke-width="1"/>
           </g>
-          <!-- Ascent curve path -->
-          <polyline points="70,120 100,110 130,95 160,80 200,70 230,60 260,45 290,30 310,20 320,15" 
-            stroke="var(--c-plongee)" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
-          <!-- Area fill -->
-          <polygon points="70,120 100,110 130,95 160,80 200,70 230,60 260,45 290,30 310,20 320,15 320,140 70,140" 
-            fill="rgba(0,180,216,0.06)"/>
-          <!-- Palier markers -->
-          <circle cx="240" cy="55" r="5" fill="#ffd60a"/>
-          <rect x="248" y="47" width="70" height="18" rx="4" fill="rgba(255,214,10,0.1)" stroke="rgba(255,214,10,0.4)" stroke-width="1"/>
-          <text x="283" y="59" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="#ffd60a">Palier 3m</text>
-          <!-- Labels -->
-          <text x="40" y="125" text-anchor="end" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">40m</text>
-          <text x="40" y="85" text-anchor="end" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">20m</text>
-          <text x="40" y="30" text-anchor="end" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">3m</text>
-          <!-- RIFAP badge -->
-          <rect x="290" y="115" width="80" height="18" rx="5" fill="rgba(255,107,53,0.15)" stroke="rgba(255,107,53,0.4)" stroke-width="1"/>
-          <text x="330" y="127" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="var(--c-games)" font-weight="700">RIFAP</text>
+          <!-- Ascent path dotted -->
+          <polyline points="200,135 195,110 192,85 190,60 188,35 185,15" 
+            stroke="rgba(0,180,216,0.5)" stroke-width="1.5" fill="none" stroke-dasharray="4,3"/>
+          <!-- Palier marker 3m -->
+          <line x1="160" y1="28" x2="220" y2="28" stroke="#ffd60a" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <text x="226" y="32" font-family="'Space Mono',monospace" font-size="8" fill="#ffd60a">3m</text>
+          <!-- Diver character (bigger) -->
+          <g transform="translate(155,120)">
+            <ellipse cx="22" cy="15" rx="18" ry="12" fill="rgba(0,180,216,0.1)" stroke="rgba(0,180,216,0.3)" stroke-width="1"/>
+            <text x="22" y="20" text-anchor="middle" font-size="18">🤿</text>
+          </g>
+          <!-- Victim diver -->
+          <g transform="translate(220,108)">
+            <text x="0" y="16" font-size="14" opacity="0.6">🤿</text>
+          </g>
+          <!-- HUD elements -->
+          <rect x="14" y="14" width="70" height="50" rx="5" fill="rgba(0,0,0,0.4)" stroke="rgba(0,180,216,0.3)" stroke-width="1"/>
+          <text x="49" y="28" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,216,0.6)">PROF.</text>
+          <text x="49" y="42" text-anchor="middle" font-family="'Space Mono',monospace" font-size="14" font-weight="700" fill="var(--c-plongee)">28m</text>
+          <text x="49" y="56" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,216,0.4)">↑ 8m/min</text>
+          <!-- Stab gauge -->
+          <rect x="316" y="14" width="70" height="50" rx="5" fill="rgba(0,0,0,0.4)" stroke="rgba(0,180,216,0.3)" stroke-width="1"/>
+          <text x="351" y="28" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,216,0.6)">STAB</text>
+          <rect x="326" y="34" width="50" height="8" rx="4" fill="rgba(255,255,255,0.05)"/>
+          <rect x="326" y="34" width="32" height="8" rx="4" fill="rgba(0,180,216,0.5)"/>
+          <text x="351" y="56" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,216,0.4)">0.0 L</text>
+          <!-- Bubbles -->
+          <circle cx="192" cy="95" r="2" fill="rgba(0,180,216,0.4)"/>
+          <circle cx="196" cy="80" r="1.5" fill="rgba(0,180,216,0.35)"/>
+          <circle cx="189" cy="65" r="2" fill="rgba(0,180,216,0.3)"/>
+          <!-- Site chips -->
+          <rect x="14" y="124" width="56" height="16" rx="8" fill="rgba(0,180,216,0.12)" stroke="rgba(0,180,216,0.3)" stroke-width="1"/>
+          <text x="42" y="135" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="var(--c-plongee)">ROUSSAY</text>
+          <rect x="76" y="124" width="70" height="16" rx="8" fill="rgba(0,180,216,0.08)" stroke="rgba(0,180,216,0.15)" stroke-width="1"/>
+          <text x="111" y="135" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,216,0.5)">ST-PIERRE</text>
         </svg>
       </div>
       <div class="pcard-body">
-        <div class="pcard-type c-plongee">Plongée · Simulateur</div>
-        <div class="pcard-title">Simulateur Remontée Assistée</div>
-        <div class="pcard-desc">Simulateur de remontée et de secours en plongée. Aide à la préparation des certifications et à la pratique des procédures d'urgence RIFAP.</div>
+        <div class="pcard-type c-plongee">Plongée · Simulateur 3D <span class="badge-new">NEW</span></div>
+        <div class="pcard-title">Remontée Assistée 3D</div>
+        <div class="pcard-desc">Simulateur immersif de sauvetage en plongée avec rendu 3D. Gérez les stabs, poumon-ballast et vitesse de remontée pour ramener votre binôme en surface. 4 sites : Roussay, Martinique, Fosse VLG, Nemo 33.</div>
         <div class="pcard-footer">
-          <span class="pcard-link">MN90Mobile/rassist</span>
+          <span class="pcard-link">MN90Mobile/3dassist</span>
           <span class="pcard-arrow">→</span>
         </div>
       </div>
     </a>
 
-    <!-- DTR -->
+    <!-- Dessin de Profil (anciennement mal nommé DTR) -->
     <a class="pcard border-plongee" href="https://soaresden.github.io/MN90Mobile/decomp.html" target="_blank">
       <div class="pcard-art">
         <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
           <rect width="400" height="160" fill="#030d14"/>
-          <!-- Déco bars -->
-          <g>
-            <rect x="50" y="30" width="40" height="100" rx="4" fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" stroke-width="1"/>
-            <rect x="51" y="95" width="38" height="34" rx="3" fill="rgba(0,180,216,0.25)"/>
-            <text x="70" y="148" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">3m</text>
-            <rect x="110" y="30" width="40" height="100" rx="4" fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" stroke-width="1"/>
-            <rect x="111" y="75" width="38" height="54" rx="3" fill="rgba(0,180,216,0.2)"/>
-            <text x="130" y="148" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">6m</text>
-            <rect x="170" y="30" width="40" height="100" rx="4" fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" stroke-width="1"/>
-            <rect x="171" y="55" width="38" height="74" rx="3" fill="rgba(0,180,216,0.15)"/>
-            <text x="190" y="148" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">9m</text>
-            <rect x="230" y="30" width="40" height="100" rx="4" fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" stroke-width="1"/>
-            <rect x="231" y="40" width="38" height="89" rx="3" fill="rgba(0,180,216,0.1)"/>
-            <text x="250" y="148" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">12m</text>
-            <rect x="290" y="30" width="40" height="100" rx="4" fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" stroke-width="1"/>
-            <rect x="291" y="32" width="38" height="97" rx="3" fill="rgba(0,180,216,0.07)"/>
-            <text x="310" y="148" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">15m</text>
+          <!-- Grid axes -->
+          <line x1="50" y1="15" x2="50" y2="135" stroke="rgba(0,180,216,0.25)" stroke-width="1.5"/>
+          <line x1="50" y1="135" x2="380" y2="135" stroke="rgba(0,180,216,0.25)" stroke-width="1.5"/>
+          <!-- Grid lines -->
+          <g stroke="rgba(0,180,216,0.06)" stroke-width="1">
+            <line x1="50" y1="55" x2="380" y2="55"/>
+            <line x1="50" y1="95" x2="380" y2="95"/>
+            <line x1="150" y1="15" x2="150" y2="135"/>
+            <line x1="250" y1="15" x2="250" y2="135"/>
+            <line x1="350" y1="15" x2="350" y2="135"/>
           </g>
-          <!-- Highlight top of 3m bar -->
-          <rect x="50" y="94" width="40" height="4" rx="2" fill="var(--c-plongee)"/>
-          <text x="350" y="90" font-family="'Space Mono',monospace" font-size="20" font-weight="700" fill="var(--c-plongee)">DTR</text>
+          <!-- Dive profile drawn curve -->
+          <polyline points="50,30 100,30 140,80 180,80 200,95 230,60 260,60 290,30 320,30 340,105 360,125 375,135" 
+            stroke="var(--c-plongee)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Area fill under -->
+          <polygon points="50,30 100,30 140,80 180,80 200,95 230,60 260,60 290,30 320,30 340,105 360,125 375,135 375,135 50,135"
+            fill="rgba(0,180,216,0.06)"/>
+          <!-- N2 saturation overlay -->
+          <polyline points="50,120 100,118 140,108 180,100 200,95 230,88 260,82 290,72 320,65 340,85 360,110 375,130"
+            stroke="rgba(255,107,53,0.5)" stroke-width="1.5" fill="none" stroke-dasharray="4,3"/>
+          <!-- Labels -->
+          <text x="40" y="33" text-anchor="end" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,216,0.5)">0m</text>
+          <text x="40" y="98" text-anchor="end" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,216,0.5)">30m</text>
+          <text x="40" y="138" text-anchor="end" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,216,0.5)">60m</text>
+          <!-- GF badge -->
+          <rect x="280" y="18" width="90" height="34" rx="6" fill="rgba(0,0,0,0.4)" stroke="rgba(0,180,216,0.25)" stroke-width="1"/>
+          <text x="325" y="31" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,216,0.5)">GF LOW / HIGH</text>
+          <text x="325" y="45" text-anchor="middle" font-family="'Space Mono',monospace" font-size="10" font-weight="700" fill="var(--c-plongee)">30% / 85%</text>
+          <!-- N2 legend -->
+          <line x1="55" y1="148" x2="75" y2="148" stroke="rgba(255,107,53,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="80" y="152" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,107,53,0.6)">Saturation N₂</text>
+          <line x1="175" y1="148" x2="195" y2="148" stroke="var(--c-plongee)" stroke-width="2"/>
+          <text x="200" y="152" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,216,0.6)">Profil dessiné</text>
         </svg>
       </div>
       <div class="pcard-body">
-        <div class="pcard-type c-plongee">Plongée · Décompression</div>
-        <div class="pcard-title">Planificateur DTR</div>
-        <div class="pcard-desc">Calculateur de durée totale de remontée. Planification précise des paliers de décompression aux stops 3m, 6m, 9m, 12m et 15m.</div>
+        <div class="pcard-type c-plongee">Plongée · Profil</div>
+        <div class="pcard-title">Dessin de Profil de Plongée</div>
+        <div class="pcard-desc">Dessinez votre profil de plongée à la souris et obtenez une analyse automatique de la saturation en N₂, avec gradient factors (GF Low/High) et tableau temps/profondeur en temps réel.</div>
         <div class="pcard-footer">
           <span class="pcard-link">MN90Mobile/decomp</span>
           <span class="pcard-arrow">→</span>
@@ -875,39 +906,141 @@ footer {
       </div>
     </a>
 
-    <!-- Nitrox -->
+    <!-- Calculateur Nitrox -->
     <a class="pcard border-plongee" href="https://soaresden.github.io/MN90Mobile/nitrox.html" target="_blank">
       <div class="pcard-art">
         <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
           <rect width="400" height="160" fill="#030d14"/>
-          <!-- Nitrox gauge -->
           <circle cx="200" cy="80" r="60" fill="rgba(0,180,216,0.04)" stroke="rgba(0,180,216,0.2)" stroke-width="1.5"/>
-          <!-- Arc segments -->
           <path d="M 200 20 A 60 60 0 0 1 260 80" stroke="#00ff88" stroke-width="8" fill="none" stroke-linecap="round"/>
           <path d="M 200 20 A 60 60 0 0 0 140 80" stroke="var(--c-plongee)" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.4"/>
-          <!-- O2 percentage -->
           <text x="200" y="72" text-anchor="middle" font-family="'Space Mono',monospace" font-size="22" font-weight="700" fill="white">32%</text>
           <text x="200" y="88" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="rgba(0,180,216,0.6)">O₂</text>
-          <!-- MOD indicator -->
-          <rect x="290" y="45" width="80" height="40" rx="6" fill="rgba(0,255,136,0.08)" stroke="rgba(0,255,136,0.3)" stroke-width="1"/>
-          <text x="330" y="62" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,255,136,0.7)">MOD</text>
-          <text x="330" y="78" text-anchor="middle" font-family="'Space Mono',monospace" font-size="13" font-weight="700" fill="#00ff88">33m</text>
+          <!-- MOD -->
+          <rect x="290" y="30" width="80" height="40" rx="6" fill="rgba(0,255,136,0.08)" stroke="rgba(0,255,136,0.3)" stroke-width="1"/>
+          <text x="330" y="47" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,255,136,0.7)">MOD</text>
+          <text x="330" y="63" text-anchor="middle" font-family="'Space Mono',monospace" font-size="13" font-weight="700" fill="#00ff88">33m</text>
+          <!-- EAD -->
+          <rect x="290" y="80" width="80" height="40" rx="6" fill="rgba(0,180,216,0.08)" stroke="rgba(0,180,216,0.3)" stroke-width="1"/>
+          <text x="330" y="97" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.7)">EAD</text>
+          <text x="330" y="113" text-anchor="middle" font-family="'Space Mono',monospace" font-size="13" font-weight="700" fill="var(--c-plongee)">24m</text>
           <!-- N2 label -->
           <rect x="30" y="45" width="80" height="40" rx="6" fill="rgba(0,180,216,0.08)" stroke="rgba(0,180,216,0.3)" stroke-width="1"/>
           <text x="70" y="62" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="var(--c-plongee)">N₂ EAN32</text>
           <text x="70" y="78" text-anchor="middle" font-family="'Space Mono',monospace" font-size="13" font-weight="700" fill="var(--c-plongee)">68%</text>
+          <!-- Nitrox optimal badge -->
+          <rect x="60" y="115" width="150" height="22" rx="5" fill="rgba(0,255,136,0.05)" stroke="rgba(0,255,136,0.2)" stroke-width="1"/>
+          <text x="135" y="129" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,255,136,0.5)">Nitrox optimal · Formules</text>
         </svg>
       </div>
       <div class="pcard-body">
         <div class="pcard-type c-plongee">Plongée · Nitrox</div>
         <div class="pcard-title">Calculateur Nitrox</div>
-        <div class="pcard-desc">Calcul de la profondeur maximale d'exploitation (MOD), équivalent de profondeur air et vérification des mélanges Nitrox EAN.</div>
+        <div class="pcard-desc">MOD, profondeur équivalente air (EAD) et Nitrox optimal pour une profondeur donnée. Formules pédagogiques complètes, tableau de référence EAN par PPO₂.</div>
         <div class="pcard-footer">
           <span class="pcard-link">MN90Mobile/nitrox</span>
           <span class="pcard-arrow">→</span>
         </div>
       </div>
     </a>
+
+    <!-- RASSIST (ancienne version textuelle) -->
+    <a class="pcard border-plongee" href="https://soaresden.github.io/MN90Mobile/rassist/" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#030d14"/>
+          <defs>
+            <linearGradient id="ascent" x1="0%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:0.6"/>
+              <stop offset="60%" style="stop-color:#ffd60a;stop-opacity:0.4"/>
+              <stop offset="100%" style="stop-color:#00b4d8;stop-opacity:0.2"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="160" fill="url(#ascent)" opacity="0.1"/>
+          <g stroke="rgba(0,180,216,0.07)" stroke-width="1">
+            <line x1="50" y1="20" x2="50" y2="140"/>
+            <line x1="50" y1="140" x2="380" y2="140"/>
+          </g>
+          <polyline points="70,120 100,110 130,95 160,80 200,70 230,60 260,45 290,30 310,20 320,15" 
+            stroke="var(--c-plongee)" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+          <polygon points="70,120 100,110 130,95 160,80 200,70 230,60 260,45 290,30 310,20 320,15 320,140 70,140" 
+            fill="rgba(0,180,216,0.06)"/>
+          <circle cx="240" cy="55" r="5" fill="#ffd60a"/>
+          <rect x="248" y="47" width="70" height="18" rx="4" fill="rgba(255,214,10,0.1)" stroke="rgba(255,214,10,0.4)" stroke-width="1"/>
+          <text x="283" y="59" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="#ffd60a">Palier 3m</text>
+          <text x="40" y="125" text-anchor="end" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">40m</text>
+          <text x="40" y="85" text-anchor="end" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">20m</text>
+          <text x="40" y="30" text-anchor="end" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">3m</text>
+          <rect x="290" y="115" width="80" height="18" rx="5" fill="rgba(255,107,53,0.15)" stroke="rgba(255,107,53,0.4)" stroke-width="1"/>
+          <text x="330" y="127" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="var(--c-games)" font-weight="700">RIFAP</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type c-plongee">Plongée · Simulateur</div>
+        <div class="pcard-title">Remontée Assistée — Guide</div>
+        <div class="pcard-desc">Guide interactif des procédures de remontée assistée et de secours. Aide à la préparation des certifications RIFAP, étape par étape avec schémas.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">MN90Mobile/rassist</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Dive Game -->
+    <a class="pcard border-plongee" href="https://soaresden.github.io/MN90Mobile/dive.html" target="_blank">
+      <div class="pcard-art">
+        <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="160" fill="#030d14"/>
+          <!-- Ocean bg -->
+          <defs>
+            <linearGradient id="sea" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#001f3d;stop-opacity:1"/>
+              <stop offset="100%" style="stop-color:#003a6e;stop-opacity:0.4"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="160" fill="url(#sea)"/>
+          <!-- Pixel-style fish -->
+          <g transform="translate(60,50)" fill="rgba(0,180,216,0.7)">
+            <rect x="0" y="4" width="20" height="8" rx="2"/>
+            <rect x="20" y="2" width="4" height="12" rx="1"/>
+            <rect x="16" y="6" width="3" height="3" fill="white" rx="1"/>
+          </g>
+          <g transform="translate(280,90)" fill="rgba(255,107,53,0.6)">
+            <rect x="0" y="4" width="28" height="10" rx="2"/>
+            <rect x="28" y="2" width="5" height="14" rx="1"/>
+            <rect x="22" y="6" width="4" height="4" fill="white" rx="1"/>
+          </g>
+          <!-- Diver score HUD -->
+          <rect x="140" y="25" width="120" height="80" rx="8" fill="rgba(0,0,0,0.5)" stroke="rgba(0,180,216,0.3)" stroke-width="1"/>
+          <text x="200" y="44" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">OXYGEN</text>
+          <rect x="155" y="50" width="90" height="8" rx="4" fill="rgba(255,255,255,0.06)"/>
+          <rect x="155" y="50" width="65" height="8" rx="4" fill="rgba(0,255,136,0.5)"/>
+          <text x="200" y="76" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,216,0.5)">SCORE</text>
+          <text x="200" y="92" text-anchor="middle" font-family="'Space Mono',monospace" font-size="18" font-weight="700" fill="var(--c-plongee)">1 240</text>
+          <!-- Jellyfish obstacle -->
+          <g transform="translate(310,30)" opacity="0.7">
+            <ellipse cx="20" cy="16" rx="18" ry="12" fill="rgba(199,125,255,0.2)" stroke="rgba(199,125,255,0.4)" stroke-width="1"/>
+            <line x1="12" y1="27" x2="10" y2="45" stroke="rgba(199,125,255,0.3)" stroke-width="1.5"/>
+            <line x1="17" y1="28" x2="16" y2="48" stroke="rgba(199,125,255,0.3)" stroke-width="1.5"/>
+            <line x1="23" y1="28" x2="24" y2="48" stroke="rgba(199,125,255,0.3)" stroke-width="1.5"/>
+            <line x1="28" y1="27" x2="30" y2="45" stroke="rgba(199,125,255,0.3)" stroke-width="1.5"/>
+          </g>
+          <!-- GAME label -->
+          <rect x="14" y="130" width="50" height="18" rx="9" fill="rgba(255,214,10,0.15)" stroke="rgba(255,214,10,0.4)" stroke-width="1"/>
+          <text x="39" y="142" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" font-weight="700" fill="#ffd60a">GAME</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type c-plongee">Plongée · Jeu</div>
+        <div class="pcard-title">Dive — Le Jeu du Plongeur</div>
+        <div class="pcard-desc">Mini-jeu de plongée : contrôlez votre plongeur, évitez les obstacles et gérez votre réserve d'oxygène. Score en temps réel et niveaux de difficulté progressifs.</div>
+        <div class="pcard-footer">
+          <span class="pcard-link">MN90Mobile/dive</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
   </div>
 </section>
 
@@ -929,21 +1062,17 @@ footer {
       <div class="pcard-art">
         <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
           <rect width="400" height="160" fill="#040e0a"/>
-          <!-- Terminal look -->
           <rect x="20" y="20" width="360" height="120" rx="8" fill="rgba(6,214,160,0.04)" stroke="rgba(6,214,160,0.15)" stroke-width="1"/>
-          <!-- Terminal header -->
           <rect x="20" y="20" width="360" height="24" rx="8" fill="rgba(6,214,160,0.08)"/>
           <circle cx="38" cy="32" r="5" fill="rgba(255,100,100,0.5)"/>
           <circle cx="54" cy="32" r="5" fill="rgba(255,200,0,0.4)"/>
           <circle cx="70" cy="32" r="5" fill="rgba(0,200,100,0.4)"/>
           <text x="200" y="37" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="rgba(6,214,160,0.5)">dark_web_checker.js</text>
-          <!-- Code lines -->
           <text x="35" y="62" font-family="'Space Mono',monospace" font-size="9" fill="rgba(6,214,160,0.4)">$ checking 247 passwords...</text>
           <text x="35" y="78" font-family="'Space Mono',monospace" font-size="9" fill="rgba(6,214,160,0.6)">✓ <tspan fill="rgba(6,214,160,0.9)">243</tspan> passwords OK</text>
           <text x="35" y="94" font-family="'Space Mono',monospace" font-size="9" fill="rgba(255,100,100,0.8)">⚠ <tspan fill="rgba(255,100,100,1)">4</tspan> breaches detected</text>
           <text x="35" y="110" font-family="'Space Mono',monospace" font-size="9" fill="rgba(6,214,160,0.3)">  ↳ haveibeenpwned.com API</text>
           <text x="35" y="126" font-family="'Space Mono',monospace" font-size="9" fill="rgba(6,214,160,0.2)">  ↳ Bitwarden export compat.</text>
-          <!-- Cursor -->
           <rect x="35" y="133" width="7" height="10" fill="rgba(6,214,160,0.7)" rx="1">
             <animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/>
           </rect>
@@ -980,24 +1109,20 @@ footer {
       <div class="pcard-art">
         <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
           <rect width="400" height="160" fill="#0d0c00"/>
-          <!-- Stars bg -->
           <circle cx="50" cy="30" r="1.5" fill="rgba(255,214,10,0.4)"/>
           <circle cx="150" cy="20" r="1" fill="rgba(255,214,10,0.3)"/>
           <circle cx="250" cy="35" r="1.5" fill="rgba(255,214,10,0.4)"/>
           <circle cx="350" cy="25" r="1" fill="rgba(255,214,10,0.3)"/>
           <circle cx="100" cy="140" r="1.5" fill="rgba(255,214,10,0.3)"/>
           <circle cx="320" cy="135" r="1" fill="rgba(255,214,10,0.2)"/>
-          <!-- Inspector character badge -->
           <circle cx="200" cy="80" r="52" fill="rgba(255,214,10,0.05)" stroke="rgba(255,214,10,0.15)" stroke-width="1.5" stroke-dasharray="6,4"/>
           <text x="200" y="95" text-anchor="middle" font-size="44">🔍</text>
-          <!-- Score panels -->
           <rect x="20" y="115" width="80" height="30" rx="5" fill="rgba(255,214,10,0.08)" stroke="rgba(255,214,10,0.25)" stroke-width="1"/>
           <text x="60" y="127" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,214,10,0.5)">SCORE</text>
           <text x="60" y="140" text-anchor="middle" font-family="'Space Mono',monospace" font-size="12" font-weight="700" fill="#ffd60a">2450</text>
           <rect x="300" y="115" width="80" height="30" rx="5" fill="rgba(255,214,10,0.08)" stroke="rgba(255,214,10,0.25)" stroke-width="1"/>
           <text x="340" y="127" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,214,10,0.5)">RANG</text>
           <text x="340" y="140" text-anchor="middle" font-family="'Space Mono',monospace" font-size="12" font-weight="700" fill="#ffd60a">#3</text>
-          <!-- EDF badge -->
           <rect x="155" y="18" width="90" height="20" rx="4" fill="rgba(255,214,10,0.12)" stroke="rgba(255,214,10,0.3)" stroke-width="1"/>
           <text x="200" y="32" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" font-weight="700" fill="#ffd60a">EDF Quality Week</text>
         </svg>
@@ -1033,7 +1158,6 @@ footer {
       <div class="pcard-art">
         <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
           <rect width="400" height="160" fill="#0e0006"/>
-          <!-- Checklist style -->
           <g transform="translate(40,20)">
             <rect width="300" height="30" rx="5" fill="rgba(255,77,109,0.06)" stroke="rgba(255,77,109,0.15)" stroke-width="1"/>
             <text x="40" y="20" font-family="'DM Sans',sans-serif" font-size="11" fill="rgba(255,77,109,0.8)">Inspection HSE · Point de contrôle</text>
@@ -1052,7 +1176,6 @@ footer {
             <circle cx="15" cy="15" r="8" fill="rgba(255,77,109,0.15)" stroke="rgba(255,77,109,0.6)" stroke-width="1.5"/>
             <text x="15" y="20" text-anchor="middle" font-size="10" fill="#ff4d6d">!</text>
           </g>
-          <!-- Shield icon -->
           <g transform="translate(355,55)">
             <circle r="22" fill="rgba(255,77,109,0.08)" stroke="rgba(255,77,109,0.25)" stroke-width="1.5"/>
             <text text-anchor="middle" y="8" font-size="20">🦺</text>
@@ -1074,7 +1197,6 @@ footer {
 
 </main>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <span class="footer-text">© 2025 soaresden · Tous droits réservés</span>
