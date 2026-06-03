@@ -1,61 +1,56 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>soaresden · Portfolio</title>
+  <meta name="description" content="Portfolio de side projects de soaresden : jeux, musique, plongée, sécurité, quiz et outils." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
 
-<header>
-  <div class="header-glow"></div>
-  <div class="header-inner">
-    <div>
-      <p style="font-family:var(--font-display);font-size:0.7rem;color:var(--text-muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;">soaresden · github.io</p>
-      <div class="header-title">
-        <span>Side</span>
-        <span class="accent">Projects</span>
-        <span style="font-size:0.45em;font-weight:400;background:none;-webkit-text-fill-color:var(--text-muted);margin-top:4px;display:block;letter-spacing:0.01em;">& Créations personnelles</span>
+  <main class="page-shell">
+    <header class="hero">
+      <div>
+        <div class="eyebrow">✨ soaresden · github.io</div>
+        <h1>Side Projects <span>en boxes.</span></h1>
       </div>
-    </div>
-    <div class="header-meta">
-      <span class="header-tag">Version 2025</span>
-      <p class="header-desc">Projets web, outils, jeux &amp; expériences — tous développés en dehors du boulot.</p>
-      <a href="https://github.com/soaresden" target="_blank" style="font-family:var(--font-display);font-size:0.72rem;color:var(--text-dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-top:8px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        github.com/soaresden
-      </a>
-    </div>
-  </div>
-</header>
+      <aside class="hero-note">
+        <div class="note-title">Version légère · 2026</div>
+        <p>Une landing plus respirante : d’abord les catégories, puis les projets apparaissent dynamiquement au clic.</p>
+      </aside>
+    </header>
 
-<nav class="nav-strip">
-  <div class="nav-inner">
-    <!-- Les nav pills seront générées dynamiquement par main.js -->
-  </div>
-</nav>
+    <section class="category-grid" id="categoryGrid" aria-label="Catégories de projets"></section>
 
-<main id="projects-container">
-  <!-- Les sections de projets seront générées dynamiquement par main.js -->
-</main>
+    <section class="selection-bar">
+      <div>
+        <div class="section-kicker">Sélection</div>
+        <h2 id="selectionTitle">Tous les projets</h2>
+        <p id="selectionSubtitle">Tous les side projects et créations personnelles.</p>
+      </div>
+      <label class="search-box">
+        <span>🔎</span>
+        <input id="searchInput" type="search" placeholder="Chercher un projet…" autocomplete="off" />
+      </label>
+    </section>
 
-<footer>
-  <div class="footer-inner">
-    <span class="footer-text">© 2025 soaresden · Tous droits réservés</span>
-    <span class="footer-text" style="color:var(--text-muted)">Built with ♥ · HTML / CSS / JS</span>
-    <a class="footer-gh" href="https://github.com/soaresden" target="_blank">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-      github.com/soaresden
-    </a>
-  </div>
-</footer>
+    <section class="projects-grid" id="projectsGrid" aria-live="polite"></section>
+    <div class="empty-state" id="emptyState">Aucun projet trouvé 😅 Essaie un autre mot-clé.</div>
 
-<!-- Scripts - chargement des modules -->
-<script src="projects.js"></script>
-<script src="main.js"></script>
+    <footer class="footer">
+      <span>© 2026 soaresden · Side projects & créations personnelles</span>
+      <a class="github-link" href="https://github.com/soaresden" target="_blank" rel="noreferrer">GitHub →</a>
+    </footer>
+  </main>
 
+  <script src="data.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
