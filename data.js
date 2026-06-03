@@ -1,11 +1,19 @@
 const CATEGORIES = [
   {
-    "id": "games",
+    "id": "boardgames",
     "label": "Board Games",
-    "subtitle": "Assistants, soundboards & jeux de table",
+    "subtitle": "Assistants de jeu, rôles et tablettes",
     "icon": "🎲",
     "color": "#f97316",
     "soft": "#ffedd5"
+  },
+  {
+    "id": "soundboards",
+    "label": "Soundboards",
+    "subtitle": "Soundboards jouables + générateur",
+    "icon": "🔊",
+    "color": "#2563eb",
+    "soft": "#dbeafe"
   },
   {
     "id": "music",
@@ -18,7 +26,7 @@ const CATEGORIES = [
   {
     "id": "plongee",
     "label": "Plongée",
-    "subtitle": "MN90, simulateurs & outils pédagogiques",
+    "subtitle": "MN90, profils, Nitrox et simulateurs",
     "icon": "🌊",
     "color": "#0891b2",
     "soft": "#cffafe"
@@ -51,7 +59,7 @@ const CATEGORIES = [
 
 const PROJECTS = [
   {
-    "category": "games",
+    "category": "boardgames",
     "title": "😊 Smile Life Tracker",
     "type": "Board Game · Tracker",
     "url": "https://soaresden.github.io/smilelifetracker/",
@@ -61,10 +69,11 @@ const PROJECTS = [
       "tracker",
       "score",
       "mobile"
-    ]
+    ],
+    "art": "smile"
   },
   {
-    "category": "games",
+    "category": "boardgames",
     "title": "TimeBomb GUI",
     "type": "Board Game · Assistant",
     "url": "https://soaresden.github.io/TimeBombGUI/",
@@ -74,13 +83,14 @@ const PROJECTS = [
       "roles",
       "party game",
       "timer"
-    ]
+    ],
+    "art": "timebomb"
   },
   {
-    "category": "games",
+    "category": "boardgames",
     "title": "🧠 Insider Tablet Version",
     "type": "Board Game · Tablet App",
-    "url": "https://github.com/soaresden/insidertabletversion",
+    "url": "https://soaresden.github.io/insidertabletversion/",
     "desc": "Version tablette pour Insider : attribution des rôles, écran anti-spoil, révélation discrète du mot, timer court avec bips et changement de mot intégré.",
     "accent": "#8b5cf6",
     "tags": [
@@ -88,13 +98,13 @@ const PROJECTS = [
       "insider",
       "roles"
     ],
-    "github": true,
-    "new": true
+    "new": true,
+    "art": "insider"
   },
   {
-    "category": "games",
+    "category": "soundboards",
     "title": "🛠️ SoundBoardHTMLMaker",
-    "type": "Board Game · Generator",
+    "type": "Soundboard · Generator",
     "url": "https://github.com/soaresden/SoundBoardHTMLMaker",
     "desc": "Template open-source pour générer des soundboards HTML autonomes depuis un dossier de MP3. Éditeur web, drag & drop, thèmes et build all-in-one.",
     "accent": "#0891b2",
@@ -103,12 +113,13 @@ const PROJECTS = [
       "soundboard",
       "open-source"
     ],
-    "github": true
+    "github": true,
+    "art": "maker"
   },
   {
-    "category": "games",
+    "category": "soundboards",
     "title": "🐺 Board LoupGarou",
-    "type": "Board Game · Soundboard",
+    "type": "Soundboard · Board Game",
     "url": "https://soaresden.github.io/SoundBoardHTMLMaker/FOLDERTOEXPORT/Loup%20Garou%20by%20Denis/",
     "desc": "Soundboard immersive pour MJ Loup-Garou : musiques par phase et effets sonores par rôle. Optimisée mobile/tablette.",
     "accent": "#5174db",
@@ -116,12 +127,13 @@ const PROJECTS = [
       "soundboard",
       "MJ",
       "ambiance"
-    ]
+    ],
+    "art": "wolf"
   },
   {
-    "category": "games",
+    "category": "soundboards",
     "title": "🐍 Metal Gear Board Game",
-    "type": "Board Game · Soundboard · MGS",
+    "type": "Soundboard · MGS",
     "url": "https://soaresden.github.io/SoundBoardHTMLMaker/FOLDERTOEXPORT/Metal%20Gear%20Board%20Game%20by%20Soaresden/",
     "desc": "Soundboard Metal Gear Solid : 14 stages, musiques originales et SFX classés. Interface tactique inspirée codec/radar.",
     "accent": "#2563eb",
@@ -129,7 +141,8 @@ const PROJECTS = [
       "MGS",
       "soundboard",
       "boss"
-    ]
+    ],
+    "art": "mgs"
   },
   {
     "category": "music",
@@ -143,7 +156,8 @@ const PROJECTS = [
       "social",
       "discovery"
     ],
-    "new": true
+    "new": true,
+    "art": "wemeet"
   },
   {
     "category": "music",
@@ -156,7 +170,8 @@ const PROJECTS = [
       "mp3",
       "tempo",
       "batch"
-    ]
+    ],
+    "art": "tempo"
   },
   {
     "category": "music",
@@ -169,11 +184,26 @@ const PROJECTS = [
       "score",
       "player",
       "browser"
-    ]
+    ],
+    "art": "score"
   },
   {
     "category": "plongee",
-    "title": "MN90Mobile",
+    "title": "MN90Mobile · Accueil",
+    "type": "Plongée · Suite MN90",
+    "url": "https://soaresden.github.io/MN90Mobile/index.html",
+    "desc": "Page d’accueil de la suite MN90Mobile : point d’entrée vers les outils de planification, Nitrox, profils et simulateurs.",
+    "accent": "#0891b2",
+    "tags": [
+      "MN90",
+      "index",
+      "mobile"
+    ],
+    "art": "mn90"
+  },
+  {
+    "category": "plongee",
+    "title": "MN90Mobile · Tables",
     "type": "Plongée · Tables MN90",
     "url": "https://soaresden.github.io/MN90Mobile/",
     "desc": "Application mobile de planification de plongée : paliers, autonomie bouteille, groupes successifs et intervalles de surface.",
@@ -182,7 +212,8 @@ const PROJECTS = [
       "MN90",
       "paliers",
       "mobile"
-    ]
+    ],
+    "art": "tables"
   },
   {
     "category": "plongee",
@@ -195,7 +226,8 @@ const PROJECTS = [
       "3D",
       "RIFAP",
       "simulation"
-    ]
+    ],
+    "art": "assist3d"
   },
   {
     "category": "plongee",
@@ -208,7 +240,22 @@ const PROJECTS = [
       "profil",
       "N₂",
       "GF"
-    ]
+    ],
+    "art": "profile"
+  },
+  {
+    "category": "plongee",
+    "title": "DTR · Plongée",
+    "type": "Plongée · DTR",
+    "url": "https://soaresden.github.io/MN90Mobile/dtr.html",
+    "desc": "Outil dédié à la DTR / durée totale de remontée dans la suite MN90Mobile.",
+    "accent": "#0e7490",
+    "tags": [
+      "DTR",
+      "remontée",
+      "MN90"
+    ],
+    "art": "dtr"
   },
   {
     "category": "plongee",
@@ -221,20 +268,8 @@ const PROJECTS = [
       "nitrox",
       "MOD",
       "EAD"
-    ]
-  },
-  {
-    "category": "plongee",
-    "title": "Remontée Assistée — Guide",
-    "type": "Plongée · Simulateur",
-    "url": "https://soaresden.github.io/MN90Mobile/rassist/",
-    "desc": "Guide interactif des procédures de remontée assistée et de secours. Aide à la préparation RIFAP.",
-    "accent": "#ca8a04",
-    "tags": [
-      "guide",
-      "RIFAP",
-      "secours"
-    ]
+    ],
+    "art": "nitrox"
   },
   {
     "category": "plongee",
@@ -247,7 +282,8 @@ const PROJECTS = [
       "game",
       "oxygen",
       "arcade"
-    ]
+    ],
+    "art": "dive"
   },
   {
     "category": "securite",
@@ -260,7 +296,8 @@ const PROJECTS = [
       "password",
       "Bitwarden",
       "breach"
-    ]
+    ],
+    "art": "security"
   },
   {
     "category": "quizz",
@@ -273,7 +310,8 @@ const PROJECTS = [
       "quiz",
       "quality",
       "Supabase"
-    ]
+    ],
+    "art": "quiz"
   },
   {
     "category": "tools",
@@ -286,6 +324,7 @@ const PROJECTS = [
       "HSE",
       "inspection",
       "actions"
-    ]
+    ],
+    "art": "hse"
   }
 ];

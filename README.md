@@ -1,17 +1,15 @@
-# Portfolio modulaire soaresden
+# Portfolio modulaire soaresden - v3 SVG
 
-Structure :
+Version avec mini-illustrations SVG réintégrées sur chaque carte projet.
 
-- `index.html` : structure de la page
-- `styles.css` : design clair / boxes / responsive
-- `data.js` : catégories + projets à modifier facilement
-- `script.js` : logique dynamique, filtre catégories et recherche
+Fichiers :
+- `index.html` : structure
+- `styles.css` : design clair + layout + miniatures SVG
+- `data.js` : catégories + projets + clé `art`
+- `script.js` : rendu dynamique + SVG inline
 
-## Mise en ligne GitHub Pages
-
-1. Dézipper le dossier.
-2. Copier les 4 fichiers à la racine du repo `soaresden.github.io`.
-3. Commit + push.
-4. GitHub Pages servira automatiquement `index.html`.
-
-Pas besoin de React, npm, build ou framework.
+Corrections incluses :
+- Insider Tablet Version -> https://soaresden.github.io/insidertabletversion/
+- Catégorie Soundboards séparée
+- `rassist` supprimé
+- MN90Mobile mis à jour avec index, racine, 3dassist, decomp, dtr, nitrox et dive.
