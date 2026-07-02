@@ -102,6 +102,21 @@ const PROJECTS = [
     "art": "insider"
   },
   {
+    "category": "boardgames",
+    "title": "⚖️ Gauche ou Droite ?",
+    "type": "Board Game · Party Game",
+    "url": "https://soaresden.github.io/GaucheDroiteGame/",
+    "desc": "Party game de débat : glisse les prénoms dans les camps ✊ Gauche ou 💼 Droite, l'IA rend son verdict. Leaderboard, historique et profils persistants.",
+    "accent": "#e11d48",
+    "tags": [
+      "party game",
+      "IA",
+      "débat"
+    ],
+    "new": true,
+    "art": "gauchedroite"
+  },
+  {
     "category": "soundboards",
     "title": "🛠️ SoundBoardHTMLMaker",
     "type": "Soundboard · Generator",
@@ -186,6 +201,21 @@ const PROJECTS = [
       "browser"
     ],
     "art": "score"
+  },
+  {
+    "category": "music",
+    "title": "📱 Mobile Player",
+    "type": "Music · Web Player",
+    "url": "https://soaresden.github.io/MobilePlayer/",
+    "desc": "Lecteur audio mobile façon Spotify : playlists, lecture aléatoire, pochettes et téléchargements, le tout dans le navigateur.",
+    "accent": "#22c55e",
+    "tags": [
+      "player",
+      "mobile",
+      "playlist"
+    ],
+    "new": true,
+    "art": "player"
   },
   {
     "category": "plongee",
