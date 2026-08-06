@@ -32,6 +32,22 @@ const CATEGORIES = [
     "soft": "#cffafe"
   },
   {
+    "id": "gaming",
+    "label": "Gaming",
+    "subtitle": "Retrogaming, consoles & homebrew",
+    "icon": "🎮",
+    "color": "#db2777",
+    "soft": "#fce7f3"
+  },
+  {
+    "id": "photo",
+    "label": "Photo / Média",
+    "subtitle": "Tri, doublons et visualisation de médias",
+    "icon": "📷",
+    "color": "#6366f1",
+    "soft": "#e0e7ff"
+  },
+  {
     "id": "securite",
     "label": "Sécurité",
     "subtitle": "Cyber, mots de passe & contrôle",
@@ -314,6 +330,70 @@ const PROJECTS = [
       "arcade"
     ],
     "art": "dive"
+  },
+  {
+    "category": "plongee",
+    "title": "📒 Carnet de Plongée",
+    "type": "Plongée · Carnet numérique",
+    "url": "https://github.com/soaresden/PlongeeJournal",
+    "desc": "Carnet de plongée local, sans compte ni cloud : un simple JSON sur ton disque. Saisie mobile, import .fit (Suunto/Garmin/Shearwater), faune & flore par lieu via iNaturalist, carte, calendrier et PWA hors connexion.",
+    "accent": "#0891b2",
+    "tags": [
+      "carnet",
+      "fit",
+      "PWA"
+    ],
+    "new": true,
+    "github": true,
+    "art": "carnet"
+  },
+  {
+    "category": "photo",
+    "title": "🗂️ TriPhoto",
+    "type": "Photo · Desktop App",
+    "url": "https://github.com/soaresden/photoorganizer",
+    "desc": "App Python/Qt pour ranger et dédoublonner des milliers de photos et vidéos. Comparaison de contenu réel (dHash, taille, durée, vidéos image par image), tri chronologique fiable et visualiseur avec frise interactive.",
+    "accent": "#6366f1",
+    "tags": [
+      "doublons",
+      "dHash",
+      "PySide6"
+    ],
+    "new": true,
+    "github": true,
+    "art": "triphoto"
+  },
+  {
+    "category": "photo",
+    "title": "🎬 Video Thumbnail Changer",
+    "type": "Média · Desktop App",
+    "url": "https://github.com/soaresden/Video-Thumbnail-Changer",
+    "desc": "Réécriture Python d'un outil VB.NET pour embarquer une miniature personnalisée dans une vidéo. Extraction de 10 frames, lecteur VLC intégré, montage 2×2, texte en surimpression avec aperçu live et accélération GPU.",
+    "accent": "#6366f1",
+    "tags": [
+      "ffmpeg",
+      "thumbnail",
+      "VLC"
+    ],
+    "new": true,
+    "github": true,
+    "art": "thumbnail"
+  },
+  {
+    "category": "gaming",
+    "title": "🎮 RETROLauncher · exFAT PS2",
+    "type": "Gaming · Fork PS2 · Homebrew",
+    "url": "https://github.com/soaresden/RETROLauncher",
+    "desc": "Fork du launcher retro PS2 en Lua (Enceladus) avec support exFAT : bibliothèques de ROMs lancées via RetroArch, POPStarter, Neutrino, OPL et wLaunchELF ISR, dans une interface rétrowave.",
+    "accent": "#db2777",
+    "tags": [
+      "PS2",
+      "exFAT",
+      "fork"
+    ],
+    "new": true,
+    "github": true,
+    "art": "retro"
   },
   {
     "category": "securite",
