@@ -133,6 +133,21 @@ const PROJECTS = [
     "art": "gauchedroite"
   },
   {
+    "category": "boardgames",
+    "title": "🤫 Le Jeu des Secrets",
+    "type": "Board Game · Party Game",
+    "url": "https://soaresden.github.io/SocialSecretGame/",
+    "desc": "Party game en pass-and-play : chacun écrit un secret anonyme, puis on devine qui a écrit quoi. Points visibles et cachés, leaderboard, journal de partie et export JSON.",
+    "accent": "#7c3aed",
+    "tags": [
+      "party game",
+      "secrets",
+      "anonyme"
+    ],
+    "new": true,
+    "art": "secrets"
+  },
+  {
     "category": "soundboards",
     "title": "🛠️ SoundBoardHTMLMaker",
     "type": "Soundboard · Generator",
