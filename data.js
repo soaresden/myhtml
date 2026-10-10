@@ -1,455 +1,377 @@
+// Source unique du portfolio : tout le site est généré depuis ce fichier.
+//
+// Projet :
+//   cat        id de la catégorie (CATEGORIES)
+//   title      nom affiché
+//   kind       petite ligne au-dessus du titre
+//   desc       2-3 phrases max
+//   url        lien principal (site en ligne, sinon le dépôt)
+//   repo       nom du dépôt github.com/soaresden/<repo> (optionnel)
+//   apk        lien direct vers l'APK (optionnel)
+//   links      sous-liens [{label, url}] (optionnel)
+//   platforms  web · android · wear · ps2 · switch · pc · handheld
+//   shot       image dans shots/ (900×337) ; sinon art = clé d'illustration SVG (art.js)
+//   wide       carte large (le projet phare de la catégorie)
+//   new        badge « Nouveau »
+//   accent     couleur de la carte (sinon celle de la catégorie)
+//
+// ARCHIVES : vieux petits outils, affichés en liste compacte en bas de page.
+
 const CATEGORIES = [
-  {
-    "id": "boardgames",
-    "label": "Board Games",
-    "subtitle": "Assistants de jeu, rôles et tablettes",
-    "icon": "🎲",
-    "color": "#f97316",
-    "soft": "#ffedd5"
-  },
-  {
-    "id": "soundboards",
-    "label": "Soundboards",
-    "subtitle": "Soundboards jouables + générateur",
-    "icon": "🔊",
-    "color": "#2563eb",
-    "soft": "#dbeafe"
-  },
-  {
-    "id": "music",
-    "label": "Music",
-    "subtitle": "Outils pour musiciens & créateurs",
-    "icon": "🎵",
-    "color": "#8b5cf6",
-    "soft": "#ede9fe"
-  },
-  {
-    "id": "plongee",
-    "label": "Plongée",
-    "subtitle": "MN90, profils, Nitrox et simulateurs",
-    "icon": "🌊",
-    "color": "#0891b2",
-    "soft": "#cffafe"
-  },
-  {
-    "id": "gaming",
-    "label": "Gaming",
-    "subtitle": "Retrogaming, consoles & homebrew",
-    "icon": "🎮",
-    "color": "#db2777",
-    "soft": "#fce7f3"
-  },
-  {
-    "id": "photo",
-    "label": "Photo / Média",
-    "subtitle": "Tri, doublons et visualisation de médias",
-    "icon": "📷",
-    "color": "#6366f1",
-    "soft": "#e0e7ff"
-  },
-  {
-    "id": "securite",
-    "label": "Sécurité",
-    "subtitle": "Cyber, mots de passe & contrôle",
-    "icon": "🛡️",
-    "color": "#059669",
-    "soft": "#d1fae5"
-  },
-  {
-    "id": "quizz",
-    "label": "Quiz",
-    "subtitle": "Expériences interactives & gamification",
-    "icon": "❔",
-    "color": "#ca8a04",
-    "soft": "#fef3c7"
-  },
-  {
-    "id": "tools",
-    "label": "Tools",
-    "subtitle": "Productivité, HSE & utilitaires",
-    "icon": "🛠️",
-    "color": "#e11d48",
-    "soft": "#ffe4e6"
-  }
+  { id: "plongee", label: "Plongée", short: "Plongée", icon: "🌊", color: "#0284c7",
+    blurb: "Construits au fil de mes formations FFESSM, avec et pour mon club, l'OGN." },
+  { id: "musique", label: "Musique", short: "Musique", icon: "🎻", color: "#7c3aed",
+    blurb: "Partitions, violon, groupe de potes et créations Suno." },
+  { id: "jeux", label: "Jeux de société", short: "Jeux", icon: "🎲", color: "#ea580c",
+    blurb: "Assistants de partie, party games et soundboards pour le maître du jeu." },
+  { id: "retro", label: "Retrogaming", short: "Rétro", icon: "🕹️", color: "#db2777",
+    blurb: "Homebrew PS2, Switch et consoles portables : lanceurs, sauvegardes, rétro-ingénierie." },
+  { id: "route", label: "Sur la route", short: "Route", icon: "🛵", color: "#059669",
+    blurb: "Carburant, trottinette et dashcam : des applis pour ce qui roule." },
+  { id: "media", label: "Photo & vidéo", short: "Média", icon: "📷", color: "#4f46e5",
+    blurb: "Ranger, dédoublonner et habiller des milliers de fichiers." },
+  { id: "outils", label: "Outils & boulot", short: "Outils", icon: "🛠️", color: "#be123c",
+    blurb: "Sécurité des mots de passe, et des jeux sérieux faits pour EDF Renouvelables." }
 ];
 
 const PROJECTS = [
+  // ── Plongée ──────────────────────────────────────────────
   {
-    "category": "boardgames",
-    "title": "😊 Smile Life Tracker",
-    "type": "Board Game · Tracker",
-    "url": "https://soaresden.github.io/smilelifetracker/",
-    "desc": "Compteur de smiles pour Smile Life et ses extensions. Inventaire des cartes par joueur, en-têtes figés, timer et export JSON.",
-    "accent": "#EC407A",
-    "tags": [
-      "tracker",
-      "score",
-      "mobile"
+    cat: "plongee", wide: true, new: true,
+    title: "MN90Mobile",
+    kind: "Suite d'outils de plongée",
+    desc: "Planificateur MN90 complet (paliers, autonomie, successives), profil à dessiner avec saturation et gradient factors, Nitrox, DTR, briefing et procédures, simulateur de remontée assistée et mini-jeu. Une appli Wear OS au poignet. PWA hors ligne, 6 langues.",
+    url: "https://soaresden.github.io/MN90Mobile/",
+    repo: "MN90Mobile",
+    links: [
+      { label: "Planificateur", url: "https://soaresden.github.io/MN90Mobile/planner/" },
+      { label: "Profil", url: "https://soaresden.github.io/MN90Mobile/decomp/" },
+      { label: "Saturation & GF", url: "https://soaresden.github.io/MN90Mobile/saturation/" },
+      { label: "Nitrox", url: "https://soaresden.github.io/MN90Mobile/nitrox/" },
+      { label: "DTR", url: "https://soaresden.github.io/MN90Mobile/dtr/" },
+      { label: "Briefing", url: "https://soaresden.github.io/MN90Mobile/briefing/" },
+      { label: "Procédures", url: "https://soaresden.github.io/MN90Mobile/procedures/" },
+      { label: "⌚ Montre", url: "https://soaresden.github.io/MN90Mobile/watch/" }
     ],
-    "art": "smile"
+    platforms: ["web", "android", "wear"],
+    art: "mn90scene"
   },
   {
-    "category": "boardgames",
-    "title": "TimeBomb GUI",
-    "type": "Board Game · Assistant",
-    "url": "https://soaresden.github.io/TimeBombGUI/",
-    "desc": "Interface de gestion pour parties de TimeBomb : scores, rôles, tours et actions en temps réel. Ambiance sabotage Cold War.",
-    "accent": "#f97316",
-    "tags": [
-      "roles",
-      "party game",
-      "timer"
-    ],
-    "art": "timebomb"
+    cat: "plongee",
+    title: "Remontée assistée 3D",
+    kind: "Simulateur · RIFAP / N3",
+    desc: "Sauve ton binôme : stab, poumon-ballast, vitesse de remontée et palier, sur quatre sites d'entraînement en 3D.",
+    url: "https://soaresden.github.io/MN90Mobile/3dassist/",
+    repo: "MN90Mobile",
+    platforms: ["web"],
+    shot: "assist3d"
   },
   {
-    "category": "boardgames",
-    "title": "🧠 Insider Tablet Version",
-    "type": "Board Game · Tablet App",
-    "url": "https://soaresden.github.io/insidertabletversion/",
-    "desc": "Version tablette pour Insider : attribution des rôles, écran anti-spoil, révélation discrète du mot, timer court avec bips et changement de mot intégré.",
-    "accent": "#8b5cf6",
-    "tags": [
-      "tablet",
-      "insider",
-      "roles"
-    ],
-    "new": true,
-    "art": "insider"
+    cat: "plongee",
+    title: "Diver Flap",
+    kind: "Mini-jeu",
+    desc: "Le jeu du plongeur : évite les obstacles, gère ta réserve d'air et affronte l'hippocampe maléfique.",
+    url: "https://soaresden.github.io/MN90Mobile/diverflap/",
+    repo: "MN90Mobile",
+    platforms: ["web"],
+    shot: "dive"
   },
   {
-    "category": "boardgames",
-    "title": "⚖️ Gauche ou Droite ?",
-    "type": "Board Game · Party Game",
-    "url": "https://soaresden.github.io/GaucheDroiteGame/",
-    "desc": "Party game de débat : glisse les prénoms dans les camps ✊ Gauche ou 💼 Droite, l'IA rend son verdict. Leaderboard, historique et profils persistants.",
-    "accent": "#e11d48",
-    "tags": [
-      "party game",
-      "IA",
-      "débat"
-    ],
-    "new": true,
-    "art": "gauchedroite"
+    cat: "plongee", new: true,
+    title: "Carnet de plongée",
+    kind: "Carnet numérique · PWA",
+    desc: "Sans compte ni cloud : un simple JSON sur ton disque. Import .fit (Suunto, Garmin, Shearwater), faune et flore du site via iNaturalist, carte et calendrier.",
+    url: "https://github.com/soaresden/PlongeeJournal",
+    repo: "PlongeeJournal",
+    platforms: ["web"],
+    art: "carnet"
+  },
+
+  // ── Musique ──────────────────────────────────────────────
+  {
+    cat: "musique", wide: true, new: true,
+    title: "Partoche and Friends 🐶",
+    kind: "Partitions en groupe",
+    desc: "Une seule bibliothèque MuseScore pour toute la bande : chacun garde ses .mscz dans son pCloud, les autres les lisent. Un calque d'annotations par ami, chat dans la partition, statuts par morceau et présence en direct. Sans serveur.",
+    url: "https://soaresden.github.io/Partoche-and-Friends/",
+    repo: "Partoche-and-Friends",
+    apk: "https://github.com/soaresden/Partoche-and-Friends/releases/latest/download/Partoche-and-Friends.apk",
+    links: [{ label: "Tuto", url: "https://soaresden.github.io/Partoche-and-Friends/tuto.html" }],
+    platforms: ["web", "android"],
+    shot: "paf"
   },
   {
-    "category": "boardgames",
-    "title": "🤫 Le Jeu des Secrets",
-    "type": "Board Game · Party Game",
-    "url": "https://soaresden.github.io/SocialSecretGame/",
-    "desc": "Party game en pass-and-play : chacun écrit un secret anonyme, puis on devine qui a écrit quoi. Points visibles et cachés, leaderboard, journal de partie et export JSON.",
-    "accent": "#7c3aed",
-    "tags": [
-      "party game",
-      "secrets",
-      "anonyme"
-    ],
-    "new": true,
-    "art": "secrets"
+    cat: "musique", new: true,
+    title: "Partoche",
+    kind: "Élève ⇄ prof",
+    desc: "Mes partitions MuseScore sur tablette, annotées avec ma prof de violon : elle dépose ses traits depuis sa page web (FR · EN · 한국어), synchro pCloud, deux calques séparés.",
+    url: "https://soaresden.github.io/Partoche/",
+    repo: "Partoche",
+    apk: "https://github.com/soaresden/Partoche/releases/latest/download/Partoche.apk",
+    platforms: ["android", "web"],
+    art: "partoche", accent: "#7c3aed"
   },
   {
-    "category": "soundboards",
-    "title": "🛠️ SoundBoardHTMLMaker",
-    "type": "Soundboard · Generator",
-    "url": "https://github.com/soaresden/SoundBoardHTMLMaker",
-    "desc": "Template open-source pour générer des soundboards HTML autonomes depuis un dossier de MP3. Éditeur web, drag & drop, thèmes et build all-in-one.",
-    "accent": "#0891b2",
-    "tags": [
-      "generator",
-      "soundboard",
-      "open-source"
-    ],
-    "github": true,
-    "art": "maker"
+    cat: "musique", new: true,
+    title: "SUNODLAA",
+    kind: "Suno · favori + Android Auto",
+    desc: "Ta bibliothèque Suno rangée par espace de travail : sur suno.com via un favori qui se met à jour tout seul, sur le téléphone, et dans la voiture.",
+    url: "https://soaresden.github.io/SunoDLAA/",
+    repo: "SunoDLAA",
+    platforms: ["web", "android"],
+    shot: "sunodlaa"
   },
   {
-    "category": "soundboards",
-    "title": "🐺 Board LoupGarou",
-    "type": "Soundboard · Board Game",
-    "url": "https://soaresden.github.io/SoundBoardHTMLMaker/FOLDERTOEXPORT/Loup%20Garou%20by%20Denis/",
-    "desc": "Soundboard immersive pour MJ Loup-Garou : musiques par phase et effets sonores par rôle. Optimisée mobile/tablette.",
-    "accent": "#5174db",
-    "tags": [
-      "soundboard",
-      "MJ",
-      "ambiance"
-    ],
-    "art": "wolf"
+    cat: "musique",
+    title: "Suno Tempo Boost",
+    kind: "Suno · MP3 par lot",
+    desc: "Accélère le tempo de tes MP3 avant import dans Suno ; le nom du fichier garde la vitesse à rétablir dans l'éditeur.",
+    url: "https://soaresden.github.io/SunoBypassMp3/",
+    repo: "SunoBypassMp3",
+    platforms: ["web"],
+    shot: "tempo"
   },
   {
-    "category": "soundboards",
-    "title": "🐍 Metal Gear Board Game",
-    "type": "Soundboard · MGS",
-    "url": "https://soaresden.github.io/SoundBoardHTMLMaker/FOLDERTOEXPORT/Metal%20Gear%20Board%20Game%20by%20Soaresden/",
-    "desc": "Soundboard Metal Gear Solid : 14 stages, musiques originales et SFX classés. Interface tactique inspirée codec/radar.",
-    "accent": "#2563eb",
-    "tags": [
-      "MGS",
-      "soundboard",
-      "boss"
-    ],
-    "art": "mgs"
+    cat: "musique",
+    title: "Mobile Player",
+    kind: "Lecteur audio web",
+    desc: "Lecteur façon Spotify dans le navigateur : playlists, aléatoire, pochettes et téléchargements.",
+    url: "https://soaresden.github.io/MobilePlayer/",
+    repo: "MobilePlayer",
+    platforms: ["web"],
+    shot: "player"
+  },
+
+  // ── Jeux de société ──────────────────────────────────────
+  {
+    cat: "jeux", wide: true,
+    title: "Soundboard Loup-Garou",
+    kind: "Soundboard + Maître du Jeu",
+    desc: "Ambiances jour/nuit, bruitages par rôle et un Maître du Jeu complet : sélection des rôles, nuits guidées, votes. Fonctionne hors ligne sur la tablette.",
+    url: "https://soaresden.github.io/SoundBoardHTMLMaker/FOLDERTOEXPORT/loup-garou/",
+    repo: "SoundBoardHTMLMaker",
+    platforms: ["web"],
+    shot: "wolf"
   },
   {
-    "category": "music",
-    "title": "🎧 WeMeetMusik",
-    "type": "Music · Social Discovery",
-    "url": "https://soaresden.github.io/WeMeetMusik/",
-    "desc": "Expérience web autour de la découverte musicale et du partage de goûts. Une interface légère pour connecter les personnes par la musique.",
-    "accent": "#22c55e",
-    "tags": [
-      "music",
-      "social",
-      "discovery"
-    ],
-    "new": true,
-    "art": "wemeet"
+    cat: "jeux", new: true,
+    title: "Metal Gear Solid · le jeu de plateau",
+    kind: "Soundboard + assistant de partie",
+    desc: "Musiques et voix de mission, assistant de partie (mise en place, règles et errata, tour par tour guidé, phase ennemie pas à pas), 14 scènes d'aide animées et un guide : leçons, 14 missions + VR 60, FAQ.",
+    url: "https://soaresden.github.io/SoundBoardHTMLMaker/FOLDERTOEXPORT/metal-gear/",
+    repo: "SoundBoardHTMLMaker",
+    links: [{ label: "📖 Guide & missions", url: "https://soaresden.github.io/SoundBoardHTMLMaker/FOLDERTOEXPORT/metal-gear/guide.html" }],
+    platforms: ["web"],
+    shot: "mgs"
   },
   {
-    "category": "music",
-    "title": "Suno Tempo Boost",
-    "type": "Music · Suno AI",
-    "url": "https://soaresden.github.io/SunoBypassMp3/",
-    "desc": "Accélérateur de tempo MP3 par lot. Modifie temporairement la vitesse du fichier avant réajustement dans l’éditeur Suno.",
-    "accent": "#8b5cf6",
-    "tags": [
-      "mp3",
-      "tempo",
-      "batch"
-    ],
-    "art": "tempo"
+    cat: "jeux",
+    title: "SoundBoardHTMLMaker",
+    kind: "Créateur de soundboards",
+    desc: "L'interface de ton jeu de société sans coder : tes MP3 dans un dossier, un éditeur web pour ranger et colorer, un export qui marche hors ligne sur tablette (léger ou tout-en-un).",
+    url: "https://soaresden.github.io/SoundBoardHTMLMaker/",
+    repo: "SoundBoardHTMLMaker",
+    platforms: ["web", "pc"],
+    shot: "maker"
   },
   {
-    "category": "music",
-    "title": "Web MuseScore Player",
-    "type": "Music · Partitions",
-    "url": "https://soaresden.github.io/WebMuseScorePlayer/",
-    "desc": "Lecteur de partitions MuseScore dans le navigateur. Visualisation et lecture audio sans logiciel tiers.",
-    "accent": "#a855f7",
-    "tags": [
-      "score",
-      "player",
-      "browser"
-    ],
-    "art": "score"
+    cat: "jeux", new: true,
+    title: "Gauche ou Droite ?",
+    kind: "Party game",
+    desc: "Glisse les prénoms dans le camp ✊ Gauche ou 💼 Droite, l'IA rend son verdict. Leaderboard, historique et profils.",
+    url: "https://soaresden.github.io/GaucheDroiteGame/",
+    repo: "GaucheDroiteGame",
+    platforms: ["web"],
+    shot: "gauchedroite"
   },
   {
-    "category": "music",
-    "title": "📱 Mobile Player",
-    "type": "Music · Web Player",
-    "url": "https://soaresden.github.io/MobilePlayer/",
-    "desc": "Lecteur audio mobile façon Spotify : playlists, lecture aléatoire, pochettes et téléchargements, le tout dans le navigateur.",
-    "accent": "#22c55e",
-    "tags": [
-      "player",
-      "mobile",
-      "playlist"
-    ],
-    "new": true,
-    "art": "player"
+    cat: "jeux", new: true,
+    title: "Le Jeu des Secrets",
+    kind: "Party game",
+    desc: "Chacun écrit un secret anonyme, puis on devine qui a écrit quoi. Points visibles et cachés 😈, journal de partie.",
+    url: "https://soaresden.github.io/SocialSecretGame/",
+    repo: "SocialSecretGame",
+    platforms: ["web"],
+    shot: "secrets"
   },
   {
-    "category": "plongee",
-    "title": "MN90Mobile · Accueil",
-    "type": "Plongée · Suite MN90",
-    "url": "https://soaresden.github.io/MN90Mobile/index.html",
-    "desc": "Page d’accueil de la suite MN90Mobile : point d’entrée vers les outils de planification, Nitrox, profils et simulateurs.",
-    "accent": "#0891b2",
-    "tags": [
-      "MN90",
-      "index",
-      "mobile"
-    ],
-    "art": "mn90"
+    cat: "jeux",
+    title: "Insider · version tablette",
+    kind: "Assistant de partie",
+    desc: "Attribution des rôles, écran anti-spoil, mot caché, timer à bips et changement de mot intégré.",
+    url: "https://soaresden.github.io/insidertabletversion/",
+    repo: "insidertabletversion",
+    platforms: ["web"],
+    shot: "insider"
   },
   {
-    "category": "plongee",
-    "title": "MN90Mobile · Tables",
-    "type": "Plongée · Tables MN90",
-    "url": "https://soaresden.github.io/MN90Mobile/",
-    "desc": "Application mobile de planification de plongée : paliers, autonomie bouteille, groupes successifs et intervalles de surface.",
-    "accent": "#0891b2",
-    "tags": [
-      "MN90",
-      "paliers",
-      "mobile"
-    ],
-    "art": "tables"
+    cat: "jeux",
+    title: "Smile Life Tracker",
+    kind: "Compteur de score",
+    desc: "Les smiles de chaque joueur pour Smile Life et ses extensions, avec inventaire des cartes, timer et export JSON.",
+    url: "https://soaresden.github.io/smilelifetracker/",
+    repo: "smilelifetracker",
+    platforms: ["web"],
+    shot: "smile"
   },
   {
-    "category": "plongee",
-    "title": "Remontée Assistée 3D",
-    "type": "Plongée · Simulateur 3D",
-    "url": "https://soaresden.github.io/MN90Mobile/3dassist/index.html",
-    "desc": "Simulateur immersif de sauvetage en plongée : stabs, poumon-ballast, vitesse de remontée et sites d’entraînement.",
-    "accent": "#0891b2",
-    "tags": [
-      "3D",
-      "RIFAP",
-      "simulation"
-    ],
-    "art": "assist3d"
+    cat: "jeux",
+    title: "TimeBomb GUI",
+    kind: "Assistant de partie",
+    desc: "Rôles, tours, câbles coupés et scores pour TimeBomb, ambiance sabotage Guerre froide.",
+    url: "https://soaresden.github.io/TimeBombGUI/",
+    repo: "TimeBombGUI",
+    platforms: ["web"],
+    art: "timebomb"
+  },
+
+  // ── Retrogaming ──────────────────────────────────────────
+  {
+    cat: "retro", wide: true, new: true,
+    title: "Prism PS2 Launcher",
+    kind: "Homebrew PS2 · Lua",
+    desc: "Un seul lanceur pour toute la ludothèque : disque exFAT interne, clé USB ou MMCE, et chaque fichier part dans le bon émulateur (RetroArch, POPStarter, Neutrino, OPL). Jaquettes, descriptions et emplacement des sauvegardes.",
+    url: "https://github.com/soaresden/PrismPS2Launcher",
+    repo: "PrismPS2Launcher",
+    platforms: ["ps2"],
+    shot: "prism"
   },
   {
-    "category": "plongee",
-    "title": "Dessin de Profil de Plongée",
-    "type": "Plongée · Profil",
-    "url": "https://soaresden.github.io/MN90Mobile/decomp.html",
-    "desc": "Dessinez un profil de plongée et obtenez une analyse temps/profondeur avec saturation N₂ et gradient factors.",
-    "accent": "#0891b2",
-    "tags": [
-      "profil",
-      "N₂",
-      "GF"
-    ],
-    "art": "profile"
+    cat: "retro", new: true,
+    title: "bigben8mcps2",
+    kind: "Rétro-ingénierie PS2",
+    desc: "Ressusciter la carte mémoire Datel Mega Memory 8 sans son CD : gestionnaire XMEM2 qui ouvre les archives Datel, et un pilote résident qui joue le rôle du disque.",
+    url: "https://github.com/soaresden/bigben8mcps2",
+    repo: "bigben8mcps2",
+    platforms: ["ps2"],
+    shot: "bigben"
   },
   {
-    "category": "plongee",
-    "title": "DTR · Plongée",
-    "type": "Plongée · DTR",
-    "url": "https://soaresden.github.io/MN90Mobile/dtr.html",
-    "desc": "Outil dédié à la DTR / durée totale de remontée dans la suite MN90Mobile.",
-    "accent": "#0e7490",
-    "tags": [
-      "DTR",
-      "remontée",
-      "MN90"
-    ],
-    "art": "dtr"
+    cat: "retro", new: true,
+    title: "MPW Switch Save Editor",
+    kind: "Éditeur de sauvegarde",
+    desc: "Peace Walker (Master Collection, Switch) dans le navigateur : déchiffrement, soldats, véhicules, ZEKE, rangs S. Rien n'est envoyé nulle part.",
+    url: "https://soaresden.github.io/MPW-Switch-Save-Editor/",
+    repo: "MPW-Switch-Save-Editor",
+    platforms: ["web", "switch"],
+    art: "mpw", accent: "#b7791f"
   },
   {
-    "category": "plongee",
-    "title": "Calculateur Nitrox",
-    "type": "Plongée · Nitrox",
-    "url": "https://soaresden.github.io/MN90Mobile/nitrox.html",
-    "desc": "MOD, profondeur équivalente air et Nitrox optimal. Formules pédagogiques et tableau de référence EAN.",
-    "accent": "#059669",
-    "tags": [
-      "nitrox",
-      "MOD",
-      "EAD"
-    ],
-    "art": "nitrox"
+    cat: "retro", new: true,
+    title: "Walkthrough Overlay",
+    kind: "Overlay Switch · C++",
+    desc: "Lire une soluce par-dessus n'importe quel jeu : textes, images et pages PDF, plus un outil PC pour convertir les guides. Réécriture complète de la v1.",
+    url: "https://github.com/soaresden/WalkthroughOverlay",
+    repo: "WalkthroughOverlay",
+    platforms: ["switch", "pc"],
+    shot: "walkthrough"
   },
   {
-    "category": "plongee",
-    "title": "Dive — Le Jeu du Plongeur",
-    "type": "Plongée · Jeu",
-    "url": "https://soaresden.github.io/MN90Mobile/dive.html",
-    "desc": "Mini-jeu de plongée : contrôlez votre plongeur, évitez les obstacles et gérez votre réserve d’oxygène.",
-    "accent": "#0891b2",
-    "tags": [
-      "game",
-      "oxygen",
-      "arcade"
-    ],
-    "art": "dive"
+    cat: "retro",
+    title: "LED Retroid 5",
+    kind: "Batocera · Python",
+    desc: "Pilote les LED des sticks du Retroid Pocket 5 : couleurs par bouton gardées au redémarrage, ou niveau de batterie en couleur.",
+    url: "https://github.com/soaresden/Retroid5_Led_Batocera",
+    repo: "Retroid5_Led_Batocera",
+    platforms: ["handheld"],
+    art: "retroid", accent: "#a855f7"
+  },
+
+  // ── Sur la route ─────────────────────────────────────────
+  {
+    cat: "route", wide: true, new: true,
+    title: "FuelTrajetMap",
+    kind: "Carburant · trajet optimisé",
+    desc: "Les prix officiels des ~9 800 stations françaises sur une carte, et surtout l'optimiseur de pleins : où s'arrêter sur ton trajet et combien de litres mettre, selon ton véhicule. Mode pénurie, écran Android Auto, sans backend.",
+    url: "https://soaresden.github.io/FuelTrajetMap/",
+    repo: "FuelTrajetMap",
+    platforms: ["web", "android"],
+    shot: "fuel"
   },
   {
-    "category": "plongee",
-    "title": "📒 Carnet de Plongée",
-    "type": "Plongée · Carnet numérique",
-    "url": "https://github.com/soaresden/PlongeeJournal",
-    "desc": "Carnet de plongée local, sans compte ni cloud : un simple JSON sur ton disque. Saisie mobile, import .fit (Suunto/Garmin/Shearwater), faune & flore par lieu via iNaturalist, carte, calendrier et PWA hors connexion.",
-    "accent": "#0891b2",
-    "tags": [
-      "carnet",
-      "fit",
-      "PWA"
-    ],
-    "new": true,
-    "github": true,
-    "art": "carnet"
+    cat: "route", new: true,
+    title: "Ride Companion · iX7 Pro",
+    kind: "Trottinette connectée",
+    desc: "Remplace l'appli officielle de la trottinette iX7 Pro : tableau de bord personnalisable, modes et réglages, trajets enregistrés avec la carte, suivi batterie, et la montre au poignet.",
+    url: "https://github.com/soaresden/Ix7Companion",
+    repo: "Ix7Companion",
+    platforms: ["android", "wear"],
+    art: "ix7"
   },
   {
-    "category": "photo",
-    "title": "🗂️ TriPhoto",
-    "type": "Photo · Desktop App",
-    "url": "https://github.com/soaresden/photoorganizer",
-    "desc": "App Python/Qt pour ranger et dédoublonner des milliers de photos et vidéos. Comparaison de contenu réel (dHash, taille, durée, vidéos image par image), tri chronologique fiable et visualiseur avec frise interactive.",
-    "accent": "#6366f1",
-    "tags": [
-      "doublons",
-      "dHash",
-      "PySide6"
-    ],
-    "new": true,
-    "github": true,
-    "art": "triphoto"
+    cat: "route",
+    title: "DashCam Player",
+    kind: "Lecteur dashcam Yantop",
+    desc: "Remplace GXPlayer depuis la carte SD : décode la trace GPS cachée dans les vidéos, reconstruit les trajets et signale les chocs pendant les stationnements.",
+    url: "https://github.com/soaresden/YantopDashcamViewer",
+    repo: "YantopDashcamViewer",
+    platforms: ["pc"],
+    art: "dashcam", accent: "#0284c7"
+  },
+
+  // ── Photo & vidéo ────────────────────────────────────────
+  {
+    cat: "media",
+    title: "TriPhoto",
+    kind: "Python · Qt",
+    desc: "Range et dédoublonne des milliers de photos et vidéos en comparant leur contenu réel (dHash, durée, image par image). Tri chronologique fiable et frise interactive.",
+    url: "https://github.com/soaresden/photoorganizer",
+    repo: "photoorganizer",
+    platforms: ["pc"],
+    art: "triphoto"
   },
   {
-    "category": "photo",
-    "title": "🎬 Video Thumbnail Changer",
-    "type": "Média · Desktop App",
-    "url": "https://github.com/soaresden/Video-Thumbnail-Changer",
-    "desc": "Réécriture Python d'un outil VB.NET pour embarquer une miniature personnalisée dans une vidéo. Extraction de 10 frames, lecteur VLC intégré, montage 2×2, texte en surimpression avec aperçu live et accélération GPU.",
-    "accent": "#6366f1",
-    "tags": [
-      "ffmpeg",
-      "thumbnail",
-      "VLC"
-    ],
-    "new": true,
-    "github": true,
-    "art": "thumbnail"
+    cat: "media",
+    title: "Video Thumbnail Changer",
+    kind: "Python · ffmpeg",
+    desc: "Incruste une miniature dans une vidéo : 10 images extraites, lecteur VLC intégré, montage 2×2, texte en surimpression et accélération GPU.",
+    url: "https://github.com/soaresden/Video-Thumbnail-Changer",
+    repo: "Video-Thumbnail-Changer",
+    platforms: ["pc"],
+    art: "thumbnail"
+  },
+
+  // ── Outils & boulot ──────────────────────────────────────
+  {
+    cat: "outils",
+    title: "Dark Web Checker for Bitwarden",
+    kind: "Sécurité",
+    desc: "Vérifie ton export Bitwarden contre les fuites repérées sur le dark web, pour savoir quels mots de passe changer en priorité.",
+    url: "https://soaresden.github.io/GoogleDarkWebCheckerforBitwarden/",
+    repo: "GoogleDarkWebCheckerforBitwarden",
+    platforms: ["web"],
+    shot: "security"
   },
   {
-    "category": "gaming",
-    "title": "🎮 RETROLauncher · exFAT PS2",
-    "type": "Gaming · Fork PS2 · Homebrew",
-    "url": "https://github.com/soaresden/RETROLauncher",
-    "desc": "Fork du launcher retro PS2 en Lua (Enceladus) avec support exFAT : bibliothèques de ROMs lancées via RetroArch, POPStarter, Neutrino, OPL et wLaunchELF ISR, dans une interface rétrowave.",
-    "accent": "#db2777",
-    "tags": [
-      "PS2",
-      "exFAT",
-      "fork"
-    ],
-    "new": true,
-    "github": true,
-    "art": "retro"
+    cat: "outils",
+    title: "Quality Inspector",
+    kind: "Jeu sérieux · EDF Renouvelables",
+    desc: "Le quiz de la Quality Week 2025 : dilemmes d'inspection, chrono et classement en temps réel.",
+    url: "https://soaresden.github.io/EDF-QualityWeekGame2025/",
+    repo: "EDF-QualityWeekGame2025",
+    platforms: ["web"],
+    shot: "quiz"
   },
   {
-    "category": "securite",
-    "title": "Google Dark Web Checker for Bitwarden",
-    "type": "Sécurité · Dark Web",
-    "url": "https://soaresden.github.io/GoogleDarkWebCheckerforBitwarden/",
-    "desc": "Vérifie les mots de passe Bitwarden contre des bases de fuites. Compatible export Bitwarden.",
-    "accent": "#059669",
-    "tags": [
-      "password",
-      "Bitwarden",
-      "breach"
-    ],
-    "art": "security"
-  },
-  {
-    "category": "quizz",
-    "title": "Quality Inspector — EDF 2025",
-    "type": "Quiz · Gamification · EDF",
-    "url": "https://soaresden.github.io/EDF-QualityWeekGame2025/",
-    "desc": "Jeu de quiz pour la Quality Week 2025 d’EDF Renouvelables. Leaderboard temps réel et questions qualité.",
-    "accent": "#ca8a04",
-    "tags": [
-      "quiz",
-      "quality",
-      "Supabase"
-    ],
-    "art": "quiz"
-  },
-  {
-    "category": "tools",
-    "title": "EDF No Drop No Harm",
-    "type": "Tools · HSE · EDF",
-    "url": "https://soaresden.github.io/EDF-NoDropNoHarm/",
-    "desc": "Outil de suivi HSE : inspections, signalements de risques et actions correctives de sécurité.",
-    "accent": "#e11d48",
-    "tags": [
-      "HSE",
-      "inspection",
-      "actions"
-    ],
-    "art": "hse"
+    cat: "outils",
+    title: "No Drop No Harm",
+    kind: "Sécurité HSE · EDF Renouvelables",
+    desc: "Simulateur pédagogique de chute d'objets : hauteur, masse et énergie d'impact, pour sensibiliser aux risques.",
+    url: "https://soaresden.github.io/EDF-NoDropNoHarm/",
+    repo: "EDF-NoDropNoHarm",
+    platforms: ["web"],
+    shot: "hse"
   }
+];
+
+const ARCHIVES = [
+  { title: "idotMatrix GIF Converter", year: 2025, platform: "pc",
+    desc: "Vidéo → GIF optimisé pour les écrans pixel iDotMatrix.",
+    url: "https://github.com/soaresden/idotMatrixViewer-Gif-Converter" },
+  { title: "Live-Pipette", year: 2024, platform: "pc",
+    desc: "Pipette de couleur à l'écran, sans lancer Photoshop.",
+    url: "https://github.com/soaresden/Live-Pipette" },
+  { title: "GifCarBootanimAndroid", year: 2023, platform: "pc",
+    desc: "Un GIF ⇄ une animation de démarrage pour autoradio Android.",
+    url: "https://github.com/soaresden/GifCarBootanimAndroid" }
 ];

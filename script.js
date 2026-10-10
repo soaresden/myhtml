@@ -1,92 +1,208 @@
-const state = { active: "all", query: "" };
-const $ = (selector) => document.querySelector(selector);
-const categoryGrid = $("#categoryGrid");
-const projectsGrid = $("#projectsGrid");
-const searchInput = $("#searchInput");
-const selectionTitle = $("#selectionTitle");
-const selectionSubtitle = $("#selectionSubtitle");
-const emptyState = $("#emptyState");
+const PLATFORMS = {
+  web: "Web", android: "Android", wear: "Wear OS",
+  ps2: "PS2", switch: "Switch", pc: "PC", handheld: "Retroid"
+};
+const HOME = { id: "", label: "Accueil", icon: "✦", color: "#78716c" };
+const state = { view: "", query: "" };
+const $ = (sel) => document.querySelector(sel);
+const $$ = (sel) => [...document.querySelectorAll(sel)];
 
 function escapeHtml(value){
-  return String(value).replace(/[&<>"]/g,(char)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[char]));
+  return String(value).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
 }
+const catOf = (p) => CATEGORIES.find((c) => c.id === p.cat);
+const colorOf = (p) => p.accent || catOf(p).color;
+const isLive = (p) => p.url.startsWith("https://soaresden.github.io/");
 
-function artSvg(project){
-  const a = project.accent || "#0891b2";
-  const key = project.art || project.category;
-  const commonBg = `<rect width="400" height="150" rx="0" fill="white"/><circle cx="340" cy="20" r="90" fill="${a}" opacity="0.08"/><circle cx="40" cy="130" r="80" fill="${a}" opacity="0.06"/>`;
-  const map = {
-    smile: `${commonBg}<rect x="30" y="32" width="62" height="82" rx="10" fill="${a}" opacity="0.12" stroke="${a}"/><text x="61" y="83" text-anchor="middle" font-size="32">😊</text><rect x="125" y="40" width="190" height="12" rx="6" fill="${a}" opacity="0.18"/><rect x="125" y="66" width="150" height="12" rx="6" fill="${a}" opacity="0.12"/><text x="230" y="112" text-anchor="middle" font-size="24">😊 😊 😊</text>`,
-    timebomb: `${commonBg}<circle cx="200" cy="82" r="48" fill="${a}" opacity="0.13" stroke="${a}" stroke-width="3"/><path d="M200 34 Q220 18 214 8" fill="none" stroke="${a}" stroke-width="4" stroke-linecap="round"/><circle cx="215" cy="8" r="7" fill="#f59e0b"/><text x="200" y="92" text-anchor="middle" font-family="monospace" font-size="28" font-weight="700" fill="${a}">0:47</text><text x="70" y="92" font-size="28">✂️</text><text x="315" y="92" font-size="28">💣</text>`,
-    insider: `${commonBg}<rect x="92" y="28" width="216" height="96" rx="18" fill="${a}" opacity="0.12" stroke="${a}" stroke-width="2"/><text x="200" y="68" text-anchor="middle" font-size="28">🧠</text><rect x="130" y="86" width="140" height="16" rx="8" fill="${a}" opacity="0.25"/><text x="200" y="118" text-anchor="middle" font-family="monospace" font-size="10" fill="${a}">ROLE REVEAL · 10s</text><text x="72" y="72" font-size="22">🙈</text><text x="320" y="72" font-size="22">⏱️</text>`,
-    maker: `${commonBg}<rect x="22" y="24" width="356" height="102" rx="12" fill="#f8fafc" stroke="${a}" opacity="0.95"/><rect x="40" y="48" width="95" height="54" rx="8" fill="${a}" opacity="0.12"/><rect x="155" y="48" width="205" height="54" rx="8" fill="#8b5cf6" opacity="0.10"/><text x="87" y="81" text-anchor="middle" font-size="24">⋮⋮</text><text x="258" y="82" text-anchor="middle" font-size="22">🎧 🎚️ 🎨</text><text x="200" y="119" text-anchor="middle" font-family="monospace" font-size="10" fill="${a}">build all-in-one</text>`,
-    wolf: `${commonBg}<rect width="400" height="150" fill="#eef2ff"/><circle cx="334" cy="32" r="18" fill="#fef3c7"/><circle cx="326" cy="28" r="18" fill="#eef2ff"/><text x="70" y="95" text-anchor="middle" font-size="42">🐺</text><rect x="130" y="48" width="180" height="10" rx="5" fill="${a}" opacity="0.35"/><rect x="130" y="75" width="130" height="8" rx="4" fill="${a}" opacity="0.22"/><text x="225" y="112" text-anchor="middle" font-size="19">🌙 🏹 🧙‍♀️</text>`,
-    mgs: `${commonBg}<rect width="400" height="150" fill="#eff6ff"/><circle cx="72" cy="76" r="42" fill="none" stroke="${a}" stroke-width="2"/><circle cx="72" cy="76" r="24" fill="none" stroke="${a}" opacity="0.5"/><line x1="72" y1="76" x2="72" y2="34" stroke="${a}" stroke-width="3"/><text x="210" y="58" font-family="monospace" font-size="14" font-weight="700" fill="${a}">TACTICAL OPS</text><rect x="190" y="75" width="120" height="20" rx="4" fill="#ef4444" opacity="0.13" stroke="#ef4444"/><text x="250" y="90" text-anchor="middle" font-family="monospace" font-size="12" fill="#ef4444">ALERT</text><text x="330" y="93" font-size="26">🐍</text>`,
-    wemeet: `${commonBg}<circle cx="155" cy="72" r="36" fill="${a}" opacity="0.15"/><circle cx="245" cy="72" r="36" fill="#8b5cf6" opacity="0.15"/><path d="M178 72 C190 45 210 45 222 72 C210 100 190 100 178 72Z" fill="#22c55e" opacity="0.20"/><text x="155" y="80" text-anchor="middle" font-size="25">🎧</text><text x="245" y="80" text-anchor="middle" font-size="25">🎶</text><text x="200" y="118" text-anchor="middle" font-family="monospace" font-size="10" fill="${a}">music match</text>`,
-    tempo: `${commonBg}<g fill="${a}"><rect x="60" y="70" width="12" height="28" rx="6" opacity="0.35"/><rect x="82" y="56" width="12" height="56" rx="6" opacity="0.45"/><rect x="104" y="42" width="12" height="84" rx="6" opacity="0.55"/><rect x="210" y="34" width="9" height="92" rx="5"/><rect x="226" y="50" width="9" height="60" rx="5"/><rect x="242" y="24" width="9" height="112" rx="5"/></g><text x="316" y="84" text-anchor="middle" font-family="monospace" font-size="26" font-weight="700" fill="${a}">2x</text><path d="M140 78 H182" stroke="${a}" stroke-width="4"/><path d="M174 66 L188 78 L174 90" fill="none" stroke="${a}" stroke-width="4"/>`,
-    score: `${commonBg}<g stroke="${a}" opacity="0.35"><line x1="35" y1="52" x2="360" y2="52"/><line x1="35" y1="68" x2="360" y2="68"/><line x1="35" y1="84" x2="360" y2="84"/><line x1="35" y1="100" x2="360" y2="100"/></g><text x="68" y="99" font-size="48" fill="${a}" opacity="0.55">𝄞</text><text x="175" y="92" font-size="34">♪</text><circle cx="318" cy="76" r="28" fill="${a}" opacity="0.14" stroke="${a}"/><polygon points="310,62 310,90 334,76" fill="${a}"/>`,
-    mn90: `${commonBg}<text x="70" y="86" text-anchor="middle" font-size="36">🤿</text><rect x="135" y="38" width="185" height="76" rx="12" fill="${a}" opacity="0.10" stroke="${a}"/><text x="228" y="65" text-anchor="middle" font-family="monospace" font-size="13" fill="${a}">MN90 MOBILE</text><text x="228" y="92" text-anchor="middle" font-size="18">📱 🌊 📊</text>`,
-    tables: `${commonBg}<rect x="42" y="24" width="32" height="106" rx="16" fill="${a}" opacity="0.13" stroke="${a}"/><rect x="45" y="76" width="26" height="50" rx="13" fill="${a}" opacity="0.35"/><rect x="130" y="42" width="210" height="74" rx="12" fill="${a}" opacity="0.10" stroke="${a}"/><text x="235" y="70" text-anchor="middle" font-family="monospace" font-size="16" font-weight="700" fill="${a}">40m / 25min</text><text x="235" y="96" text-anchor="middle" font-size="17">palier 3m</text>`,
-    assist3d: `${commonBg}<path d="M198 128 C190 105 208 88 198 66 C190 48 198 28 190 14" fill="none" stroke="${a}" stroke-width="3" stroke-dasharray="6 5"/><line x1="140" y1="34" x2="260" y2="34" stroke="#ca8a04" stroke-width="3" stroke-dasharray="5 4"/><text x="268" y="38" font-family="monospace" font-size="12" fill="#ca8a04">3m</text><text x="150" y="118" font-size="28">🤿</text><text x="225" y="100" font-size="24" opacity="0.65">🤿</text><rect x="32" y="28" width="75" height="46" rx="10" fill="${a}" opacity="0.12" stroke="${a}"/><text x="70" y="57" text-anchor="middle" font-family="monospace" font-size="16" fill="${a}">28m</text>`,
-    profile: `${commonBg}<line x1="45" y1="26" x2="45" y2="122" stroke="${a}"/><line x1="45" y1="122" x2="360" y2="122" stroke="${a}"/><polyline points="45,40 90,40 125,78 170,78 200,100 235,62 285,62 315,38 340,110" fill="none" stroke="${a}" stroke-width="4" stroke-linecap="round"/><polyline points="45,112 110,108 170,100 230,86 285,74 340,105" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="5 4"/><text x="270" y="42" font-family="monospace" font-size="12" fill="${a}">GF 30/85</text>`,
-    dtr: `${commonBg}<circle cx="198" cy="74" r="46" fill="${a}" opacity="0.12" stroke="${a}" stroke-width="3"/><path d="M198 74 L198 38" stroke="${a}" stroke-width="4" stroke-linecap="round"/><path d="M198 74 L232 92" stroke="#f97316" stroke-width="4" stroke-linecap="round"/><text x="198" y="122" text-anchor="middle" font-family="monospace" font-size="18" font-weight="700" fill="${a}">DTR</text><text x="84" y="82" font-size="26">⏱️</text><text x="305" y="82" font-size="26">🤿</text>`,
-    nitrox: `${commonBg}<circle cx="190" cy="76" r="48" fill="${a}" opacity="0.10" stroke="${a}"/><path d="M190 28 A48 48 0 0 1 238 76" fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round"/><text x="190" y="78" text-anchor="middle" font-family="monospace" font-size="24" font-weight="700" fill="${a}">32%</text><text x="190" y="98" text-anchor="middle" font-family="monospace" font-size="10" fill="${a}">O₂</text><rect x="285" y="45" width="70" height="44" rx="10" fill="#22c55e" opacity="0.10" stroke="#22c55e"/><text x="320" y="72" text-anchor="middle" font-family="monospace" font-size="16" fill="#059669">MOD</text>`,
-    dive: `${commonBg}<text x="80" y="78" font-size="28">🐟</text><text x="305" y="95" font-size="30">🐠</text><rect x="135" y="38" width="130" height="78" rx="14" fill="${a}" opacity="0.12" stroke="${a}"/><text x="200" y="64" text-anchor="middle" font-family="monospace" font-size="11" fill="${a}">OXYGEN</text><rect x="158" y="76" width="84" height="10" rx="5" fill="white" stroke="${a}"/><rect x="158" y="76" width="58" height="10" rx="5" fill="#22c55e"/><text x="200" y="109" text-anchor="middle" font-size="20">🤿</text>`,
-    security: `${commonBg}<rect x="34" y="26" width="332" height="96" rx="14" fill="#f8fafc" stroke="${a}"/><text x="60" y="60" font-family="monospace" font-size="13" fill="${a}">$ checking passwords...</text><text x="60" y="86" font-family="monospace" font-size="13" fill="#059669">✓ 243 OK</text><text x="60" y="108" font-family="monospace" font-size="13" fill="#ef4444">⚠ 4 breaches</text><text x="315" y="88" text-anchor="middle" font-size="30">🛡️</text>`,
-    quiz: `${commonBg}<circle cx="200" cy="74" r="46" fill="#fef3c7" stroke="${a}" opacity="0.9"/><text x="200" y="90" text-anchor="middle" font-size="48">🔍</text><rect x="40" y="98" width="78" height="30" rx="10" fill="${a}" opacity="0.12" stroke="${a}"/><text x="79" y="118" text-anchor="middle" font-family="monospace" font-size="12" fill="${a}">2450</text><rect x="282" y="98" width="78" height="30" rx="10" fill="${a}" opacity="0.12" stroke="${a}"/><text x="321" y="118" text-anchor="middle" font-family="monospace" font-size="12" fill="${a}">#3</text>`,
-    hse: `${commonBg}<g transform="translate(42,30)"><rect width="245" height="24" rx="8" fill="${a}" opacity="0.10" stroke="${a}"/><text x="34" y="17" font-size="12" fill="#334155">Inspection HSE</text><text x="14" y="17" fill="#059669">✓</text></g><g transform="translate(42,68)"><rect width="245" height="24" rx="8" fill="${a}" opacity="0.10" stroke="${a}"/><text x="34" y="17" font-size="12" fill="#334155">Action corrective</text><text x="14" y="17" fill="${a}">!</text></g><text x="326" y="92" text-anchor="middle" font-size="34">🦺</text>`,
-    player: `${commonBg}<rect x="150" y="18" width="100" height="118" rx="16" fill="${a}" opacity="0.10" stroke="${a}"/><rect x="168" y="36" width="64" height="44" rx="8" fill="${a}" opacity="0.25"/><text x="200" y="66" text-anchor="middle" font-size="22">🎵</text><rect x="168" y="92" width="64" height="7" rx="3.5" fill="white" stroke="${a}"/><rect x="168" y="92" width="40" height="7" rx="3.5" fill="${a}"/><text x="200" y="122" text-anchor="middle" font-size="14">⏮ ▶ ⏭</text><text x="90" y="86" font-size="28">🎧</text><text x="310" y="86" font-size="28">📻</text>`,
-    carnet: `${commonBg}<rect x="34" y="24" width="180" height="102" rx="10" fill="white" stroke="${a}"/><line x1="60" y1="24" x2="60" y2="126" stroke="${a}" opacity="0.35"/><g stroke="${a}" opacity="0.30"><line x1="74" y1="48" x2="198" y2="48"/><line x1="74" y1="68" x2="198" y2="68"/><line x1="74" y1="88" x2="198" y2="88"/><line x1="74" y1="108" x2="160" y2="108"/></g><text x="74" y="42" font-family="monospace" font-size="10" fill="${a}">PLONGÉE N°128</text><rect x="238" y="30" width="128" height="90" rx="12" fill="${a}" opacity="0.10" stroke="${a}"/><polyline points="248,48 274,48 292,78 320,78 336,58 358,58" fill="none" stroke="${a}" stroke-width="3" stroke-linecap="round"/><text x="302" y="106" text-anchor="middle" font-size="20">🤿 📍</text>`,
-    triphoto: `${commonBg}<g transform="rotate(-8 110 76)"><rect x="52" y="36" width="104" height="80" rx="8" fill="white" stroke="${a}"/><rect x="62" y="46" width="84" height="50" rx="4" fill="${a}" opacity="0.18"/><text x="104" y="80" text-anchor="middle" font-size="22">🏞️</text></g><g transform="rotate(6 190 78)"><rect x="140" y="38" width="104" height="80" rx="8" fill="white" stroke="${a}"/><rect x="150" y="48" width="84" height="50" rx="4" fill="${a}" opacity="0.12"/><text x="192" y="82" text-anchor="middle" font-size="22">🏞️</text></g><text x="196" y="130" text-anchor="middle" font-family="monospace" font-size="10" fill="#ef4444">doublon 🟠</text><rect x="272" y="44" width="92" height="26" rx="8" fill="#22c55e" opacity="0.12" stroke="#22c55e"/><text x="318" y="62" text-anchor="middle" font-family="monospace" font-size="11" fill="#059669">2024 ✓</text><rect x="272" y="80" width="92" height="26" rx="8" fill="${a}" opacity="0.12" stroke="${a}"/><text x="318" y="98" text-anchor="middle" font-family="monospace" font-size="11" fill="${a}">2025</text>`,
-    thumbnail: `${commonBg}<rect x="118" y="24" width="176" height="102" rx="10" fill="#0f172a"/><rect x="128" y="34" width="156" height="66" rx="6" fill="${a}" opacity="0.35"/><polygon points="192,52 192,82 218,67" fill="white" opacity="0.9"/><rect x="128" y="108" width="156" height="7" rx="3.5" fill="white" opacity="0.25"/><rect x="128" y="108" width="62" height="7" rx="3.5" fill="${a}"/><text x="206" y="97" text-anchor="middle" font-family="monospace" font-size="10" fill="white" opacity="0.85">MON TITRE</text><g fill="${a}" opacity="0.30"><rect x="30" y="36" width="66" height="38" rx="6"/><rect x="30" y="86" width="66" height="38" rx="6"/><rect x="316" y="36" width="60" height="38" rx="6"/><rect x="316" y="86" width="60" height="38" rx="6"/></g><text x="63" y="62" text-anchor="middle" font-size="16">🎞️</text><text x="63" y="112" text-anchor="middle" font-size="16">📸</text><text x="346" y="62" text-anchor="middle" font-size="16">✏️</text><text x="346" y="112" text-anchor="middle" font-size="16">⚡</text>`,
-    retro: `${commonBg}<rect width="400" height="150" fill="#1e1b4b"/><g stroke="${a}" opacity="0.35"><line x1="0" y1="104" x2="400" y2="104"/><line x1="0" y1="118" x2="400" y2="118"/><line x1="0" y1="134" x2="400" y2="134"/><line x1="120" y1="104" x2="60" y2="150"/><line x1="200" y1="104" x2="200" y2="150"/><line x1="280" y1="104" x2="340" y2="150"/></g><circle cx="200" cy="66" r="34" fill="#db2777" opacity="0.45"/><text x="200" y="52" text-anchor="middle" font-family="monospace" font-size="15" font-weight="700" fill="#fce7f3">RETRO</text><text x="200" y="78" text-anchor="middle" font-family="monospace" font-size="11" fill="#fbcfe8">LAUNCHER</text><text x="58" y="70" font-size="30">🎮</text><rect x="288" y="46" width="80" height="26" rx="6" fill="#22c55e" opacity="0.20" stroke="#22c55e"/><text x="328" y="64" text-anchor="middle" font-family="monospace" font-size="11" fill="#86efac">exFAT</text><text x="328" y="94" text-anchor="middle" font-family="monospace" font-size="11" fill="#fbcfe8">PS2</text>`,
-    secrets: `${commonBg}<rect x="34" y="32" width="132" height="88" rx="10" fill="white" stroke="${a}" stroke-width="2"/><path d="M34 38 L100 86 L166 38" fill="none" stroke="${a}" stroke-width="2" opacity="0.55"/><text x="100" y="108" text-anchor="middle" font-size="26">🤫</text><rect x="192" y="30" width="168" height="26" rx="9" fill="${a}" opacity="0.14"/><rect x="192" y="64" width="168" height="26" rx="9" fill="${a}" opacity="0.10"/><rect x="192" y="98" width="120" height="26" rx="9" fill="${a}" opacity="0.07"/><g font-family="monospace" font-size="12" fill="${a}"><text x="276" y="48" text-anchor="middle">secret ? \u2192 Denis</text><text x="276" y="82" text-anchor="middle">secret ? \u2192 L\u00e9a</text><text x="252" y="116" text-anchor="middle">secret ? \u2192 ...</text></g>`,
-    gauchedroite: `${commonBg}<path d="M200 26 V128" stroke="${a}" stroke-width="3" stroke-dasharray="7 6"/><rect x="42" y="40" width="120" height="72" rx="14" fill="#ef4444" opacity="0.10" stroke="#ef4444"/><text x="102" y="72" text-anchor="middle" font-size="26">✊</text><text x="102" y="100" text-anchor="middle" font-family="monospace" font-size="12" fill="#ef4444">GAUCHE</text><rect x="238" y="40" width="120" height="72" rx="14" fill="#2563eb" opacity="0.10" stroke="#2563eb"/><text x="298" y="72" text-anchor="middle" font-size="26">💼</text><text x="298" y="100" text-anchor="middle" font-family="monospace" font-size="12" fill="#2563eb">DROITE</text><circle cx="200" cy="76" r="22" fill="white" stroke="${a}" stroke-width="2"/><text x="200" y="85" text-anchor="middle" font-size="22">⚖️</text>`
-  };
-  return `<svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration ${escapeHtml(project.title)}">${map[key] || commonBg + `<text x="200" y="86" text-anchor="middle" font-size="38">${escapeHtml(project.category)}</text>`}</svg>`;
-}
-
-function getFilteredProjects(){
-  const q=state.query.trim().toLowerCase();
-  return PROJECTS.filter((project)=>{
-    const inCategory=state.active==="all"||project.category===state.active;
-    const haystack=[project.title,project.type,project.desc,...(project.tags||[])].join(" ").toLowerCase();
-    return inCategory&&(!q||haystack.includes(q));
+/* ── Thème : auto → clair → sombre ────────────────────── */
+const THEMES = ["auto", "light", "dark"];
+function applyTheme(theme){
+  if (theme === "auto") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", theme);
+  $$(".theme-btn").forEach((b) => {
+    b.textContent = { auto: "◐", light: "☀", dark: "☾" }[theme];
+    b.title = { auto: "Thème : automatique", light: "Thème : clair", dark: "Thème : sombre" }[theme];
   });
 }
+let theme = "auto";
+try { theme = localStorage.getItem("theme") || "auto"; } catch (e) {}
+if (!THEMES.includes(theme)) theme = "auto";
+applyTheme(theme);
+$$(".theme-btn").forEach((b) => b.addEventListener("click", () => {
+  theme = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length];
+  applyTheme(theme);
+  try { localStorage.setItem("theme", theme); } catch (e) {}
+}));
 
-function renderCategories(){
-  const allActive=state.active==="all";
-  const allButton=`<button class="category-card ${allActive?"active":""}" data-category="all" type="button"><div class="cat-icon" style="background:#f1f5f9">▦</div><div class="cat-title">Tous</div><div class="cat-count">${PROJECTS.length} projets</div></button>`;
-  const buttons=CATEGORIES.map((cat)=>{
-    const count=PROJECTS.filter((p)=>p.category===cat.id).length;
-    return `<button class="category-card ${state.active===cat.id?"active":""}" data-category="${cat.id}" type="button"><div class="cat-icon" style="background:${cat.soft};color:${cat.color}">${cat.icon}</div><div class="cat-title">${escapeHtml(cat.label)}</div><div class="cat-count">${count} projet${count>1?"s":""}</div></button>`;
+/* ── Navigation ───────────────────────────────────────── */
+function renderNav(){
+  const items = [HOME, ...CATEGORIES];
+  $("#nav").innerHTML = items.map((c) => {
+    const n = c.id ? PROJECTS.filter((p) => p.cat === c.id).length : "";
+    const current = !state.query && state.view === c.id ? ' aria-current="page"' : "";
+    return `<a class="nav-item" href="#/${c.id}" style="--c:${c.color}"${current}>
+      <span class="nav-ico" aria-hidden="true">${c.icon}</span>
+      <span class="nav-label">${escapeHtml(c.label)}</span>
+      <span class="nav-short">${escapeHtml(c.short || c.label)}</span>
+      <span class="nav-n">${n}</span>
+    </a>`;
   }).join("");
-  categoryGrid.innerHTML=allButton+buttons;
-  categoryGrid.querySelectorAll(".category-card").forEach((button)=>button.addEventListener("click",()=>{state.active=button.dataset.category;render();}));
 }
 
-function renderSelection(count){
-  const cat=CATEGORIES.find((c)=>c.id===state.active);
-  selectionTitle.innerHTML=`${state.active==="all"?"Tous les projets":escapeHtml(cat.label)} <span>${count} résultat${count>1?"s":""}</span>`;
-  selectionTitle.querySelector("span").style.cssText="margin-left:12px;font-size:15px;font-weight:400;color:#64748b;letter-spacing:0";
-  selectionSubtitle.textContent=state.active==="all"?"Tous les side projects et créations personnelles.":cat.subtitle;
+/* ── Contenu de la vue ────────────────────────────────── */
+function currentItems(){
+  const q = state.query.trim().toLowerCase();
+  if (q) {
+    return PROJECTS.filter((p) => [p.title, p.kind, p.desc, catOf(p).label, ...p.platforms.map((k) => PLATFORMS[k])]
+      .join(" ").toLowerCase().includes(q));
+  }
+  if (!state.view) return PROJECTS.filter((p) => p.wide);
+  return PROJECTS.filter((p) => p.cat === state.view);
 }
 
-function renderProjects(){
-  const filtered=getFilteredProjects();
-  projectsGrid.innerHTML=filtered.map((project)=>`<a class="project-card" href="${project.url}" target="_blank" rel="noreferrer" style="--accent:${project.accent}">
-    <div class="project-art">${artSvg(project)}<img class="project-shot" src="shots/${project.art || project.category}.jpg" alt="Aperçu de ${escapeHtml(project.title)}" loading="lazy" decoding="async" onerror="this.remove()" /></div>
-    <div class="project-content">
-      <div class="project-top"><div><div class="badges"><span class="type-badge">${escapeHtml(project.type)}</span>${project.new?'<span class="new-badge">New</span>':''}</div><h3>${escapeHtml(project.title)}</h3></div><div class="project-icon" title="${project.github?"GitHub":"Ouvrir"}">${project.github?"⌘":"↗"}</div></div>
-      <p>${escapeHtml(project.desc)}</p>
-      <div class="tags">${(project.tags||[]).map((tag)=>`<span class="tag">#${escapeHtml(tag)}</span>`).join("")}</div>
+// Même structure d'en-tête partout (titre + une phrase) : la place laissée
+// aux vignettes est donc identique d'une vue à l'autre.
+function renderHead(items){
+  let title, sub;
+  if (state.query.trim()) {
+    title = "⌕ Recherche";
+    sub = `${items.length} projet${items.length > 1 ? "s" : ""} pour « ${escapeHtml(state.query.trim())} »`;
+  } else if (!state.view) {
+    title = `✦ Projets <em>phares</em>`;
+    sub = "Je bricole des outils pour mes passions : plongée, violon, soirées jeux, consoles rétro…";
+  } else {
+    const c = CATEGORIES.find((x) => x.id === state.view);
+    title = `${c.icon} ${escapeHtml(c.label)}`;
+    sub = escapeHtml(c.blurb);
+  }
+  $("#viewHead").innerHTML = `<h1>${title}</h1><p>${sub}</p>`;
+}
+
+function renderSideInfo(){
+  const live = PROJECTS.filter(isLive).length;
+  $("#sideInfo").innerHTML = `<p class="side-stats"><strong>${PROJECTS.length}</strong> projets · <strong>${live}</strong> en ligne</p>
+    <p class="side-archives">Archives : ${ARCHIVES.map((a) => `<a href="${a.url}" target="_blank" rel="noreferrer" title="${escapeHtml(a.desc)}">${escapeHtml(a.title)}</a>`).join(", ")}</p>`;
+}
+
+// À monter quand une capture de shots/ est remplacée (sinon le navigateur garde l'ancienne)
+const SHOTS_VERSION = 2;
+function artFor(p){
+  if (p.shot) return `<img src="shots/${p.shot}.jpg?v=${SHOTS_VERSION}" alt="" loading="lazy" decoding="async" width="900" height="337">`;
+  return artSvg({ ...p, accent: colorOf(p) });
+}
+
+function renderTiles(items){
+  const showCat = !state.view || state.query.trim();
+  $("#tiles").innerHTML = items.length ? items.map((p) => `
+    <button class="tile" type="button" data-i="${PROJECTS.indexOf(p)}" style="--c:${colorOf(p)}">
+      <span class="tile-art">${artFor(p)}${p.new ? '<span class="tile-new">Nouveau</span>' : ""}</span>
+      <span class="tile-cap">
+        <span class="tile-kind">${showCat ? `${catOf(p).icon} ${escapeHtml(catOf(p).label)}` : escapeHtml(p.kind)}</span>
+        <span class="tile-title">${escapeHtml(p.title)}</span>
+      </span>
+    </button>`).join("")
+    : `<p class="empty">Rien trouvé 🤿 Essaie un autre mot.</p>`;
+  fit();
+}
+
+function render(){
+  const items = currentItems();
+  renderNav();
+  renderSideInfo();
+  renderHead(items);
+  renderTiles(items);
+}
+
+/* ── Vignettes : une seule taille pour tout le site ─────
+   La taille dépend de l'écran, pas de la catégorie : on la calcule pour que
+   la catégorie la plus remplie tienne sans défiler, et toutes les vues
+   l'utilisent. Vignette = illustration 8:3 + légende de hauteur fixe. */
+const MAX_ITEMS = Math.max(...CATEGORIES.map((c) => PROJECTS.filter((p) => p.cat === c.id).length));
+function fit(){
+  const box = $("#tiles");
+  const W = box.clientWidth, H = box.clientHeight;
+  if (!W || !H) return;
+  const css = getComputedStyle(box);
+  const gap = parseFloat(css.columnGap) || 12;
+  const cap = parseFloat(css.getPropertyValue("--cap")) || 52;
+  const mobile = matchMedia("(max-width: 760px)").matches;
+  const height = (w, c) => { const r = Math.ceil(MAX_ITEMS / c); return r * (w * 3 / 8 + cap) + gap * (r - 1); };
+
+  // Colonnes : 2 (ou 3) sur mobile ; sur ordinateur, le moins de colonnes possible
+  // (donc les plus grandes vignettes) tant que tout tient en hauteur.
+  let cols = mobile ? (W >= 520 ? 3 : 2) : 6;
+  if (!mobile) {
+    for (let c = 2; c <= 6; c++) {
+      if (height((W - gap * (c - 1)) / c, c) <= H) { cols = c; break; }
+    }
+  }
+  // Largeur de vignette : celle de la colonne, réduite si la hauteur manque.
+  let w = (W - gap * (cols - 1)) / cols;
+  const r = Math.ceil(MAX_ITEMS / cols);
+  const wFromH = ((H - gap * (r - 1)) / r - cap) * 8 / 3;
+  w = Math.max(90, Math.floor(Math.min(w, wFromH, 440)));
+  box.style.gridTemplateColumns = `repeat(${cols}, ${w}px)`;
+}
+new ResizeObserver(() => fit()).observe($("#tiles"));
+
+/* ── Fiche projet ─────────────────────────────────────── */
+const sheet = $("#sheet");
+function openSheet(p){
+  const repoUrl = p.repo ? `https://github.com/soaresden/${p.repo}` : null;
+  const actions = [
+    `<a class="primary" href="${p.url}" target="_blank" rel="noreferrer">${isLive(p) ? "Ouvrir" : "Voir"} ↗</a>`,
+    p.apk ? `<a href="${p.apk}" rel="noreferrer">APK</a>` : "",
+    repoUrl && repoUrl !== p.url ? `<a href="${repoUrl}" target="_blank" rel="noreferrer">Code</a>` : ""
+  ].join("");
+  sheet.style.setProperty("--c", colorOf(p));
+  $("#sheetInner").innerHTML = `
+    <div class="sheet-art">${artFor(p).replace(' loading="lazy"', "")}
+      <button class="sheet-close" type="button" aria-label="Fermer">✕</button>
     </div>
-  </a>`).join("");
-  emptyState.style.display=filtered.length?"none":"block";
-  renderSelection(filtered.length);
+    <div class="sheet-body">
+      <div class="sheet-kind">${catOf(p).icon} ${escapeHtml(p.kind)}${p.new ? '<span class="new">Nouveau</span>' : ""}</div>
+      <h2 id="sheetTitle">${escapeHtml(p.title)}</h2>
+      <p class="sheet-desc">${escapeHtml(p.desc)}</p>
+      ${p.links ? `<div class="sublinks">${p.links.map((l) => `<a href="${l.url}" target="_blank" rel="noreferrer">${escapeHtml(l.label)}</a>`).join("")}</div>` : ""}
+      <div class="sheet-foot">
+        <div class="plats">${p.platforms.map((k) => `<span class="plat">${PLATFORMS[k]}</span>`).join("")}</div>
+        <div class="actions">${actions}</div>
+      </div>
+    </div>`;
+  sheet.showModal();
+  sheet.querySelector(".actions a").focus();
 }
+$("#tiles").addEventListener("click", (e) => {
+  const tile = e.target.closest(".tile");
+  if (tile) openSheet(PROJECTS[+tile.dataset.i]);
+});
+sheet.addEventListener("click", (e) => {
+  if (e.target === sheet || e.target.closest(".sheet-close")) sheet.close();
+});
 
-function render(){renderCategories();renderProjects();}
-searchInput.addEventListener("input",(event)=>{state.query=event.target.value;renderProjects();});
-render();
+/* ── Recherche (barre latérale ou bouton mobile) ──────── */
+function setQuery(q){
+  state.query = q;
+  $("#search").value = $("#searchMobile").value = q;
+  render();
+}
+$("#search").addEventListener("input", (e) => setQuery(e.target.value));
+$("#searchMobile").addEventListener("input", (e) => setQuery(e.target.value));
+$("#searchToggle").addEventListener("click", () => {
+  const wrap = $("#searchMobileWrap");
+  wrap.hidden = !wrap.hidden;
+  if (wrap.hidden) setQuery("");
+  else $("#searchMobile").focus();
+  fit();
+});
+
+/* ── Routage par ancre : #/plongee, #/musique… ─────────── */
+function route(){
+  const id = location.hash.replace(/^#\/?/, "");
+  state.view = CATEGORIES.some((c) => c.id === id) ? id : "";
+  if (state.query) { state.query = ""; $("#search").value = $("#searchMobile").value = ""; }
+  if (sheet.open) sheet.close();
+  render();
+}
+addEventListener("hashchange", route);
+route();
