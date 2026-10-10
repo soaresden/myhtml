@@ -140,8 +140,18 @@ function fit(){
   let w = (W - gap * (cols - 1)) / cols;
   const r = Math.ceil(MAX_ITEMS / cols);
   const wFromH = ((H - gap * (r - 1)) / r - cap) * 8 / 3;
-  w = Math.max(90, Math.floor(Math.min(w, wFromH, 440)));
-  box.style.gridTemplateColumns = `repeat(${cols}, ${w}px)`;
+  w = Math.floor(Math.min(w, wFromH, 440));
+  box.classList.remove("rows");
+  box.style.gridAutoRows = "";
+  // Petit téléphone : des vignettes trop petites deviennent illisibles ; on passe
+  // à des lignes de même hauteur (image à gauche, titre à droite).
+  if (mobile && w < 130) {
+    box.classList.add("rows");
+    box.style.gridTemplateColumns = "minmax(0, 1fr)";
+    box.style.gridAutoRows = `${Math.floor((H - gap * (MAX_ITEMS - 1)) / MAX_ITEMS)}px`;
+    return;
+  }
+  box.style.gridTemplateColumns = `repeat(${cols}, ${Math.max(90, w)}px)`;
 }
 new ResizeObserver(() => fit()).observe($("#tiles"));
 

@@ -176,6 +176,16 @@ const PROJECTS = [
   },
   {
     cat: "jeux", new: true,
+    title: "Pili Pili Helper 🌶️",
+    kind: "Compagnon de table",
+    desc: "Pour Pili Pili et l'extension Extra Spicy : la règle de chaque carte en un tap, les missions de manche, et les paris, plis et Pilis comptés pour vous. Historique, annulation de manche et revanche.",
+    url: "https://soaresden.github.io/PiliPiliHelper/",
+    repo: "PiliPiliHelper",
+    platforms: ["web"],
+    shot: "pilipili"
+  },
+  {
+    cat: "jeux", new: true,
     title: "Gauche ou Droite ?",
     kind: "Party game",
     desc: "Glisse les prénoms dans le camp ✊ Gauche ou 💼 Droite, l'IA rend son verdict. Leaderboard, historique et profils.",

@@ -272,6 +272,13 @@ button { font: inherit; color: inherit; }
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
   }
 
+  /* Lignes (petits téléphones) : même hauteur pour toutes, image 8:3 à gauche */
+  .tiles.rows { gap: 8px; }
+  .tiles.rows .tile { flex-direction: row; align-items: stretch; }
+  .tiles.rows .tile-art { flex: none; height: 100%; aspect-ratio: 8 / 3; border-bottom: 0; border-right: 1px solid var(--line); }
+  .tiles.rows .tile-cap { flex: 1; height: auto; padding: 0 10px; }
+  .tiles.rows .tile-new { top: 3px; right: 3px; font-size: .5rem; padding: 1px 4px; }
+
   .sheet {
     width: 100vw; max-width: 100vw; max-height: 90dvh;
     margin: auto 0 0; border-radius: 20px 20px 0 0;
