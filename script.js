@@ -1,6 +1,7 @@
 const PLATFORMS = {
   web: "Web", android: "Android", wear: "Wear OS",
-  ps2: "PS2", switch: "Switch", pc: "PC", handheld: "Retroid"
+  ps1: "PS1", ps2: "PS2", gb: "Game Boy", gba: "GBA",
+  xbox360: "Xbox 360", switch: "Switch", pc: "PC", handheld: "Retroid"
 };
 const HOME = { id: "", label: "Accueil", icon: "✦", color: "#78716c" };
 const state = { view: "", query: "" };
@@ -85,7 +86,7 @@ function renderSideInfo(){
 }
 
 // À monter quand une capture de shots/ est remplacée (sinon le navigateur garde l'ancienne)
-const SHOTS_VERSION = 2;
+const SHOTS_VERSION = 3;
 function artFor(p){
   if (p.shot) return `<img src="shots/${p.shot}.jpg?v=${SHOTS_VERSION}" alt="" loading="lazy" decoding="async" width="900" height="337">`;
   return artSvg({ ...p, accent: colorOf(p) });

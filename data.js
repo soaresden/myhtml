@@ -24,8 +24,10 @@ const CATEGORIES = [
     blurb: "Partitions, violon, groupe de potes et créations Suno." },
   { id: "jeux", label: "Jeux de société", short: "Jeux", icon: "🎲", color: "#ea580c",
     blurb: "Assistants de partie, party games et soundboards pour le maître du jeu." },
-  { id: "retro", label: "Retrogaming", short: "Rétro", icon: "🕹️", color: "#db2777",
-    blurb: "Homebrew PS2, Switch et consoles portables : lanceurs, sauvegardes, rétro-ingénierie." },
+  { id: "mods", label: "Mods & traductions", short: "Mods", icon: "🕹️", color: "#db2777",
+    blurb: "Je modifie les jeux eux-mêmes : gameplay remis au goût du jour, traductions en français." },
+  { id: "consoles", label: "Outils consoles", short: "Consoles", icon: "🧰", color: "#9333ea",
+    blurb: "Autour des jeux : lanceurs, éditeurs de sauvegardes, rétro-ingénierie, overlays." },
   { id: "route", label: "Sur la route", short: "Route", icon: "🛵", color: "#059669",
     blurb: "Carburant, trottinette et dashcam : des applis pour ce qui roule." },
   { id: "media", label: "Photo & vidéo", short: "Média", icon: "📷", color: "#4f46e5",
@@ -235,9 +237,41 @@ const PROJECTS = [
     art: "timebomb"
   },
 
-  // ── Retrogaming ──────────────────────────────────────────
+  // ── Mods & traductions ───────────────────────────────────
   {
-    cat: "retro", wide: true, new: true,
+    cat: "mods", wide: true, new: true,
+    title: "RE1 Director's Cut · Hotkeys",
+    kind: "Mod PS1 · patcher en ligne",
+    desc: "Resident Evil Director's Cut (PS1) avec le confort moderne : raccourcis L2 + croix, vie et munitions à l'écran, demi-tour rapide façon RE3, rechargement rapide, objets déplaçables, et un menu d'options en jeu. Versions USA, Dual Shock et France ; on patche sa propre image disque dans le navigateur.",
+    url: "https://soaresden.github.io/re1-dc-hotkeys/",
+    repo: "re1-dc-hotkeys",
+    platforms: ["ps1", "web"],
+    shot: "re1"
+  },
+  {
+    cat: "mods", new: true,
+    title: "DBZ Team Training en français",
+    kind: "Traduction GBA · patcher en ligne",
+    desc: "Le ROM hack Dragon Ball Z Team Training V8 (sur base Pokémon Rouge Feu) entièrement en français : textes du hack traduits avec un glossaire, le reste repris de la VF officielle. On dépose ses propres ROMs et la version française est fabriquée dans le navigateur.",
+    url: "https://soaresden.github.io/DBZPokemonFR/",
+    repo: "DBZPokemonFR",
+    platforms: ["gba", "web"],
+    shot: "dbz"
+  },
+  {
+    cat: "mods",
+    title: "Pokémon Regulation en français",
+    kind: "Traduction · Game Boy",
+    desc: "Traduction française du hack Pokémon Regulation Rouge/Bleu : attaques, objets, statistiques, noms des Pokémon et menus. Compile en français avec RGBDS.",
+    url: "https://github.com/soaresden/pokemon_regulation_rouge_bleu",
+    repo: "pokemon_regulation_rouge_bleu",
+    platforms: ["gb"],
+    art: "pokefr", accent: "#e11d48"
+  },
+
+  // ── Outils consoles ──────────────────────────────────────
+  {
+    cat: "consoles", wide: true, new: true,
     title: "Prism PS2 Launcher",
     kind: "Homebrew PS2 · Lua",
     desc: "Un seul lanceur pour toute la ludothèque : disque exFAT interne, clé USB ou MMCE, et chaque fichier part dans le bon émulateur (RetroArch, POPStarter, Neutrino, OPL). Jaquettes, descriptions et emplacement des sauvegardes.",
@@ -247,7 +281,7 @@ const PROJECTS = [
     shot: "prism"
   },
   {
-    cat: "retro", new: true,
+    cat: "consoles", new: true,
     title: "bigben8mcps2",
     kind: "Rétro-ingénierie PS2",
     desc: "Ressusciter la carte mémoire Datel Mega Memory 8 sans son CD : gestionnaire XMEM2 qui ouvre les archives Datel, et un pilote résident qui joue le rôle du disque.",
@@ -257,7 +291,7 @@ const PROJECTS = [
     shot: "bigben"
   },
   {
-    cat: "retro", new: true,
+    cat: "consoles", new: true,
     title: "MPW Switch Save Editor",
     kind: "Éditeur de sauvegarde",
     desc: "Peace Walker (Master Collection, Switch) dans le navigateur : déchiffrement, soldats, véhicules, ZEKE, rangs S. Rien n'est envoyé nulle part.",
@@ -267,7 +301,18 @@ const PROJECTS = [
     art: "mpw", accent: "#b7791f"
   },
   {
-    cat: "retro", new: true,
+    cat: "consoles", new: true,
+    title: "NFS Most Wanted Save Editor · Xbox 360",
+    kind: "Éditeur de sauvegarde · contribution",
+    desc: "L'éditeur web de x07x08 pour NFS Most Wanted (2005), auquel j'ai ajouté les sauvegardes Xbox 360 : ordre des octets, décalages, et les trois CRC d'EA que le jeu vérifie. Testé sur le portage Switch : la sauvegarde modifiée se charge en jeu.",
+    url: "https://soaresden.github.io/nfsmw-save-editor/src/",
+    repo: "nfsmw-save-editor",
+    links: [{ label: "Pull request chez x07x08", url: "https://github.com/x07x08/nfsmw-save-editor/pull/6" }],
+    platforms: ["web", "xbox360", "switch"],
+    art: "nfsmw", accent: "#65a30d"
+  },
+  {
+    cat: "consoles", new: true,
     title: "Walkthrough Overlay",
     kind: "Overlay Switch · C++",
     desc: "Lire une soluce par-dessus n'importe quel jeu : textes, images et pages PDF, plus un outil PC pour convertir les guides. Réécriture complète de la v1.",
@@ -277,7 +322,7 @@ const PROJECTS = [
     shot: "walkthrough"
   },
   {
-    cat: "retro",
+    cat: "consoles",
     title: "LED Retroid 5",
     kind: "Batocera · Python",
     desc: "Pilote les LED des sticks du Retroid Pocket 5 : couleurs par bouton gardées au redémarrage, ou niveau de batterie en couleur.",

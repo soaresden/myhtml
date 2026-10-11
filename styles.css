@@ -291,6 +291,12 @@ button { font: inherit; color: inherit; }
   .actions a { flex: 1; justify-content: center; }
 }
 
+/* Téléphones étroits : 9 onglets en bas, libellés resserrés pour rester entiers */
+@media (max-width: 400px) {
+  .nav { padding-left: 0; padding-right: 0; }
+  .nav-short { font-size: .56rem; letter-spacing: -.03em; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
