@@ -14,8 +14,8 @@
 //   wide       carte large (le projet phare de la catégorie)
 //   new        badge « Nouveau »
 //   accent     couleur de la carte (sinon celle de la catégorie)
+//   also       autres catégories où le projet apparaît aussi (ex. ["android"])
 //
-// ARCHIVES : vieux petits outils, affichés en liste compacte en bas de page.
 
 const CATEGORIES = [
   { id: "plongee", label: "Plongée", short: "Plongée", icon: "🌊", color: "#0284c7",
@@ -24,10 +24,14 @@ const CATEGORIES = [
     blurb: "Partitions, violon, groupe de potes et créations Suno." },
   { id: "jeux", label: "Jeux de société", short: "Jeux", icon: "🎲", color: "#ea580c",
     blurb: "Assistants de partie, party games et soundboards pour le maître du jeu." },
+  { id: "creation", label: "Création de jeux", short: "Créa", icon: "🎮", color: "#d97706",
+    blurb: "Mes propres jeux, de l'idée à la publication." },
   { id: "mods", label: "Mods & traductions", short: "Mods", icon: "🕹️", color: "#db2777",
     blurb: "Je modifie les jeux eux-mêmes : gameplay remis au goût du jour, traductions en français." },
   { id: "consoles", label: "Outils consoles", short: "Consoles", icon: "🧰", color: "#9333ea",
     blurb: "Autour des jeux : lanceurs, éditeurs de sauvegardes, rétro-ingénierie, overlays." },
+  { id: "android", label: "Applis Android", short: "Android", icon: "🤖", color: "#16a34a",
+    blurb: "Mes applis pour le téléphone, la montre et Android Auto." },
   { id: "route", label: "Sur la route", short: "Route", icon: "🛵", color: "#059669",
     blurb: "Carburant, trottinette et dashcam : des applis pour ce qui roule." },
   { id: "media", label: "Photo & vidéo", short: "Média", icon: "📷", color: "#4f46e5",
@@ -40,11 +44,13 @@ const PROJECTS = [
   // ── Plongée ──────────────────────────────────────────────
   {
     cat: "plongee", wide: true, new: true,
+    also: ["android"],
     title: "MN90Mobile",
     kind: "Suite d'outils de plongée",
     desc: "Planificateur MN90 complet (paliers, autonomie, successives), profil à dessiner avec saturation et gradient factors, Nitrox, DTR, briefing et procédures, simulateur de remontée assistée et mini-jeu. Une appli Wear OS au poignet. PWA hors ligne, 6 langues.",
     url: "https://soaresden.github.io/MN90Mobile/",
     repo: "MN90Mobile",
+    apk: "https://github.com/soaresden/MN90Mobile/releases/latest/download/MN90-Montre.apk",
     links: [
       { label: "Planificateur", url: "https://soaresden.github.io/MN90Mobile/planner/" },
       { label: "Profil", url: "https://soaresden.github.io/MN90Mobile/decomp/" },
@@ -70,6 +76,7 @@ const PROJECTS = [
   },
   {
     cat: "plongee",
+    also: ["creation"],
     title: "Diver Flap",
     kind: "Mini-jeu",
     desc: "Le jeu du plongeur : évite les obstacles, gère ta réserve d'air et affronte l'hippocampe maléfique.",
@@ -92,6 +99,7 @@ const PROJECTS = [
   // ── Musique ──────────────────────────────────────────────
   {
     cat: "musique", wide: true, new: true,
+    also: ["android"],
     title: "Partoche and Friends 🐶",
     kind: "Partitions en groupe",
     desc: "Une seule bibliothèque MuseScore pour toute la bande : chacun garde ses .mscz dans son pCloud, les autres les lisent. Un calque d'annotations par ami, chat dans la partition, statuts par morceau et présence en direct. Sans serveur.",
@@ -104,6 +112,7 @@ const PROJECTS = [
   },
   {
     cat: "musique", new: true,
+    also: ["android"],
     title: "Partoche",
     kind: "Élève ⇄ prof",
     desc: "Mes partitions MuseScore sur tablette, annotées avec ma prof de violon : elle dépose ses traits depuis sa page web (FR · EN · 한국어), synchro pCloud, deux calques séparés.",
@@ -115,11 +124,13 @@ const PROJECTS = [
   },
   {
     cat: "musique", new: true,
+    also: ["android"],
     title: "SUNODLAA",
     kind: "Suno · favori + Android Auto",
     desc: "Ta bibliothèque Suno rangée par espace de travail : sur suno.com via un favori qui se met à jour tout seul, sur le téléphone, et dans la voiture.",
     url: "https://soaresden.github.io/SunoDLAA/",
     repo: "SunoDLAA",
+    apk: "https://github.com/soaresden/SunoDLAA/tree/main/releases",
     platforms: ["web", "android"],
     shot: "sunodlaa"
   },
@@ -237,6 +248,17 @@ const PROJECTS = [
     art: "timebomb"
   },
 
+  // ── Création de jeux ─────────────────────────────────────
+  {
+    cat: "creation", also: ["android"], wide: true, new: true,
+    title: "Xplosives Adventures",
+    kind: "Jeu Android · itch.io",
+    desc: "Un démineur-RPG : une Aventure de 50 niveaux avec monstres et boss, L'Ascension (fuir le feu, fouiller des maisons, désamorcer des bombes par déduction), un mode zombie au tour par tour, le démineur classique, des trophées et des thèmes à débloquer. En français et en anglais.",
+    url: "https://soaresden.itch.io/xplosives-adventures",
+    platforms: ["android"],
+    shot: "xplosives"
+  },
+
   // ── Mods & traductions ───────────────────────────────────
   {
     cat: "mods", wide: true, new: true,
@@ -245,7 +267,7 @@ const PROJECTS = [
     desc: "Ma Mazda MX-5 RF Deep Crystal Blue convertie dans les jeux de voitures que j'aime, de la PS1 à la Xbox 360. Premier jeu : NFS Most Wanted (Xbox 360 / Switch), avec toit fermé ou décapoté, son moteur, logo et performances. La voiture est fabriquée dans le navigateur à partir de ses propres fichiers.",
     url: "https://soaresden.github.io/MazdaMx5-nd-rf-ingames/",
     repo: "MazdaMx5-nd-rf-ingames",
-    links: [{ label: "NFS Most Wanted", url: "https://soaresden.github.io/MazdaMx5-nd-rf-ingames/nfs-most-wanted/" }],
+    links: [{ label: "NFS Most Wanted", url: "https://soaresden.github.io/MazdaMx5-nd-rf-ingames/web/nfsmw.html" }],
     platforms: ["xbox360", "switch", "web"],
     shot: "mx5"
   },
@@ -343,9 +365,25 @@ const PROJECTS = [
     art: "retroid", accent: "#a855f7"
   },
 
+  // ── Applis Android ───────────────────────────────────────
+  {
+    cat: "android", new: true,
+    title: "Bodycount",
+    kind: "Appli Android · bêta Play Store",
+    desc: "Le carnet de ta vie amoureuse en version jeu : une fiche avec avatar pour chaque rencontre, un agenda de rendez-vous, des défis (alphabet, tour du monde, astro) et des cartes rares à collectionner. Tout reste sur le téléphone, chiffré et verrouillé ; ni compte ni pub.",
+    url: "https://groups.google.com/g/bodycountapp",
+    links: [
+      { label: "Activer le test Play Store", url: "https://play.google.com/apps/testing/com.grobezeur.bodycount" },
+      { label: "Confidentialité", url: "https://soaresden.github.io/BodyCountApp/politique-de-confidentialite.html" }
+    ],
+    platforms: ["android"],
+    shot: "bodycount", accent: "#ec4899"
+  },
+
   // ── Sur la route ─────────────────────────────────────────
   {
     cat: "route", wide: true, new: true,
+    also: ["android"],
     title: "FuelTrajetMap",
     kind: "Carburant · trajet optimisé",
     desc: "Les prix officiels des ~9 800 stations françaises sur une carte, et surtout l'optimiseur de pleins : où s'arrêter sur ton trajet et combien de litres mettre, selon ton véhicule. Mode pénurie, écran Android Auto, sans backend.",
@@ -356,6 +394,7 @@ const PROJECTS = [
   },
   {
     cat: "route", new: true,
+    also: ["android"],
     title: "Ride Companion · iX7 Pro",
     kind: "Trottinette connectée",
     desc: "Remplace l'appli officielle de la trottinette iX7 Pro : tableau de bord personnalisable, modes et réglages, trajets enregistrés avec la carte, suivi batterie, et la montre au poignet.",
@@ -427,17 +466,35 @@ const PROJECTS = [
     repo: "EDF-NoDropNoHarm",
     platforms: ["web"],
     shot: "hse"
+  },
+  {
+    cat: "outils",
+    title: "idotMatrix GIF Converter",
+    kind: "Ancien outil · 2025",
+    desc: "Transforme une vidéo en GIF optimisé pour les écrans pixel iDotMatrix (16×16 à 64×64) : choix du passage, aperçu du rendu, début et fin.",
+    url: "https://github.com/soaresden/idotMatrixViewer-Gif-Converter",
+    repo: "idotMatrixViewer-Gif-Converter",
+    platforms: ["pc"],
+    art: "pixelgif", accent: "#0d9488"
+  },
+  {
+    cat: "outils",
+    title: "Live-Pipette",
+    kind: "Ancien outil · 2024",
+    desc: "Une pipette de couleur à l'écran, pour lire une valeur RGB sans lancer Photoshop.",
+    url: "https://github.com/soaresden/Live-Pipette",
+    repo: "Live-Pipette",
+    platforms: ["pc"],
+    art: "pipette", accent: "#c026d3"
+  },
+  {
+    cat: "outils",
+    title: "GifCarBootanimAndroid",
+    kind: "Ancien outil · 2023",
+    desc: "Un GIF devient l'animation de démarrage d'un autoradio Android (et inversement) : en boucle ou figée sur la dernière image, avec redimensionnement.",
+    url: "https://github.com/soaresden/GifCarBootanimAndroid",
+    repo: "GifCarBootanimAndroid",
+    platforms: ["pc"],
+    art: "bootanim", accent: "#2563eb"
   }
-];
-
-const ARCHIVES = [
-  { title: "idotMatrix GIF Converter", year: 2025, platform: "pc",
-    desc: "Vidéo → GIF optimisé pour les écrans pixel iDotMatrix.",
-    url: "https://github.com/soaresden/idotMatrixViewer-Gif-Converter" },
-  { title: "Live-Pipette", year: 2024, platform: "pc",
-    desc: "Pipette de couleur à l'écran, sans lancer Photoshop.",
-    url: "https://github.com/soaresden/Live-Pipette" },
-  { title: "GifCarBootanimAndroid", year: 2023, platform: "pc",
-    desc: "Un GIF ⇄ une animation de démarrage pour autoradio Android.",
-    url: "https://github.com/soaresden/GifCarBootanimAndroid" }
 ];

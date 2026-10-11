@@ -3,7 +3,7 @@ const PLATFORMS = {
   ps1: "PS1", ps2: "PS2", gb: "Game Boy", gba: "GBA",
   xbox360: "Xbox 360", switch: "Switch", pc: "PC", handheld: "Retroid"
 };
-const HOME = { id: "", label: "Accueil", icon: "✦", color: "#78716c" };
+const HOME = { id: "", label: "Accueil", icon: "✦", color: "#e11d74" };
 const state = { view: "", query: "" };
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => [...document.querySelectorAll(sel)];
@@ -14,6 +14,8 @@ function escapeHtml(value){
 const catOf = (p) => CATEGORIES.find((c) => c.id === p.cat);
 const colorOf = (p) => p.accent || catOf(p).color;
 const isLive = (p) => p.url.startsWith("https://soaresden.github.io/");
+// Un projet a une catégorie principale (cat) et peut apparaître dans d'autres (also)
+const inCat = (p, id) => p.cat === id || (p.also || []).includes(id);
 
 /* ── Thème : auto → clair → sombre ────────────────────── */
 const THEMES = ["auto", "light", "dark"];
@@ -35,19 +37,23 @@ $$(".theme-btn").forEach((b) => b.addEventListener("click", () => {
   try { localStorage.setItem("theme", theme); } catch (e) {}
 }));
 
-/* ── Navigation ───────────────────────────────────────── */
+/* ── Navigation ───────────────────────────────────────────
+   Ordinateur : colonne d'icônes, le nom apparaît au survol.
+   Mobile : bouton « Catégories » qui ouvre une grille. Même liste dans les deux. */
 function renderNav(){
   const items = [HOME, ...CATEGORIES];
-  $("#nav").innerHTML = items.map((c) => {
-    const n = c.id ? PROJECTS.filter((p) => p.cat === c.id).length : "";
+  const html = items.map((c) => {
+    const n = c.id ? PROJECTS.filter((p) => inCat(p, c.id)).length : "";
     const current = !state.query && state.view === c.id ? ' aria-current="page"' : "";
-    return `<a class="nav-item" href="#/${c.id}" style="--c:${c.color}"${current}>
+    return `<a class="nav-item" href="#/${c.id}" data-cat="${c.id || "home"}" style="--c:${c.color}"${current} aria-label="${escapeHtml(c.label)}">
       <span class="nav-ico" aria-hidden="true">${c.icon}</span>
-      <span class="nav-label">${escapeHtml(c.label)}</span>
-      <span class="nav-short">${escapeHtml(c.short || c.label)}</span>
-      <span class="nav-n">${n}</span>
+      <span class="nav-label">${escapeHtml(c.label)}${n ? ` <span class="nav-n">${n}</span>` : ""}</span>
     </a>`;
   }).join("");
+  $("#nav").innerHTML = html;
+  $("#catGrid").innerHTML = html;
+  const cur = items.find((c) => c.id === state.view) || HOME;
+  $("#catToggle").innerHTML = `<span aria-hidden="true">${state.query ? "⌕" : cur.icon}</span> ${state.query ? "Recherche" : escapeHtml(cur.short || cur.label)} <span aria-hidden="true">▾</span>`;
 }
 
 /* ── Contenu de la vue ────────────────────────────────── */
@@ -58,44 +64,43 @@ function currentItems(){
       .join(" ").toLowerCase().includes(q));
   }
   if (!state.view) return PROJECTS.filter((p) => p.wide);
-  return PROJECTS.filter((p) => p.cat === state.view);
+  return PROJECTS.filter((p) => inCat(p, state.view));
 }
 
 // Même structure d'en-tête partout (titre + une phrase) : la place laissée
 // aux vignettes est donc identique d'une vue à l'autre.
+// L'icône du titre joue l'animation de sa catégorie quand on arrive sur la page
+// (pas à chaque lettre tapée dans la recherche).
+let lastView = null;
+const headIco = (cat, icon) => `<span class="head-ico" data-cat="${cat}">${icon}</span>`;
 function renderHead(items){
   let title, sub;
   if (state.query.trim()) {
-    title = "⌕ Recherche";
+    title = `${headIco("search", "⌕")} Recherche`;
     sub = `${items.length} projet${items.length > 1 ? "s" : ""} pour « ${escapeHtml(state.query.trim())} »`;
   } else if (!state.view) {
-    title = `✦ Projets <em>phares</em>`;
-    sub = "Je bricole des outils pour mes passions : plongée, violon, soirées jeux, consoles rétro…";
+    title = `${headIco("home", "✦")} Projets <em>phares</em>`;
+    sub = `${PROJECTS.length} projets faits maison pour mes passions : plongée, violon, jeux, consoles rétro…`;
   } else {
     const c = CATEGORIES.find((x) => x.id === state.view);
-    title = `${c.icon} ${escapeHtml(c.label)}`;
+    title = `${headIco(c.id, c.icon)} ${escapeHtml(c.label)}`;
     sub = escapeHtml(c.blurb);
   }
   $("#viewHead").innerHTML = `<h1>${title}</h1><p>${sub}</p>`;
 }
 
-function renderSideInfo(){
-  const live = PROJECTS.filter(isLive).length;
-  $("#sideInfo").innerHTML = `<p class="side-stats"><strong>${PROJECTS.length}</strong> projets · <strong>${live}</strong> en ligne</p>
-    <p class="side-archives">Archives : ${ARCHIVES.map((a) => `<a href="${a.url}" target="_blank" rel="noreferrer" title="${escapeHtml(a.desc)}">${escapeHtml(a.title)}</a>`).join(", ")}</p>`;
-}
-
 // À monter quand une capture de shots/ est remplacée (sinon le navigateur garde l'ancienne)
-const SHOTS_VERSION = 3;
+const SHOTS_VERSION = 5;
 function artFor(p){
   if (p.shot) return `<img src="shots/${p.shot}.jpg?v=${SHOTS_VERSION}" alt="" loading="lazy" decoding="async" width="900" height="337">`;
   return artSvg({ ...p, accent: colorOf(p) });
 }
 
-function renderTiles(items){
+function renderTiles(items, entering){
   const showCat = !state.view || state.query.trim();
-  $("#tiles").innerHTML = items.length ? items.map((p) => `
-    <button class="tile" type="button" data-i="${PROJECTS.indexOf(p)}" style="--c:${colorOf(p)}">
+  $("#tiles").classList.toggle("enter", entering);
+  $("#tiles").innerHTML = items.length ? items.map((p, i) => `
+    <button class="tile" type="button" data-i="${PROJECTS.indexOf(p)}" style="--c:${colorOf(p)};--n:${i}">
       <span class="tile-art">${artFor(p)}${p.new ? '<span class="tile-new">Nouveau</span>' : ""}</span>
       <span class="tile-cap">
         <span class="tile-kind">${showCat ? `${catOf(p).icon} ${escapeHtml(catOf(p).label)}` : escapeHtml(p.kind)}</span>
@@ -108,17 +113,23 @@ function renderTiles(items){
 
 function render(){
   const items = currentItems();
+  const viewKey = state.query.trim() ? "search" : state.view;
+  const entering = viewKey !== lastView;
+  lastView = viewKey;
+  // La page prend la couleur de sa catégorie (transition douce, cf. @property --pc)
+  const cat = CATEGORIES.find((c) => c.id === state.view);
+  document.documentElement.style.setProperty("--pc", state.query.trim() ? "#64748b" : (cat ? cat.color : HOME.color));
   renderNav();
-  renderSideInfo();
   renderHead(items);
-  renderTiles(items);
+  $("#viewHead").classList.toggle("play", entering);
+  renderTiles(items, entering);
 }
 
 /* ── Vignettes : une seule taille pour tout le site ─────
    La taille dépend de l'écran, pas de la catégorie : on la calcule pour que
    la catégorie la plus remplie tienne sans défiler, et toutes les vues
    l'utilisent. Vignette = illustration 8:3 + légende de hauteur fixe. */
-const MAX_ITEMS = Math.max(...CATEGORIES.map((c) => PROJECTS.filter((p) => p.cat === c.id).length));
+const MAX_ITEMS = Math.max(...CATEGORIES.map((c) => PROJECTS.filter((p) => inCat(p, c.id)).length));
 function fit(){
   const box = $("#tiles");
   const W = box.clientWidth, H = box.clientHeight;
@@ -191,7 +202,7 @@ sheet.addEventListener("click", (e) => {
   if (e.target === sheet || e.target.closest(".sheet-close")) sheet.close();
 });
 
-/* ── Recherche (barre latérale ou bouton mobile) ──────── */
+/* ── Recherche (en-tête sur ordinateur, bouton sur mobile) ── */
 function setQuery(q){
   state.query = q;
   $("#search").value = $("#searchMobile").value = q;
@@ -207,12 +218,20 @@ $("#searchToggle").addEventListener("click", () => {
   fit();
 });
 
+/* ── Grille des catégories (mobile) ───────────────────── */
+const cats = $("#cats");
+$("#catToggle").addEventListener("click", () => cats.showModal());
+cats.addEventListener("click", (e) => {
+  if (e.target === cats || e.target.closest(".nav-item")) cats.close();
+});
+
 /* ── Routage par ancre : #/plongee, #/musique… ─────────── */
 function route(){
   const id = location.hash.replace(/^#\/?/, "");
   state.view = CATEGORIES.some((c) => c.id === id) ? id : "";
   if (state.query) { state.query = ""; $("#search").value = $("#searchMobile").value = ""; }
   if (sheet.open) sheet.close();
+  if (cats.open) cats.close();
   render();
 }
 addEventListener("hashchange", route);

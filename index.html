@@ -9,24 +9,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=17">
+  <link rel="stylesheet" href="styles.css?v=23">
 </head>
 <body>
   <div class="app">
-    <!-- Ordinateur : barre latérale · Mobile : barre du haut + onglets en bas -->
-    <aside class="side">
-      <a class="wordmark" href="#/">soaresden<span>/atelier</span></a>
+    <!-- Ordinateur : colonne d'icônes (nom au survol) · Mobile : barre du haut + grille des catégories -->
+    <aside class="rail">
+      <a class="logo" href="#/" title="soaresden · l'atelier">s<span>/</span></a>
       <nav class="nav" id="nav" aria-label="Catégories"></nav>
-      <div class="side-foot">
-        <div class="side-info" id="sideInfo"></div>
-        <label class="search">
-          <span aria-hidden="true">⌕</span>
-          <input id="search" type="search" placeholder="Chercher un projet…" autocomplete="off">
-        </label>
-        <div class="side-links">
-          <a href="https://github.com/soaresden" target="_blank" rel="noreferrer">GitHub ↗</a>
-          <button class="icon-btn theme-btn" type="button" aria-label="Changer de thème">◐</button>
-        </div>
+      <div class="rail-foot">
+        <a class="icon-btn" href="https://github.com/soaresden" target="_blank" rel="noreferrer" title="GitHub" aria-label="GitHub">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.88.87 2.34.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>
+        </a>
+        <button class="icon-btn theme-btn" type="button" aria-label="Changer de thème">◐</button>
       </div>
     </aside>
 
@@ -36,6 +31,7 @@
         <button class="icon-btn" id="searchToggle" type="button" aria-label="Chercher">⌕</button>
         <button class="icon-btn theme-btn" type="button" aria-label="Changer de thème">◐</button>
       </div>
+      <button class="cat-toggle" id="catToggle" type="button" aria-haspopup="dialog">Catégories</button>
       <label class="search search-mobile" id="searchMobileWrap" hidden>
         <span aria-hidden="true">⌕</span>
         <input id="searchMobile" type="search" placeholder="Chercher un projet…" autocomplete="off">
@@ -43,7 +39,13 @@
     </header>
 
     <main class="view" id="view">
-      <div class="view-head" id="viewHead"></div>
+      <div class="view-top">
+        <div class="view-head" id="viewHead"></div>
+        <label class="search search-desktop">
+          <span aria-hidden="true">⌕</span>
+          <input id="search" type="search" placeholder="Chercher un projet…" autocomplete="off">
+        </label>
+      </div>
       <div class="tiles" id="tiles"></div>
     </main>
   </div>
@@ -52,8 +54,12 @@
     <div class="sheet-inner" id="sheetInner"></div>
   </dialog>
 
-  <script src="data.js?v=17"></script>
-  <script src="art.js?v=17"></script>
-  <script src="script.js?v=17"></script>
+  <dialog class="cats" id="cats" aria-label="Catégories">
+    <nav class="cat-grid" id="catGrid"></nav>
+  </dialog>
+
+  <script src="data.js?v=23"></script>
+  <script src="art.js?v=23"></script>
+  <script src="script.js?v=23"></script>
 </body>
 </html>
