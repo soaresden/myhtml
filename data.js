@@ -240,6 +240,17 @@ const PROJECTS = [
   // ── Mods & traductions ───────────────────────────────────
   {
     cat: "mods", wide: true, new: true,
+    title: "Ma MX-5 RF dans les jeux",
+    kind: "Mod voiture · générateur en ligne",
+    desc: "Ma Mazda MX-5 RF Deep Crystal Blue convertie dans les jeux de voitures que j'aime, de la PS1 à la Xbox 360. Premier jeu : NFS Most Wanted (Xbox 360 / Switch), avec toit fermé ou décapoté, son moteur, logo et performances. La voiture est fabriquée dans le navigateur à partir de ses propres fichiers.",
+    url: "https://soaresden.github.io/MazdaMx5-nd-rf-ingames/",
+    repo: "MazdaMx5-nd-rf-ingames",
+    links: [{ label: "NFS Most Wanted", url: "https://soaresden.github.io/MazdaMx5-nd-rf-ingames/nfs-most-wanted/" }],
+    platforms: ["xbox360", "switch", "web"],
+    shot: "mx5"
+  },
+  {
+    cat: "mods", wide: true, new: true,
     title: "RE1 Director's Cut · Hotkeys",
     kind: "Mod PS1 · patcher en ligne",
     desc: "Resident Evil Director's Cut (PS1) avec le confort moderne : raccourcis L2 + croix, vie et munitions à l'écran, demi-tour rapide façon RE3, rechargement rapide, objets déplaçables, et un menu d'options en jeu. Versions USA, Dual Shock et France ; on patche sa propre image disque dans le navigateur.",
