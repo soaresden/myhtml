@@ -49,7 +49,8 @@ const isLive = (p) => p.url.startsWith("https://soaresden.github.io/");
 // Un projet a une catégorie principale (cat) et peut apparaître dans d'autres (also)
 const inCat = (p, id) => p.cat === id || (p.also || []).includes(id);
 // Un jeu ou une console a sa propre vignette dès qu'il a au moins deux projets
-const isGrouped = (type, id) => !!id && groupProjects(type, id).length > 1;
+// Projets d'un jeu (ou d'une console) dans une catégorie donnée : un groupe reste dans sa catégorie
+const groupIn = (type, id, view) => groupProjects(type, id).filter((p) => !view || inCat(p, view));
 
 /* ── Thème : auto → clair → sombre ────────────────────── */
 const THEMES = ["auto", "light", "dark"];
@@ -82,15 +83,15 @@ function itemsFor(view, group, query){
       L(catOf(p), "label"), p.game ? gameOf(p.game).name : "", ...p.platforms.map((k) => PLATFORMS[k])]
       .join(" ").toLowerCase().includes(q)).map((p) => ({ p }));
   }
-  if (group) return groupProjects(group.type, group.id).map((p) => ({ p }));
+  if (group) return groupIn(group.type, group.id, view).map((p) => ({ p }));
   if (!view) return PROJECTS.filter((p) => p.wide).map((p) => ({ p }));
   const type = CATEGORIES.find((c) => c.id === view).groupBy || "game";
   const field = GROUPS[type].field;
   const out = [], seen = new Set();
   for (const p of PROJECTS.filter((x) => inCat(x, view))) {
     const id = p[field];
-    if (isGrouped(type, id)) {
-      if (!seen.has(id)) { seen.add(id); out.push({ g: groupOf(type, id), type }); }
+    if (id && groupIn(type, id, view).length > 1) {
+      if (!seen.has(id)) { seen.add(id); out.push({ g: groupOf(type, id), type, view }); }
     } else out.push({ p });
   }
   return out;
@@ -162,7 +163,7 @@ const NEW = () => T("Nouveau", "New");
 
 function tileHtml(item, i, showCat){
   if (item.g) {
-    const g = item.g, list = groupProjects(item.type, g.id), n = list.length;
+    const g = item.g, list = groupIn(item.type, g.id, item.view), n = list.length;
     const art = g.shot ? img(g.shot) : g.art ? artSvg({ art: g.art, title: g.name, accent: g.color }) : artFor(list[0]);
     return `<a class="tile tile-game" href="#/${GROUPS[item.type].slug}/${g.id}" style="--c:${g.color};--n:${i}">
       <span class="tile-art">${art}<span class="tile-count">${n} ${T("projets", "projects")}</span></span>
