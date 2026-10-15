@@ -4,6 +4,7 @@
 //   cat        id de la catégorie (CATEGORIES)
 //   also       autres catégories où le projet apparaît aussi (ex. ["android"])
 //   game       id du jeu (GAMES) : les projets d'un même jeu sont regroupés sous une seule vignette
+//   console    id de la console (CONSOLES) : dans « Outils consoles », regroupement par console
 //   title      nom affiché
 //   kind       petite ligne au-dessus du titre
 //   desc       2-3 phrases max
@@ -34,7 +35,7 @@ const CATEGORIES = [
   { id: "mods", label: "Mods & traductions", short: "Mods", icon: "🕹️", color: "#db2777",
     blurb: "Je modifie les jeux eux-mêmes : ma voiture dedans, gameplay modernisé, versions françaises.",
     en: { label: "Mods & translations", short: "Mods", blurb: "I change the games themselves: my car inside, modern comfort, French versions." } },
-  { id: "consoles", label: "Outils consoles", short: "Consoles", icon: "🧰", color: "#9333ea",
+  { id: "consoles", groupBy: "console", label: "Outils consoles", short: "Consoles", icon: "🧰", color: "#9333ea",
     blurb: "Autour des jeux : lanceurs, éditeurs de sauvegardes, rétro-ingénierie, overlays.",
     en: { label: "Console tools", short: "Consoles", blurb: "Around the games: launchers, save editors, reverse engineering, overlays." } },
   { id: "android", label: "Applis Android", short: "Android", icon: "🤖", color: "#16a34a",
@@ -76,6 +77,19 @@ const GAMES = [
     blurb: "Resident Evil Director's Cut sur PlayStation.", en: { blurb: "Resident Evil Director's Cut on PlayStation." } },
   { id: "zelda", name: "Zelda Oracles", short: "Zelda Oracles", icon: "🗡️", color: "#15803d",
     blurb: "Oracle of Ages et Oracle of Seasons sur Game Boy Color.", en: { blurb: "Oracle of Ages and Oracle of Seasons on Game Boy Color." } }
+];
+
+// Consoles : dans « Outils consoles », les outils d'une même console sont regroupés
+// (même principe que GAMES ; un clic ouvre #/console/<id>).
+const CONSOLES = [
+  { id: "switch", name: "Nintendo Switch", short: "Switch", icon: "🕹️", color: "#e60012", art: "consoleswitch",
+    blurb: "Éditeurs de sauvegardes et overlay pour la Switch.",
+    en: { blurb: "Save editors and an overlay for the Switch." } },
+  { id: "ps2", name: "PlayStation 2", short: "PS2", icon: "💿", color: "#1e40af", shot: "prism",
+    blurb: "Homebrew et rétro-ingénierie sur PlayStation 2.",
+    en: { blurb: "Homebrew and reverse engineering on PlayStation 2." } },
+  { id: "retroid", name: "Retroid Pocket", short: "Retroid", icon: "🎮", color: "#a855f7",
+    blurb: "Console portable sous Batocera.", en: { blurb: "A handheld running Batocera." } }
 ];
 
 const MX5 = "https://soaresden.github.io/MazdaMx5-nd-rf-ingames/";
@@ -158,7 +172,7 @@ const PROJECTS = [
   },
   {
     cat: "musique", also: ["android"], new: true,
-    title: "Partoche",
+    title: "Partoche and Prof",
     kind: "Élève ⇄ prof",
     desc: "Mes partitions MuseScore sur tablette, annotées avec ma prof de violon : elle dépose ses traits depuis sa page web (FR · EN · 한국어), synchro pCloud, deux calques séparés.",
     en: { kind: "Student ⇄ teacher",
@@ -502,6 +516,7 @@ const PROJECTS = [
   // ── Outils consoles ──────────────────────────────────────
   {
     cat: "consoles", wide: true, new: true,
+    console: "ps2",
     title: "Prism PS2 Launcher",
     kind: "Homebrew PS2 · Lua",
     desc: "Un seul lanceur pour toute la ludothèque : disque exFAT interne, clé USB ou MMCE, et chaque fichier part dans le bon émulateur (RetroArch, POPStarter, Neutrino, OPL). Jaquettes, descriptions et emplacement des sauvegardes.",
@@ -514,6 +529,7 @@ const PROJECTS = [
   },
   {
     cat: "consoles", new: true,
+    console: "ps2",
     title: "bigben8mcps2",
     kind: "Rétro-ingénierie PS2",
     desc: "Ressusciter la carte mémoire Datel Mega Memory 8 sans son CD : gestionnaire XMEM2 qui ouvre les archives Datel, et un pilote résident qui joue le rôle du disque.",
@@ -526,6 +542,7 @@ const PROJECTS = [
   },
   {
     cat: "consoles", game: "mgs", new: true,
+    console: "switch",
     title: "MPW Switch Save Editor",
     kind: "Éditeur de sauvegarde",
     desc: "Peace Walker (Master Collection, Switch) dans le navigateur : déchiffrement, soldats, véhicules, ZEKE, rangs S. Rien n'est envoyé nulle part.",
@@ -538,6 +555,7 @@ const PROJECTS = [
   },
   {
     cat: "consoles", game: "nfsmw", new: true,
+    console: "switch",
     title: "NFS Most Wanted Save Editor · Xbox 360",
     kind: "Éditeur de sauvegarde · contribution",
     desc: "L'éditeur web de x07x08 pour NFS Most Wanted (2005), auquel j'ai ajouté les sauvegardes Xbox 360 : ordre des octets, décalages, et les trois CRC d'EA que le jeu vérifie. Testé sur le portage Switch : la sauvegarde modifiée se charge en jeu.",
@@ -551,6 +569,7 @@ const PROJECTS = [
   },
   {
     cat: "consoles", new: true,
+    console: "switch",
     title: "Walkthrough Overlay",
     kind: "Overlay Switch · C++",
     desc: "Lire une soluce par-dessus n'importe quel jeu : textes, images et pages PDF, plus un outil PC pour convertir les guides. Réécriture complète de la v1.",
@@ -563,6 +582,7 @@ const PROJECTS = [
   },
   {
     cat: "consoles",
+    console: "retroid",
     title: "LED Retroid 5",
     kind: "Batocera · Python",
     desc: "Pilote les LED des sticks du Retroid Pocket 5 : couleurs par bouton gardées au redémarrage, ou niveau de batterie en couleur.",

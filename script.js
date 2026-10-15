@@ -4,7 +4,8 @@ const PLATFORMS = {
   xbox: "Xbox", xbox360: "Xbox 360", switch: "Switch", pc: "PC", handheld: "Retroid"
 };
 const HOME = { id: "", label: "Accueil", short: "Accueil", icon: "✦", color: "#e11d74", en: { label: "Home", short: "Home" } };
-const state = { view: "", game: "", query: "" };
+// group : le jeu ou la console ouvert ({ type: "game" | "console", id }), sinon null
+const state = { view: "", group: null, query: "" };
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => [...document.querySelectorAll(sel)];
 
@@ -39,13 +40,16 @@ $$(".lang-btn").forEach((b) => {
 
 const catOf = (p) => CATEGORIES.find((c) => c.id === p.cat);
 const gameOf = (id) => GAMES.find((g) => g.id === id);
+// Deux façons de regrouper : par jeu (Mods…) ou par console (Outils consoles)
+const GROUPS = { game: { list: GAMES, slug: "jeu", field: "game" }, console: { list: CONSOLES, slug: "console", field: "console" } };
+const groupOf = (type, id) => GROUPS[type].list.find((x) => x.id === id);
+const groupProjects = (type, id) => PROJECTS.filter((p) => p[GROUPS[type].field] === id);
 const colorOf = (p) => p.accent || catOf(p).color;
 const isLive = (p) => p.url.startsWith("https://soaresden.github.io/");
 // Un projet a une catégorie principale (cat) et peut apparaître dans d'autres (also)
 const inCat = (p, id) => p.cat === id || (p.also || []).includes(id);
-const gameProjects = (id) => PROJECTS.filter((p) => p.game === id);
-// Un jeu a sa propre vignette dès qu'il a au moins deux projets
-const isGrouped = (id) => !!id && gameProjects(id).length > 1;
+// Un jeu ou une console a sa propre vignette dès qu'il a au moins deux projets
+const isGrouped = (type, id) => !!id && groupProjects(type, id).length > 1;
 
 /* ── Thème : auto → clair → sombre ────────────────────── */
 const THEMES = ["auto", "light", "dark"];
@@ -68,26 +72,32 @@ $$(".theme-btn").forEach((b) => b.addEventListener("click", () => {
 }));
 
 /* ── Ce qu'affiche chaque vue ─────────────────────────────
-   Dans une catégorie, les projets d'un même jeu sont remplacés par une seule
-   vignette « jeu » ; un clic ouvre #/jeu/<id> avec tous ses projets. */
-function itemsFor(view, game, query){
+   Dans une catégorie, les projets d'un même jeu (ou d'une même console, selon
+   groupBy de la catégorie) sont remplacés par une seule vignette ; un clic ouvre
+   #/jeu/<id> ou #/console/<id> avec tous ses projets. */
+function itemsFor(view, group, query){
   const q = (query || "").trim().toLowerCase();
   if (q) {
     return PROJECTS.filter((p) => [p.title, L(p, "title"), p.kind, L(p, "kind"), p.desc, L(p, "desc"),
       L(catOf(p), "label"), p.game ? gameOf(p.game).name : "", ...p.platforms.map((k) => PLATFORMS[k])]
       .join(" ").toLowerCase().includes(q)).map((p) => ({ p }));
   }
-  if (game) return gameProjects(game).map((p) => ({ p }));
+  if (group) return groupProjects(group.type, group.id).map((p) => ({ p }));
   if (!view) return PROJECTS.filter((p) => p.wide).map((p) => ({ p }));
+  const type = CATEGORIES.find((c) => c.id === view).groupBy || "game";
+  const field = GROUPS[type].field;
   const out = [], seen = new Set();
   for (const p of PROJECTS.filter((x) => inCat(x, view))) {
-    if (isGrouped(p.game)) {
-      if (!seen.has(p.game)) { seen.add(p.game); out.push({ g: gameOf(p.game) }); }
+    const id = p[field];
+    if (isGrouped(type, id)) {
+      if (!seen.has(id)) { seen.add(id); out.push({ g: groupOf(type, id), type }); }
     } else out.push({ p });
   }
   return out;
 }
-const currentItems = () => itemsFor(state.view, state.game, state.query);
+const currentItems = () => itemsFor(state.view, state.group, state.query);
+// Catégorie à allumer dans le menu (et vers laquelle revenir) sur la page d'un jeu ou d'une console
+const homeCatOf = (group) => state.view || catOf(groupProjects(group.type, group.id)[0]).id;
 
 /* ── Navigation ───────────────────────────────────────────
    Ordinateur : colonne d'icônes, le nom apparaît au survol.
@@ -95,7 +105,7 @@ const currentItems = () => itemsFor(state.view, state.game, state.query);
 function renderNav(){
   const items = [HOME, ...CATEGORIES];
   // Sur la page d'un jeu, on garde allumée la catégorie d'où il vient
-  const active = state.game ? (state.view || catOf(gameProjects(state.game)[0]).id) : state.view;
+  const active = state.group ? homeCatOf(state.group) : state.view;
   const html = items.map((c) => {
     const n = c.id ? PROJECTS.filter((p) => inCat(p, c.id)).length : "";
     const current = !state.query && active === c.id ? ' aria-current="page"' : "";
@@ -107,7 +117,7 @@ function renderNav(){
   $("#nav").innerHTML = html;
   $("#catGrid").innerHTML = html;
   const cur = items.find((c) => c.id === active) || HOME;
-  const g = state.game && gameOf(state.game);
+  const g = state.group && groupOf(state.group.type, state.group.id);
   const label = state.query ? T("Recherche", "Search") : g ? g.short : L(cur, "short") || L(cur, "label");
   $("#catToggle").innerHTML = `<span aria-hidden="true">${state.query ? "⌕" : g ? g.icon : cur.icon}</span> ${escapeHtml(label)} <span aria-hidden="true">▾</span>`;
 }
@@ -124,10 +134,10 @@ function renderHead(items){
     const n = items.length;
     title = `${headIco("search", "⌕")} ${T("Recherche", "Search")}`;
     sub = T(`${n} projet${n > 1 ? "s" : ""} pour « ${escapeHtml(state.query.trim())} »`, `${n} project${n > 1 ? "s" : ""} for “${escapeHtml(state.query.trim())}”`);
-  } else if (state.game) {
-    const g = gameOf(state.game);
-    const back = state.view || catOf(gameProjects(g.id)[0]).id;
-    title = `<a class="back" href="#/${back}" aria-label="${T("Retour", "Back")}">←</a> ${headIco("game", g.icon)} ${escapeHtml(L(g, "name"))}`;
+  } else if (state.group) {
+    const g = groupOf(state.group.type, state.group.id);
+    const back = homeCatOf(state.group);
+    title = `<a class="back" href="#/${back}" aria-label="${T("Retour", "Back")}">←</a> ${headIco(state.group.type, g.icon)} ${escapeHtml(L(g, "name"))}`;
     sub = escapeHtml(L(g, "blurb"));
   } else if (!state.view) {
     title = `${headIco("home", "✦")} ${T("Projets <em>phares</em>", "Featured <em>projects</em>")}`;
@@ -152,12 +162,12 @@ const NEW = () => T("Nouveau", "New");
 
 function tileHtml(item, i, showCat){
   if (item.g) {
-    const g = item.g, n = gameProjects(g.id).length;
-    const art = g.shot ? img(g.shot) : artFor(gameProjects(g.id)[0]);
-    return `<a class="tile tile-game" href="#/jeu/${g.id}" style="--c:${g.color};--n:${i}">
+    const g = item.g, list = groupProjects(item.type, g.id), n = list.length;
+    const art = g.shot ? img(g.shot) : g.art ? artSvg({ art: g.art, title: g.name, accent: g.color }) : artFor(list[0]);
+    return `<a class="tile tile-game" href="#/${GROUPS[item.type].slug}/${g.id}" style="--c:${g.color};--n:${i}">
       <span class="tile-art">${art}<span class="tile-count">${n} ${T("projets", "projects")}</span></span>
       <span class="tile-cap">
-        <span class="tile-kind">${g.icon} ${T("Jeu", "Game")}</span>
+        <span class="tile-kind">${g.icon} ${item.type === "console" ? "Console" : T("Jeu", "Game")}</span>
         <span class="tile-title">${escapeHtml(L(g, "name"))}</span>
       </span>
     </a>`;
@@ -165,7 +175,7 @@ function tileHtml(item, i, showCat){
   const p = item.p;
   // Ligne du dessus : la catégorie (accueil, recherche), sinon le jeu puis le type
   const kind = showCat ? `${catOf(p).icon} ${escapeHtml(L(catOf(p), "label"))}`
-    : (p.game && !state.game ? `${escapeHtml(gameOf(p.game).short)} · ` : "") + escapeHtml(L(p, "kind"));
+    : (p.game && !(state.group && state.group.type === "game") ? `${escapeHtml(gameOf(p.game).short)} · ` : "") + escapeHtml(L(p, "kind"));
   return `<button class="tile" type="button" data-i="${PROJECTS.indexOf(p)}" style="--c:${colorOf(p)};--n:${i}">
       <span class="tile-art">${artFor(p)}${p.new ? `<span class="tile-new">${NEW()}</span>` : ""}</span>
       <span class="tile-cap">
@@ -176,7 +186,7 @@ function tileHtml(item, i, showCat){
 }
 
 function renderTiles(items, entering){
-  const showCat = (!state.view && !state.game) || state.query.trim();
+  const showCat = (!state.view && !state.group) || state.query.trim();
   $("#tiles").classList.toggle("enter", entering);
   $("#tiles").innerHTML = items.length ? items.map((it, i) => tileHtml(it, i, showCat)).join("")
     : `<p class="empty">${T("Rien trouvé 🤿 Essaie un autre mot.", "Nothing found 🤿 Try another word.")}</p>`;
@@ -185,12 +195,12 @@ function renderTiles(items, entering){
 
 function render(){
   const items = currentItems();
-  const viewKey = state.query.trim() ? "search" : state.game ? "jeu/" + state.game : state.view;
+  const viewKey = state.query.trim() ? "search" : state.group ? state.group.type + "/" + state.group.id : state.view;
   const entering = viewKey !== lastView;
   lastView = viewKey;
   // La page prend la couleur de sa catégorie ou de son jeu (transition douce, cf. @property --pc)
   const cat = CATEGORIES.find((c) => c.id === state.view);
-  const color = state.query.trim() ? "#64748b" : state.game ? gameOf(state.game).color : cat ? cat.color : HOME.color;
+  const color = state.query.trim() ? "#64748b" : state.group ? groupOf(state.group.type, state.group.id).color : cat ? cat.color : HOME.color;
   document.documentElement.style.setProperty("--pc", color);
   renderNav();
   renderHead(items);
@@ -203,9 +213,10 @@ function render(){
    la plus remplie (catégorie ou jeu, une fois les jeux regroupés) tienne sans
    défiler, et toutes les vues l'utilisent. Vignette = illustration 8:3 + légende. */
 const MAX_ITEMS = Math.max(
-  itemsFor("", "", "").length,
-  ...CATEGORIES.map((c) => itemsFor(c.id, "", "").length),
-  ...GAMES.map((g) => gameProjects(g.id).length)
+  itemsFor("", null, "").length,
+  ...CATEGORIES.map((c) => itemsFor(c.id, null, "").length),
+  ...GAMES.map((g) => groupProjects("game", g.id).length),
+  ...CONSOLES.map((c) => groupProjects("console", c.id).length)
 );
 function fit(){
   const box = $("#tiles");
@@ -303,17 +314,18 @@ cats.addEventListener("click", (e) => {
   if (e.target === cats || e.target.closest(".nav-item")) cats.close();
 });
 
-/* ── Routage par ancre : #/plongee, #/mods, #/jeu/nfsmw… ── */
+/* ── Routage par ancre : #/plongee, #/jeu/nfsmw, #/console/switch… ── */
 let fromCat = "";
 function route(){
   const id = location.hash.replace(/^#\/?/, "");
-  const m = id.match(/^jeu\/(.+)$/);
-  if (m && gameOf(m[1])) {
+  const m = id.match(/^(jeu|console)\/(.+)$/);
+  const type = m && (m[1] === "jeu" ? "game" : "console");
+  if (m && groupOf(type, m[2])) {
     // On retient la catégorie d'où l'on vient, pour le bouton retour et le menu
-    state.game = m[1];
-    state.view = fromCat && gameProjects(m[1]).some((p) => inCat(p, fromCat)) ? fromCat : "";
+    state.group = { type, id: m[2] };
+    state.view = fromCat && groupProjects(type, m[2]).some((p) => inCat(p, fromCat)) ? fromCat : "";
   } else {
-    state.game = "";
+    state.group = null;
     state.view = CATEGORIES.some((c) => c.id === id) ? id : "";
     fromCat = state.view;
   }
