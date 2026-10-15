@@ -1,21 +1,51 @@
 const PLATFORMS = {
   web: "Web", android: "Android", wear: "Wear OS",
-  ps1: "PS1", ps2: "PS2", gb: "Game Boy", gba: "GBA",
-  xbox360: "Xbox 360", switch: "Switch", pc: "PC", handheld: "Retroid"
+  ps1: "PS1", ps2: "PS2", gb: "Game Boy", gbc: "Game Boy Color", gba: "GBA",
+  xbox: "Xbox", xbox360: "Xbox 360", switch: "Switch", pc: "PC", handheld: "Retroid"
 };
-const HOME = { id: "", label: "Accueil", icon: "✦", color: "#e11d74" };
-const state = { view: "", query: "" };
+const HOME = { id: "", label: "Accueil", short: "Accueil", icon: "✦", color: "#e11d74", en: { label: "Home", short: "Home" } };
+const state = { view: "", game: "", query: "" };
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => [...document.querySelectorAll(sel)];
 
 function escapeHtml(value){
   return String(value).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
 }
+
+/* ── Langue : le même bouton 🇬🇧 EN / 🇫🇷 FR que sur mes autres pages ──
+   Choix mémorisé dans sb.lang, sinon langue du navigateur. */
+let LANG = null;
+try { LANG = localStorage.getItem("sb.lang"); } catch (e) {}
+if (LANG !== "fr" && LANG !== "en") LANG = /^fr/i.test(navigator.language || "") ? "fr" : "en";
+document.documentElement.lang = LANG;
+const EN = LANG === "en";
+const T = (fr, en) => (EN ? en : fr);
+// Texte d'une fiche, d'une catégorie ou d'un jeu dans la langue choisie (repli sur le français)
+const L = (o, key) => (EN && o.en && o.en[key]) || o[key];
+if (EN) {
+  $$("[data-en]").forEach((e) => { e.innerHTML = e.getAttribute("data-en"); });
+  $$("[data-en-placeholder]").forEach((e) => { e.placeholder = e.getAttribute("data-en-placeholder"); });
+  $$("[data-en-label]").forEach((e) => { e.setAttribute("aria-label", e.getAttribute("data-en-label")); });
+  document.title = "soaresden · the workshop";
+}
+$$(".lang-btn").forEach((b) => {
+  b.textContent = EN ? "🇫🇷 FR" : "🇬🇧 EN";
+  b.title = "Français / English";
+  b.addEventListener("click", () => {
+    try { localStorage.setItem("sb.lang", EN ? "fr" : "en"); } catch (e) {}
+    location.reload();
+  });
+});
+
 const catOf = (p) => CATEGORIES.find((c) => c.id === p.cat);
+const gameOf = (id) => GAMES.find((g) => g.id === id);
 const colorOf = (p) => p.accent || catOf(p).color;
 const isLive = (p) => p.url.startsWith("https://soaresden.github.io/");
 // Un projet a une catégorie principale (cat) et peut apparaître dans d'autres (also)
 const inCat = (p, id) => p.cat === id || (p.also || []).includes(id);
+const gameProjects = (id) => PROJECTS.filter((p) => p.game === id);
+// Un jeu a sa propre vignette dès qu'il a au moins deux projets
+const isGrouped = (id) => !!id && gameProjects(id).length > 1;
 
 /* ── Thème : auto → clair → sombre ────────────────────── */
 const THEMES = ["auto", "light", "dark"];
@@ -24,7 +54,7 @@ function applyTheme(theme){
   else document.documentElement.setAttribute("data-theme", theme);
   $$(".theme-btn").forEach((b) => {
     b.textContent = { auto: "◐", light: "☀", dark: "☾" }[theme];
-    b.title = { auto: "Thème : automatique", light: "Thème : clair", dark: "Thème : sombre" }[theme];
+    b.title = { auto: T("Thème : automatique", "Theme: automatic"), light: T("Thème : clair", "Theme: light"), dark: T("Thème : sombre", "Theme: dark") }[theme];
   });
 }
 let theme = "auto";
@@ -37,34 +67,49 @@ $$(".theme-btn").forEach((b) => b.addEventListener("click", () => {
   try { localStorage.setItem("theme", theme); } catch (e) {}
 }));
 
+/* ── Ce qu'affiche chaque vue ─────────────────────────────
+   Dans une catégorie, les projets d'un même jeu sont remplacés par une seule
+   vignette « jeu » ; un clic ouvre #/jeu/<id> avec tous ses projets. */
+function itemsFor(view, game, query){
+  const q = (query || "").trim().toLowerCase();
+  if (q) {
+    return PROJECTS.filter((p) => [p.title, L(p, "title"), p.kind, L(p, "kind"), p.desc, L(p, "desc"),
+      L(catOf(p), "label"), p.game ? gameOf(p.game).name : "", ...p.platforms.map((k) => PLATFORMS[k])]
+      .join(" ").toLowerCase().includes(q)).map((p) => ({ p }));
+  }
+  if (game) return gameProjects(game).map((p) => ({ p }));
+  if (!view) return PROJECTS.filter((p) => p.wide).map((p) => ({ p }));
+  const out = [], seen = new Set();
+  for (const p of PROJECTS.filter((x) => inCat(x, view))) {
+    if (isGrouped(p.game)) {
+      if (!seen.has(p.game)) { seen.add(p.game); out.push({ g: gameOf(p.game) }); }
+    } else out.push({ p });
+  }
+  return out;
+}
+const currentItems = () => itemsFor(state.view, state.game, state.query);
+
 /* ── Navigation ───────────────────────────────────────────
    Ordinateur : colonne d'icônes, le nom apparaît au survol.
    Mobile : bouton « Catégories » qui ouvre une grille. Même liste dans les deux. */
 function renderNav(){
   const items = [HOME, ...CATEGORIES];
+  // Sur la page d'un jeu, on garde allumée la catégorie d'où il vient
+  const active = state.game ? (state.view || catOf(gameProjects(state.game)[0]).id) : state.view;
   const html = items.map((c) => {
     const n = c.id ? PROJECTS.filter((p) => inCat(p, c.id)).length : "";
-    const current = !state.query && state.view === c.id ? ' aria-current="page"' : "";
-    return `<a class="nav-item" href="#/${c.id}" data-cat="${c.id || "home"}" style="--c:${c.color}"${current} aria-label="${escapeHtml(c.label)}">
+    const current = !state.query && active === c.id ? ' aria-current="page"' : "";
+    return `<a class="nav-item" href="#/${c.id}" data-cat="${c.id || "home"}" style="--c:${c.color}"${current} aria-label="${escapeHtml(L(c, "label"))}">
       <span class="nav-ico" aria-hidden="true">${c.icon}</span>
-      <span class="nav-label">${escapeHtml(c.label)}${n ? ` <span class="nav-n">${n}</span>` : ""}</span>
+      <span class="nav-label">${escapeHtml(L(c, "label"))}${n ? ` <span class="nav-n">${n}</span>` : ""}</span>
     </a>`;
   }).join("");
   $("#nav").innerHTML = html;
   $("#catGrid").innerHTML = html;
-  const cur = items.find((c) => c.id === state.view) || HOME;
-  $("#catToggle").innerHTML = `<span aria-hidden="true">${state.query ? "⌕" : cur.icon}</span> ${state.query ? "Recherche" : escapeHtml(cur.short || cur.label)} <span aria-hidden="true">▾</span>`;
-}
-
-/* ── Contenu de la vue ────────────────────────────────── */
-function currentItems(){
-  const q = state.query.trim().toLowerCase();
-  if (q) {
-    return PROJECTS.filter((p) => [p.title, p.kind, p.desc, catOf(p).label, ...p.platforms.map((k) => PLATFORMS[k])]
-      .join(" ").toLowerCase().includes(q));
-  }
-  if (!state.view) return PROJECTS.filter((p) => p.wide);
-  return PROJECTS.filter((p) => inCat(p, state.view));
+  const cur = items.find((c) => c.id === active) || HOME;
+  const g = state.game && gameOf(state.game);
+  const label = state.query ? T("Recherche", "Search") : g ? g.short : L(cur, "short") || L(cur, "label");
+  $("#catToggle").innerHTML = `<span aria-hidden="true">${state.query ? "⌕" : g ? g.icon : cur.icon}</span> ${escapeHtml(label)} <span aria-hidden="true">▾</span>`;
 }
 
 // Même structure d'en-tête partout (titre + une phrase) : la place laissée
@@ -76,49 +121,77 @@ const headIco = (cat, icon) => `<span class="head-ico" data-cat="${cat}">${icon}
 function renderHead(items){
   let title, sub;
   if (state.query.trim()) {
-    title = `${headIco("search", "⌕")} Recherche`;
-    sub = `${items.length} projet${items.length > 1 ? "s" : ""} pour « ${escapeHtml(state.query.trim())} »`;
+    const n = items.length;
+    title = `${headIco("search", "⌕")} ${T("Recherche", "Search")}`;
+    sub = T(`${n} projet${n > 1 ? "s" : ""} pour « ${escapeHtml(state.query.trim())} »`, `${n} project${n > 1 ? "s" : ""} for “${escapeHtml(state.query.trim())}”`);
+  } else if (state.game) {
+    const g = gameOf(state.game);
+    const back = state.view || catOf(gameProjects(g.id)[0]).id;
+    title = `<a class="back" href="#/${back}" aria-label="${T("Retour", "Back")}">←</a> ${headIco("game", g.icon)} ${escapeHtml(L(g, "name"))}`;
+    sub = escapeHtml(L(g, "blurb"));
   } else if (!state.view) {
-    title = `${headIco("home", "✦")} Projets <em>phares</em>`;
-    sub = `${PROJECTS.length} projets faits maison pour mes passions : plongée, violon, jeux, consoles rétro…`;
+    title = `${headIco("home", "✦")} ${T("Projets <em>phares</em>", "Featured <em>projects</em>")}`;
+    sub = T(`${PROJECTS.length} projets faits maison pour mes passions : plongée, violon, jeux, consoles rétro…`,
+      `${PROJECTS.length} home-made projects for my passions: scuba diving, violin, games, retro consoles…`);
   } else {
     const c = CATEGORIES.find((x) => x.id === state.view);
-    title = `${headIco(c.id, c.icon)} ${escapeHtml(c.label)}`;
-    sub = escapeHtml(c.blurb);
+    title = `${headIco(c.id, c.icon)} ${escapeHtml(L(c, "label"))}`;
+    sub = escapeHtml(L(c, "blurb"));
   }
   $("#viewHead").innerHTML = `<h1>${title}</h1><p>${sub}</p>`;
 }
 
 // À monter quand une capture de shots/ est remplacée (sinon le navigateur garde l'ancienne)
-const SHOTS_VERSION = 5;
+const SHOTS_VERSION = 6;
+const img = (shot) => `<img src="shots/${shot}.jpg?v=${SHOTS_VERSION}" alt="" loading="lazy" decoding="async" width="900" height="337">`;
 function artFor(p){
-  if (p.shot) return `<img src="shots/${p.shot}.jpg?v=${SHOTS_VERSION}" alt="" loading="lazy" decoding="async" width="900" height="337">`;
+  if (p.shot) return img(p.shot);
   return artSvg({ ...p, accent: colorOf(p) });
+}
+const NEW = () => T("Nouveau", "New");
+
+function tileHtml(item, i, showCat){
+  if (item.g) {
+    const g = item.g, n = gameProjects(g.id).length;
+    const art = g.shot ? img(g.shot) : artFor(gameProjects(g.id)[0]);
+    return `<a class="tile tile-game" href="#/jeu/${g.id}" style="--c:${g.color};--n:${i}">
+      <span class="tile-art">${art}<span class="tile-count">${n} ${T("projets", "projects")}</span></span>
+      <span class="tile-cap">
+        <span class="tile-kind">${g.icon} ${T("Jeu", "Game")}</span>
+        <span class="tile-title">${escapeHtml(L(g, "name"))}</span>
+      </span>
+    </a>`;
+  }
+  const p = item.p;
+  // Ligne du dessus : la catégorie (accueil, recherche), sinon le jeu puis le type
+  const kind = showCat ? `${catOf(p).icon} ${escapeHtml(L(catOf(p), "label"))}`
+    : (p.game && !state.game ? `${escapeHtml(gameOf(p.game).short)} · ` : "") + escapeHtml(L(p, "kind"));
+  return `<button class="tile" type="button" data-i="${PROJECTS.indexOf(p)}" style="--c:${colorOf(p)};--n:${i}">
+      <span class="tile-art">${artFor(p)}${p.new ? `<span class="tile-new">${NEW()}</span>` : ""}</span>
+      <span class="tile-cap">
+        <span class="tile-kind">${kind}</span>
+        <span class="tile-title">${escapeHtml(L(p, "title"))}</span>
+      </span>
+    </button>`;
 }
 
 function renderTiles(items, entering){
-  const showCat = !state.view || state.query.trim();
+  const showCat = (!state.view && !state.game) || state.query.trim();
   $("#tiles").classList.toggle("enter", entering);
-  $("#tiles").innerHTML = items.length ? items.map((p, i) => `
-    <button class="tile" type="button" data-i="${PROJECTS.indexOf(p)}" style="--c:${colorOf(p)};--n:${i}">
-      <span class="tile-art">${artFor(p)}${p.new ? '<span class="tile-new">Nouveau</span>' : ""}</span>
-      <span class="tile-cap">
-        <span class="tile-kind">${showCat ? `${catOf(p).icon} ${escapeHtml(catOf(p).label)}` : escapeHtml(p.kind)}</span>
-        <span class="tile-title">${escapeHtml(p.title)}</span>
-      </span>
-    </button>`).join("")
-    : `<p class="empty">Rien trouvé 🤿 Essaie un autre mot.</p>`;
+  $("#tiles").innerHTML = items.length ? items.map((it, i) => tileHtml(it, i, showCat)).join("")
+    : `<p class="empty">${T("Rien trouvé 🤿 Essaie un autre mot.", "Nothing found 🤿 Try another word.")}</p>`;
   fit();
 }
 
 function render(){
   const items = currentItems();
-  const viewKey = state.query.trim() ? "search" : state.view;
+  const viewKey = state.query.trim() ? "search" : state.game ? "jeu/" + state.game : state.view;
   const entering = viewKey !== lastView;
   lastView = viewKey;
-  // La page prend la couleur de sa catégorie (transition douce, cf. @property --pc)
+  // La page prend la couleur de sa catégorie ou de son jeu (transition douce, cf. @property --pc)
   const cat = CATEGORIES.find((c) => c.id === state.view);
-  document.documentElement.style.setProperty("--pc", state.query.trim() ? "#64748b" : (cat ? cat.color : HOME.color));
+  const color = state.query.trim() ? "#64748b" : state.game ? gameOf(state.game).color : cat ? cat.color : HOME.color;
+  document.documentElement.style.setProperty("--pc", color);
   renderNav();
   renderHead(items);
   $("#viewHead").classList.toggle("play", entering);
@@ -126,10 +199,14 @@ function render(){
 }
 
 /* ── Vignettes : une seule taille pour tout le site ─────
-   La taille dépend de l'écran, pas de la catégorie : on la calcule pour que
-   la catégorie la plus remplie tienne sans défiler, et toutes les vues
-   l'utilisent. Vignette = illustration 8:3 + légende de hauteur fixe. */
-const MAX_ITEMS = Math.max(...CATEGORIES.map((c) => PROJECTS.filter((p) => inCat(p, c.id)).length));
+   La taille dépend de l'écran, pas de la vue : on la calcule pour que la vue
+   la plus remplie (catégorie ou jeu, une fois les jeux regroupés) tienne sans
+   défiler, et toutes les vues l'utilisent. Vignette = illustration 8:3 + légende. */
+const MAX_ITEMS = Math.max(
+  itemsFor("", "", "").length,
+  ...CATEGORIES.map((c) => itemsFor(c.id, "", "").length),
+  ...GAMES.map((g) => gameProjects(g.id).length)
+);
 function fit(){
   const box = $("#tiles");
   const W = box.clientWidth, H = box.clientHeight;
@@ -172,20 +249,21 @@ const sheet = $("#sheet");
 function openSheet(p){
   const repoUrl = p.repo ? `https://github.com/soaresden/${p.repo}` : null;
   const actions = [
-    `<a class="primary" href="${p.url}" target="_blank" rel="noreferrer">${isLive(p) ? "Ouvrir" : "Voir"} ↗</a>`,
+    `<a class="primary" href="${p.url}" target="_blank" rel="noreferrer">${isLive(p) ? T("Ouvrir", "Open") : T("Voir", "View")} ↗</a>`,
     p.apk ? `<a href="${p.apk}" rel="noreferrer">APK</a>` : "",
     repoUrl && repoUrl !== p.url ? `<a href="${repoUrl}" target="_blank" rel="noreferrer">Code</a>` : ""
   ].join("");
+  const g = p.game && gameOf(p.game);
   sheet.style.setProperty("--c", colorOf(p));
   $("#sheetInner").innerHTML = `
     <div class="sheet-art">${artFor(p).replace(' loading="lazy"', "")}
-      <button class="sheet-close" type="button" aria-label="Fermer">✕</button>
+      <button class="sheet-close" type="button" aria-label="${T("Fermer", "Close")}">✕</button>
     </div>
     <div class="sheet-body">
-      <div class="sheet-kind">${catOf(p).icon} ${escapeHtml(p.kind)}${p.new ? '<span class="new">Nouveau</span>' : ""}</div>
-      <h2 id="sheetTitle">${escapeHtml(p.title)}</h2>
-      <p class="sheet-desc">${escapeHtml(p.desc)}</p>
-      ${p.links ? `<div class="sublinks">${p.links.map((l) => `<a href="${l.url}" target="_blank" rel="noreferrer">${escapeHtml(l.label)}</a>`).join("")}</div>` : ""}
+      <div class="sheet-kind">${g ? `${g.icon} ${escapeHtml(g.short)} · ` : `${catOf(p).icon} `}${escapeHtml(L(p, "kind"))}${p.new ? `<span class="new">${NEW()}</span>` : ""}</div>
+      <h2 id="sheetTitle">${escapeHtml(L(p, "title"))}</h2>
+      <p class="sheet-desc">${escapeHtml(L(p, "desc"))}</p>
+      ${p.links ? `<div class="sublinks">${p.links.map((l) => `<a href="${l.url}" target="_blank" rel="noreferrer">${escapeHtml(EN && l.en ? l.en : l.label)}</a>`).join("")}</div>` : ""}
       <div class="sheet-foot">
         <div class="plats">${p.platforms.map((k) => `<span class="plat">${PLATFORMS[k]}</span>`).join("")}</div>
         <div class="actions">${actions}</div>
@@ -195,7 +273,7 @@ function openSheet(p){
   sheet.querySelector(".actions a").focus();
 }
 $("#tiles").addEventListener("click", (e) => {
-  const tile = e.target.closest(".tile");
+  const tile = e.target.closest("button.tile");
   if (tile) openSheet(PROJECTS[+tile.dataset.i]);
 });
 sheet.addEventListener("click", (e) => {
@@ -225,10 +303,20 @@ cats.addEventListener("click", (e) => {
   if (e.target === cats || e.target.closest(".nav-item")) cats.close();
 });
 
-/* ── Routage par ancre : #/plongee, #/musique… ─────────── */
+/* ── Routage par ancre : #/plongee, #/mods, #/jeu/nfsmw… ── */
+let fromCat = "";
 function route(){
   const id = location.hash.replace(/^#\/?/, "");
-  state.view = CATEGORIES.some((c) => c.id === id) ? id : "";
+  const m = id.match(/^jeu\/(.+)$/);
+  if (m && gameOf(m[1])) {
+    // On retient la catégorie d'où l'on vient, pour le bouton retour et le menu
+    state.game = m[1];
+    state.view = fromCat && gameProjects(m[1]).some((p) => inCat(p, fromCat)) ? fromCat : "";
+  } else {
+    state.game = "";
+    state.view = CATEGORIES.some((c) => c.id === id) ? id : "";
+    fromCat = state.view;
+  }
   if (state.query) { state.query = ""; $("#search").value = $("#searchMobile").value = ""; }
   if (sheet.open) sheet.close();
   if (cats.open) cats.close();

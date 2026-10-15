@@ -126,6 +126,12 @@ button { font: inherit; color: inherit; }
 .nav-item:hover .nav-label, .nav-item:focus-visible .nav-label { opacity: 1; }
 .nav-n { font: 500 .7rem/1 var(--mono); opacity: .65; margin-left: 4px; }
 .rail-foot { margin-top: auto; display: grid; gap: 8px; justify-items: center; }
+.lang-btn {
+  border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+  border-radius: 10px; padding: 6px 4px; font: 700 .68rem/1 var(--body); cursor: pointer; white-space: nowrap;
+}
+.lang-btn:hover { border-color: var(--pc); }
+.topbar .lang-btn { padding: 0 10px; height: 36px; font-size: .8rem; }
 .rail-foot a.icon-btn { display: grid; place-items: center; color: var(--muted); }
 .rail-foot a.icon-btn:hover { color: var(--ink); }
 .topbar, .cats { display: none; }
@@ -200,6 +206,23 @@ button { font: inherit; color: inherit; }
   font: 500 .58rem/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase;
   background: var(--c); color: #fff;
 }
+.tile-game { text-decoration: none; color: inherit; }
+.tile-count {
+  position: absolute; left: 8px; bottom: 8px;
+  padding: 3px 8px; border-radius: 999px;
+  font: 600 .7rem/1.3 var(--body); color: #fff;
+  background: color-mix(in srgb, var(--c) 85%, #000);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+}
+/* deux cartes empilées derrière : on voit tout de suite qu'il y a plusieurs projets */
+.tile-game { box-shadow: 4px 4px 0 -1px color-mix(in srgb, var(--c) 35%, var(--surface)), 8px 8px 0 -2px color-mix(in srgb, var(--c) 18%, var(--surface)); }
+.tile-game:hover { box-shadow: var(--shadow), 4px 4px 0 -1px color-mix(in srgb, var(--c) 35%, var(--surface)); }
+.back {
+  display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; margin-right: .1em;
+  border-radius: 10px; font-size: .7em; text-decoration: none; vertical-align: .15em;
+  background: color-mix(in srgb, var(--pc) 16%, var(--surface)); color: var(--pc);
+}
+.back:hover { background: var(--pc); color: #fff; }
 .empty { grid-column: 1 / -1; color: var(--muted); }
 
 /* ── Fiche projet (dialog) ─────────────────────────────── */
@@ -338,6 +361,7 @@ button { font: inherit; color: inherit; }
 [data-cat="route"]    { --a: a-route; }
 [data-cat="media"]    { --a: a-media; }
 [data-cat="outils"]   { --a: a-outils; }
+[data-cat="game"]     { --a: a-route; }
 /* étoile qui scintille */
 @keyframes a-home     { 50% { transform: rotate(180deg) scale(1.35); } 100% { transform: rotate(360deg); } }
 /* loupe qui cherche */
