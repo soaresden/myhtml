@@ -71,8 +71,8 @@ const GAMES = [
     blurb: "Des ROM hacks de Pokémon que j'ai traduits en français.",
     en: { name: "Pokémon (hacks)", blurb: "Pokémon ROM hacks I translated into French." } },
   { id: "mgs", name: "Metal Gear Solid", short: "Metal Gear", icon: "🐍", color: "#4d7c0f", shot: "mgs",
-    blurb: "Le jeu de plateau et Peace Walker sur Switch.",
-    en: { blurb: "The board game and Peace Walker on Switch." } },
+    blurb: "Le jeu de plateau, MGS1 en VOSTFR et Peace Walker sur Switch.",
+    en: { blurb: "The board game, MGS1 with English voices and French text, and Peace Walker on Switch." } },
   { id: "re1", name: "Resident Evil", short: "Resident Evil", icon: "🧟", color: "#991b1b",
     blurb: "Resident Evil Director's Cut sur PlayStation.", en: { blurb: "Resident Evil Director's Cut on PlayStation." } },
   { id: "zelda", name: "Zelda Oracles", short: "Zelda Oracles", icon: "🗡️", color: "#15803d",
@@ -487,6 +487,18 @@ const PROJECTS = [
     repo: "re1-dc-hotkeys",
     platforms: ["ps1", "web"],
     shot: "re1"
+  },
+  {
+    cat: "mods", game: "mgs", new: true,
+    title: "Metal Gear Solid · VOSTFR",
+    kind: "Patch PS1 · voix anglaises, textes français",
+    desc: "Metal Gear Solid (PS1) avec les voix anglaises d'origine et les textes français : cinématiques, Codec, voix en jeu, sur les deux disques. Les 1 100 voix de chaque disque appariées à leur réplique française, et une option Carré qui fait défiler le Codec comme dans MGS2. On fabrique ses disques à partir de ses propres jeux.",
+    en: { title: "Metal Gear Solid · English voices, French text", kind: "PS1 patch · English voices, French text",
+      desc: "Metal Gear Solid (PS1) with the original English voices and the French text: cutscenes, Codec, in-game voices, on both discs. The 1,100 voices of each disc paired with their French line, and a Square option that fast-forwards the Codec like in MGS2. You build the discs from your own games." },
+    url: "https://soaresden.github.io/MGS1-VOSTFR/",
+    repo: "MGS1-VOSTFR",
+    platforms: ["ps1"],
+    shot: "mgs1vostfr"
   },
   {
     cat: "mods", game: "zelda", new: true,
