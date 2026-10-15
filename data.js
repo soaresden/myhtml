@@ -338,6 +338,19 @@ const PROJECTS = [
     shot: "xplosives"
   },
 
+  {
+    cat: "creation", also: ["outils"], wide: true, new: true,
+    title: "Pile Poil",
+    kind: "Jeu web · parc éolien en mer du Calvados",
+    desc: "Hisse les 64 éoliennes du parc éolien en mer du Calvados au bout d'une grue qui balance : pile au-dessus de la pièce précédente, c'est PARFAIT. Chaque éolienne a ses éléments (nuit, orage, brouillard, neige, rafales, houle, goélands), de plus en plus nombreux jusqu'à la dernière, où tout se déchaîne.",
+    en: { kind: "Web game · Calvados offshore wind farm",
+      desc: "Raise the 64 turbines of the Calvados offshore wind farm from a swinging crane: right on top of the previous piece is PERFECT. Each turbine has its own elements (night, thunderstorm, fog, snow, gusts, swell, gulls), more and more of them until the last one, where everything breaks loose." },
+    url: "https://soaresden.github.io/EDF-COUGame/",
+    repo: "EDF-COUGame",
+    platforms: ["web"],
+    shot: "pilepoil_game"
+  },
+
   // ── Mods & traductions ───────────────────────────────────
   {
     cat: "mods", wide: true, new: true,

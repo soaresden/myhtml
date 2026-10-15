@@ -152,7 +152,7 @@ function renderHead(items){
 }
 
 // À monter quand une capture de shots/ est remplacée (sinon le navigateur garde l'ancienne)
-const SHOTS_VERSION = 6;
+const SHOTS_VERSION = 7;
 const img = (shot) => `<img src="shots/${shot}.jpg?v=${SHOTS_VERSION}" alt="" loading="lazy" decoding="async" width="900" height="337">`;
 function artFor(p){
   if (p.shot) return img(p.shot);
