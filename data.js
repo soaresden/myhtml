@@ -65,8 +65,8 @@ const GAMES = [
     blurb: "La version Xbox d'origine, portée sur Switch : ma voiture, les langues et des outils pour le port.",
     en: { blurb: "The original Xbox version, ported to Switch: my car, the languages and tools for the port." } },
   { id: "gt1", name: "Gran Turismo", short: "Gran Turismo", icon: "🏎️", color: "#dc2626", shot: "mx5_gt1",
-    blurb: "Le premier Gran Turismo sur PlayStation (version européenne) : ma voiture et un menu de triche.",
-    en: { blurb: "The first Gran Turismo on PlayStation (European version): my car and a cheat menu." } },
+    blurb: "Gran Turismo 1 et 2 sur PlayStation (versions européennes) : ma voiture et des menus de triche.",
+    en: { blurb: "Gran Turismo 1 and 2 on PlayStation (European versions): my car and cheat menus." } },
   { id: "pokemon", name: "Pokémon (hacks)", short: "Pokémon", icon: "⚡", color: "#ca8a04", shot: "dbz",
     blurb: "Des ROM hacks de Pokémon que j'ai traduits en français.",
     en: { name: "Pokémon (hacks)", blurb: "Pokémon ROM hacks I translated into French." } },
@@ -75,8 +75,9 @@ const GAMES = [
     en: { blurb: "The board game, MGS1 with English voices and French text, and Peace Walker on Switch." } },
   { id: "re1", name: "Resident Evil", short: "Resident Evil", icon: "🧟", color: "#991b1b",
     blurb: "Resident Evil Director's Cut sur PlayStation.", en: { blurb: "Resident Evil Director's Cut on PlayStation." } },
-  { id: "zelda", name: "Zelda Oracles", short: "Zelda Oracles", icon: "🗡️", color: "#15803d",
-    blurb: "Oracle of Ages et Oracle of Seasons sur Game Boy Color.", en: { blurb: "Oracle of Ages and Oracle of Seasons on Game Boy Color." } }
+  { id: "zelda", name: "Zelda Game Boy Color", short: "Zelda GBC", icon: "🗡️", color: "#15803d", shot: "zeldaoracles",
+    blurb: "Oracle of Ages et Seasons réunis en une seule ROM, en 5 langues, sur Game Boy Color.",
+    en: { blurb: "Oracle of Ages and Seasons combined into one ROM, in 5 languages, on Game Boy Color." } }
 ];
 
 // Consoles : dans « Outils consoles », les outils d'une même console sont regroupés
@@ -351,21 +352,23 @@ const PROJECTS = [
     shot: "pilepoil_game"
   },
 
+
   // ── Mods & traductions ───────────────────────────────────
   {
     cat: "mods", wide: true, new: true,
     title: "La MX-5 RF dans les jeux",
     kind: "Mod voiture · générateur en ligne",
-    desc: "Ma Mazda MX-5 RF Deep Crystal Blue convertie dans les jeux de voitures que j'aime, de la PS1 à la Xbox 360 : Gran Turismo, NFS Underground 1 et 2, NFS Most Wanted. La voiture est fabriquée dans le navigateur à partir de ses propres fichiers.",
+    desc: "Ma Mazda MX-5 RF Deep Crystal Blue convertie dans les jeux de voitures que j'aime, de la PS1 à la Xbox 360 : Gran Turismo 1 et 2, NFS Underground 1 et 2, NFS Most Wanted. La voiture est fabriquée dans le navigateur à partir de ses propres fichiers.",
     en: { title: "The MX-5 RF in games", kind: "Car mod · online builder",
-      desc: "My Deep Crystal Blue Mazda MX-5 RF converted into the car games I love, from the PS1 to the Xbox 360: Gran Turismo, NFS Underground 1 and 2, NFS Most Wanted. The car is built in the browser from your own files." },
+      desc: "My Deep Crystal Blue Mazda MX-5 RF converted into the car games I love, from the PS1 to the Xbox 360: Gran Turismo 1 and 2, NFS Underground 1 and 2, NFS Most Wanted. The car is built in the browser from your own files." },
     url: MX5,
     repo: "MazdaMx5-nd-rf-ingames",
     links: [
       { label: "Most Wanted", en: "Most Wanted", url: MX5 + "web/nfsmw.html" },
       { label: "Underground", en: "Underground", url: MX5 + "web/nfsu1.html" },
       { label: "Underground 2", en: "Underground 2", url: MX5 + "web/nfsu2.html" },
-      { label: "Gran Turismo", en: "Gran Turismo", url: MX5 + "web/gt1.html" }
+      { label: "Gran Turismo", en: "Gran Turismo", url: MX5 + "web/gt1.html" },
+      { label: "Gran Turismo 2", en: "Gran Turismo 2", url: "https://github.com/soaresden/MazdaMx5-nd-rf-ingames/tree/main/games/gran-turismo-2" }
     ],
     platforms: ["ps1", "xbox", "xbox360", "switch", "web"],
     shot: "mx5_all"
@@ -477,6 +480,31 @@ const PROJECTS = [
     art: "gt1cheat", accent: "#dc2626"
   },
   {
+    cat: "mods", game: "gt1", new: true,
+    title: "La MX-5 dans Gran Turismo 2",
+    kind: "Mod voiture · PS1",
+    desc: "La MX-5 RF, capotée ou décapotée, à la place des MX-5 de son choix dans Gran Turismo 2 : disque Simulation, disque combiné ou GT2 Plus. Option pour ajouter le menu de triche au passage. L'image disque se reconstruit à partir de la tienne.",
+    en: { title: "The MX-5 in Gran Turismo 2", kind: "Car mod · PS1",
+      desc: "The MX-5 RF, hardtop or open, in place of the MX-5s of your choice in Gran Turismo 2: Simulation disc, combined disc or GT2 Plus. An option adds the cheat menu along the way. The disc image is rebuilt from yours." },
+    url: "https://github.com/soaresden/MazdaMx5-nd-rf-ingames/tree/main/games/gran-turismo-2",
+    repo: "MazdaMx5-nd-rf-ingames",
+    platforms: ["ps1"],
+    shot: "mx5_gt2"
+  },
+  {
+    cat: "mods", game: "gt1", new: true,
+    title: "Gran Turismo 2 · Overlay Cheat",
+    kind: "Patch PS1 · menu de triche",
+    desc: "Le même menu SELECT que pour le premier : figer le chrono des permis et changer les crédits en direct. Disque Simulation européen, disque combiné et GT2 Plus ; patch .ppf / .xdelta qui s'applique aussi sur un disque déjà modifié.",
+    en: { kind: "PS1 patch · cheat menu",
+      desc: "The same SELECT menu as for the first game: freeze the licence timer and change the credits live. European Simulation disc, combined disc and GT2 Plus; a .ppf / .xdelta patch that also works on an already modified disc." },
+    url: "https://github.com/soaresden/GranTurismo2-OverlayCheat",
+    repo: "GranTurismo2-OverlayCheat",
+    links: [{ label: "Télécharger le patch (v1.0)", en: "Download the patch (v1.0)", url: "https://github.com/soaresden/GranTurismo2-OverlayCheat/releases/latest" }],
+    platforms: ["ps1"],
+    shot: "gt2cheat"
+  },
+  {
     cat: "mods", game: "re1", wide: true, new: true,
     title: "RE1 Director's Cut · Hotkeys",
     kind: "Mod PS1 · patcher en ligne",
@@ -492,9 +520,9 @@ const PROJECTS = [
     cat: "mods", game: "mgs", new: true,
     title: "Metal Gear Solid · VOSTFR",
     kind: "Patch PS1 · voix anglaises, textes français",
-    desc: "Metal Gear Solid (PS1) avec les voix anglaises d'origine et les textes français : cinématiques, Codec, voix en jeu, sur les deux disques. Les 1 100 voix de chaque disque appariées à leur réplique française, et une option Carré qui fait défiler le Codec comme dans MGS2. On fabrique ses disques à partir de ses propres jeux.",
+    desc: "Metal Gear Solid (PS1) avec les voix anglaises d'origine et les textes français : cinématiques, Codec, voix en jeu, sur les deux disques. Les 1 100 voix de chaque disque appariées à leur réplique française. En options, du confort façon MGS2 : Carré fait défiler le Codec, M9 tranquillisant pour une partie sans tuer, viser et tirer en vue subjective. On fabrique ses disques à partir de ses propres jeux.",
     en: { title: "Metal Gear Solid · English voices, French text", kind: "PS1 patch · English voices, French text",
-      desc: "Metal Gear Solid (PS1) with the original English voices and the French text: cutscenes, Codec, in-game voices, on both discs. The 1,100 voices of each disc paired with their French line, and a Square option that fast-forwards the Codec like in MGS2. You build the discs from your own games." },
+      desc: "Metal Gear Solid (PS1) with the original English voices and the French text: cutscenes, Codec, in-game voices, on both discs. The 1,100 voices of each disc paired with their French line. As options, MGS2-style comfort: Square fast-forwards the Codec, a tranquilizer M9 for a no-kill run, aiming and shooting in first person. You build the discs from your own games." },
     url: "https://soaresden.github.io/MGS1-VOSTFR/",
     repo: "MGS1-VOSTFR",
     platforms: ["ps1"],
@@ -502,16 +530,28 @@ const PROJECTS = [
   },
   {
     cat: "mods", game: "zelda", new: true,
-    title: "Zelda Oracles Combined en français",
-    kind: "Traduction · Game Boy Color",
-    desc: "Le hack « crossworld » qui réunit Oracle of Ages et Oracle of Seasons dans une seule ROM, enfin en français : textes, images et police repris des ROMs européennes. On reconstruit la ROM avec ses propres jeux.",
-    en: { title: "Zelda Oracles Combined in French", kind: "Translation · Game Boy Color",
-      desc: "The crossworld hack that merges Oracle of Ages and Oracle of Seasons into one ROM, now in French: text, images and font taken from the European ROMs. You rebuild the ROM from your own games." },
-    url: "https://github.com/soaresden/ZeldaOracleCombinedFR",
+    title: "Zelda Oracles Combined en 5 langues",
+    kind: "Traduction + options · patcher en ligne",
+    desc: "Le hack « crossworld » qui réunit Oracle of Ages et Oracle of Seasons dans une seule ROM, en français, anglais, allemand, italien et espagnol (traductions officielles des ROMs européennes). Options de confort à cocher : suivi des codes, récompenses sur la carte, barre d'état en bas, boutique GBA… La ROM est fabriquée dans le navigateur à partir de ses propres jeux.",
+    en: { title: "Zelda Oracles Combined in 5 languages", kind: "Translation + options · online patcher",
+      desc: "The crossworld hack that merges Oracle of Ages and Oracle of Seasons into one ROM, in French, English, German, Italian and Spanish (official translations from the European ROMs). Comfort options to tick: secret tracker, rewards on the map, status bar at the bottom, GBA shop… The ROM is built in the browser from your own games." },
+    url: "https://soaresden.github.io/ZeldaOracleCombinedFR/",
     repo: "ZeldaOracleCombinedFR",
     links: [{ label: "Fork oracles-disasm (branche fr/crossworld1)", en: "oracles-disasm fork (fr/crossworld1 branch)", url: "https://github.com/soaresden/oracles-disasm/tree/fr/crossworld1" }],
+    platforms: ["gbc", "web"],
+    shot: "zeldaoracles", accent: "#15803d"
+  },
+  {
+    cat: "creation", game: "zelda", new: true,
+    title: "Zelda : Gulls of Life",
+    kind: "Jeu Game Boy Color · en cours",
+    desc: "La suite de Link's Awakening que je crée de A à Z : Marine a fait un vœu, elle revient en mouette et accompagne Link dans un archipel où plus personne ne rêve. Histoire, îles, salles, film d'ouverture, sprites et dialogues : tout est nouveau, seul le moteur d'Oracle of Ages sert de base.",
+    en: { title: "Zelda: Gulls of Life", kind: "Game Boy Color game · in progress",
+      desc: "The Link's Awakening sequel I'm building from scratch: Marine made a wish, she comes back as a seagull and travels with Link through an archipelago where nobody dreams anymore. Story, islands, rooms, opening scene, sprites and dialogue are all new; only the Oracle of Ages engine is reused." },
+    url: "https://github.com/soaresden/ZeldaGullsOfLife",
+    repo: "ZeldaGullsOfLife",
     platforms: ["gbc"],
-    art: "zeldafr", accent: "#15803d"
+    shot: "gullsoflife"
   },
   {
     cat: "mods", game: "pokemon", new: true,
