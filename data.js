@@ -470,14 +470,14 @@ const PROJECTS = [
     cat: "mods", game: "gt1", new: true,
     title: "Gran Turismo · Overlay Cheat",
     kind: "Patch PS1 · menu de triche",
-    desc: "Maintiens SELECT : un petit menu apparaît par-dessus le jeu pour figer le chrono des permis et changer les crédits en direct. Version européenne, patch .ppf / .xdelta, compatible avec un disque déjà modifié.",
+    desc: "Maintiens SELECT (ou L1 + R1 + L2 + R2, pratique dans Batocera) : un petit menu apparaît par-dessus le jeu pour figer le chrono des permis et changer les crédits en direct. Version européenne, patch .ppf / .xdelta, compatible avec un disque déjà modifié.",
     en: { kind: "PS1 patch · cheat menu",
-      desc: "Hold SELECT: a small menu appears over the game to freeze the licence timer and change the credits live. European version, .ppf / .xdelta patch, works on an already modified disc." },
+      desc: "Hold SELECT (or L1 + R1 + L2 + R2, handy in Batocera): a small menu appears over the game to freeze the licence timer and change the credits live. European version, .ppf / .xdelta patch, works on an already modified disc." },
     url: "https://github.com/soaresden/GranTurismo1-OverlayCheat",
     repo: "GranTurismo1-OverlayCheat",
-    links: [{ label: "Télécharger le patch (v1.0)", en: "Download the patch (v1.0)", url: "https://github.com/soaresden/GranTurismo1-OverlayCheat/releases/latest" }],
+    links: [{ label: "Télécharger le patch (v1.1)", en: "Download the patch (v1.1)", url: "https://github.com/soaresden/GranTurismo1-OverlayCheat/releases/latest" }],
     platforms: ["ps1"],
-    art: "gt1cheat", accent: "#dc2626"
+    shot: "gt1cheat", accent: "#dc2626"
   },
   {
     cat: "mods", game: "gt1", new: true,
@@ -495,9 +495,9 @@ const PROJECTS = [
     cat: "mods", game: "gt1", new: true,
     title: "Gran Turismo 2 · Overlay Cheat",
     kind: "Patch PS1 · menu de triche",
-    desc: "Le même menu SELECT que pour le premier : figer le chrono des permis et changer les crédits en direct. Disque Simulation européen, disque combiné et GT2 Plus ; patch .ppf / .xdelta qui s'applique aussi sur un disque déjà modifié.",
+    desc: "Le même menu que pour le premier (SELECT, ou L1 + R1 + L2 + R2) : figer le chrono des permis et changer les crédits en direct. Disque Simulation européen, disque combiné et GT2 Plus ; patch .ppf / .xdelta qui s'applique aussi sur un disque déjà modifié.",
     en: { kind: "PS1 patch · cheat menu",
-      desc: "The same SELECT menu as for the first game: freeze the licence timer and change the credits live. European Simulation disc, combined disc and GT2 Plus; a .ppf / .xdelta patch that also works on an already modified disc." },
+      desc: "The same menu as for the first game (SELECT, or L1 + R1 + L2 + R2): freeze the licence timer and change the credits live. European Simulation disc, combined disc and GT2 Plus; a .ppf / .xdelta patch that also works on an already modified disc." },
     url: "https://github.com/soaresden/GranTurismo2-OverlayCheat",
     repo: "GranTurismo2-OverlayCheat",
     links: [{ label: "Télécharger le patch (v1.0)", en: "Download the patch (v1.0)", url: "https://github.com/soaresden/GranTurismo2-OverlayCheat/releases/latest" }],
@@ -518,14 +518,14 @@ const PROJECTS = [
   },
   {
     cat: "mods", game: "mgs", new: true,
-    title: "Metal Gear Solid · VOSTFR",
-    kind: "Patch PS1 · voix anglaises, textes français",
-    desc: "Metal Gear Solid (PS1) avec les voix anglaises d'origine et les textes français : cinématiques, Codec, voix en jeu, sur les deux disques. Les 1 100 voix de chaque disque appariées à leur réplique française. En options, du confort façon MGS2 : Carré fait défiler le Codec, M9 tranquillisant pour une partie sans tuer, viser et tirer en vue subjective. On fabrique ses disques à partir de ses propres jeux.",
-    en: { title: "Metal Gear Solid · English voices, French text", kind: "PS1 patch · English voices, French text",
-      desc: "Metal Gear Solid (PS1) with the original English voices and the French text: cutscenes, Codec, in-game voices, on both discs. The 1,100 voices of each disc paired with their French line. As options, MGS2-style comfort: Square fast-forwards the Codec, a tranquilizer M9 for a no-kill run, aiming and shooting in first person. You build the discs from your own games." },
+    title: "Metal Gear Solid · VOSTFR & mods",
+    kind: "Patch PS1 · patcher en ligne",
+    desc: "Metal Gear Solid (PS1) avec les voix anglaises d'origine et les textes français (cinématiques, Codec, voix en jeu), ou le jeu français ou anglais d'origine avec seulement les mods. Mods façon MGS2 : Carré fait défiler le Codec, M9 et claymores tranquillisants, PSG1 debout, vue subjective penchée et tir, ton texte dans la barre de vie. Et les deux disques en une seule image. Tout se fabrique dans le navigateur à partir de ses propres disques.",
+    en: { title: "Metal Gear Solid · English voices, French text & mods", kind: "PS1 patch · online patcher",
+      desc: "Metal Gear Solid (PS1) with the original English voices and the French text (cutscenes, Codec, in-game voices), or the original French or English game with just the mods. MGS2-style mods: Square fast-forwards the Codec, tranquilizer M9 and claymores, standing PSG1, first-person leaning and shooting, your own text in the life bar. And both discs in a single image. Everything is built in the browser from your own discs." },
     url: "https://soaresden.github.io/MGS1-VOSTFR/",
     repo: "MGS1-VOSTFR",
-    platforms: ["ps1"],
+    platforms: ["ps1", "web"],
     shot: "mgs1vostfr"
   },
   {
@@ -537,7 +537,10 @@ const PROJECTS = [
       desc: "The crossworld hack that merges Oracle of Ages and Oracle of Seasons into one ROM, in French, English, German, Italian and Spanish (official translations from the European ROMs). Comfort options to tick: secret tracker, rewards on the map, status bar at the bottom, GBA shop… The ROM is built in the browser from your own games." },
     url: "https://soaresden.github.io/ZeldaOracleCombinedFR/",
     repo: "ZeldaOracleCombinedFR",
-    links: [{ label: "Fork oracles-disasm (branche fr/crossworld1)", en: "oracles-disasm fork (fr/crossworld1 branch)", url: "https://github.com/soaresden/oracles-disasm/tree/fr/crossworld1" }],
+    links: [
+      { label: "Patchs BPS (v1.0)", en: "BPS patches (v1.0)", url: "https://github.com/soaresden/ZeldaOracleCombinedFR/releases/latest" },
+      { label: "Fork oracles-disasm (branche fr/crossworld1)", en: "oracles-disasm fork (fr/crossworld1 branch)", url: "https://github.com/soaresden/oracles-disasm/tree/fr/crossworld1" }
+    ],
     platforms: ["gbc", "web"],
     shot: "zeldaoracles", accent: "#15803d"
   },
