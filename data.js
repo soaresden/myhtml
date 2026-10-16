@@ -368,7 +368,7 @@ const PROJECTS = [
       { label: "Underground", en: "Underground", url: MX5 + "web/nfsu1.html" },
       { label: "Underground 2", en: "Underground 2", url: MX5 + "web/nfsu2.html" },
       { label: "Gran Turismo", en: "Gran Turismo", url: MX5 + "web/gt1.html" },
-      { label: "Gran Turismo 2", en: "Gran Turismo 2", url: "https://github.com/soaresden/MazdaMx5-nd-rf-ingames/tree/main/games/gran-turismo-2" }
+      { label: "Gran Turismo 2", en: "Gran Turismo 2", url: MX5 + "web/gt2.html" }
     ],
     platforms: ["ps1", "xbox", "xbox360", "switch", "web"],
     shot: "mx5_all"
@@ -486,7 +486,7 @@ const PROJECTS = [
     desc: "La MX-5 RF, capotée ou décapotée, à la place des MX-5 de son choix dans Gran Turismo 2 : disque Simulation, disque combiné ou GT2 Plus. Option pour ajouter le menu de triche au passage. L'image disque se reconstruit à partir de la tienne.",
     en: { title: "The MX-5 in Gran Turismo 2", kind: "Car mod · PS1",
       desc: "The MX-5 RF, hardtop or open, in place of the MX-5s of your choice in Gran Turismo 2: Simulation disc, combined disc or GT2 Plus. An option adds the cheat menu along the way. The disc image is rebuilt from yours." },
-    url: "https://github.com/soaresden/MazdaMx5-nd-rf-ingames/tree/main/games/gran-turismo-2",
+    url: MX5 + "web/gt2.html",
     repo: "MazdaMx5-nd-rf-ingames",
     platforms: ["ps1"],
     shot: "mx5_gt2"
@@ -548,7 +548,7 @@ const PROJECTS = [
     desc: "La suite de Link's Awakening que je crée de A à Z : Marine a fait un vœu, elle revient en mouette et accompagne Link dans un archipel où plus personne ne rêve. Histoire, îles, salles, film d'ouverture, sprites et dialogues : tout est nouveau, seul le moteur d'Oracle of Ages sert de base.",
     en: { title: "Zelda: Gulls of Life", kind: "Game Boy Color game · in progress",
       desc: "The Link's Awakening sequel I'm building from scratch: Marine made a wish, she comes back as a seagull and travels with Link through an archipelago where nobody dreams anymore. Story, islands, rooms, opening scene, sprites and dialogue are all new; only the Oracle of Ages engine is reused." },
-    url: "https://github.com/soaresden/ZeldaGullsOfLife",
+    url: "https://soaresden.github.io/ZeldaGullsOfLife/",
     repo: "ZeldaGullsOfLife",
     platforms: ["gbc"],
     shot: "gullsoflife"
