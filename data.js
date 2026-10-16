@@ -547,12 +547,13 @@ const PROJECTS = [
   {
     cat: "creation", game: "zelda", new: true,
     title: "Zelda : Gulls of Life",
-    kind: "Jeu Game Boy Color · en cours",
-    desc: "La suite de Link's Awakening que je crée de A à Z : Marine a fait un vœu, elle revient en mouette et accompagne Link dans un archipel où plus personne ne rêve. Histoire, îles, salles, film d'ouverture, sprites et dialogues : tout est nouveau, seul le moteur d'Oracle of Ages sert de base.",
-    en: { title: "Zelda: Gulls of Life", kind: "Game Boy Color game · in progress",
-      desc: "The Link's Awakening sequel I'm building from scratch: Marine made a wish, she comes back as a seagull and travels with Link through an archipelago where nobody dreams anymore. Story, islands, rooms, opening scene, sprites and dialogue are all new; only the Oracle of Ages engine is reused." },
+    kind: "Jeu Game Boy Color · démo v0.3",
+    desc: "La suite de Link's Awakening que je crée de A à Z : Marine a fait un vœu, elle revient en mouette et accompagne Link dans un archipel où plus personne ne rêve. Histoire, îles, salles, film d'ouverture, sprites et dialogues : tout est nouveau, seul le moteur d'Oracle of Ages sert de base. La démo, tout le premier chapitre jusqu'au Phare Éteint, se joue en français ou en anglais : un patch à appliquer sur sa propre ROM Oracle of Ages.",
+    en: { title: "Zelda: Gulls of Life", kind: "Game Boy Color game · demo v0.3",
+      desc: "The Link's Awakening sequel I'm building from scratch: Marine made a wish, she comes back as a seagull and travels with Link through an archipelago where nobody dreams anymore. Story, islands, rooms, opening scene, sprites and dialogue are all new; only the Oracle of Ages engine is reused. The demo, the whole first chapter up to the Dark Lighthouse, plays in French or English: a patch to apply to your own Oracle of Ages ROM." },
     url: "https://soaresden.github.io/ZeldaGullsOfLife/",
     repo: "ZeldaGullsOfLife",
+    links: [{ label: "Démo v0.3 (patch)", en: "Demo v0.3 (patch)", url: "https://github.com/soaresden/ZeldaGullsOfLife/releases/latest" }],
     platforms: ["gbc"],
     shot: "gullsoflife"
   },
