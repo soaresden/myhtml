@@ -520,9 +520,9 @@ const PROJECTS = [
     cat: "mods", game: "mgs", new: true,
     title: "Metal Gear Solid · VOSTFR & mods",
     kind: "Patch PS1 · patcher en ligne",
-    desc: "Metal Gear Solid (PS1) avec les voix anglaises d'origine et les textes français (cinématiques, Codec, voix en jeu), ou le jeu français ou anglais d'origine avec seulement les mods. Mods façon MGS2 : Carré fait défiler le Codec, M9 et claymores tranquillisants, PSG1 debout (et trouvé plus tôt), vue subjective penchée et tir, portes à carte sans l'équiper, bandana visible, ton texte dans la barre de vie. Et les deux disques en une seule image. Tout se fabrique dans le navigateur à partir de ses propres disques.",
+    desc: "Metal Gear Solid (PS1) avec les voix anglaises d'origine et les textes français (cinématiques, Codec, voix en jeu), ou le jeu français ou anglais d'origine avec seulement les mods. Mods façon MGS2 : Carré fait défiler le Codec, M9 et claymores tranquillisants (chiens-loups compris), braquer un garde de dos pour le figer, PSG1 debout (et trouvé plus tôt), vue subjective penchée et tir, portes à carte sans l'équiper, bandana visible, ton texte dans la barre de vie. Et les deux disques en une seule image. Tout se fabrique dans le navigateur à partir de ses propres disques.",
     en: { title: "Metal Gear Solid · English voices, French text & mods", kind: "PS1 patch · online patcher",
-      desc: "Metal Gear Solid (PS1) with the original English voices and the French text (cutscenes, Codec, in-game voices), or the original French or English game with just the mods. MGS2-style mods: Square fast-forwards the Codec, tranquilizer M9 and claymores, standing PSG1 (found earlier), first-person leaning and shooting, keycard doors without equipping the card, a visible bandana, your own text in the life bar. And both discs in a single image. Everything is built in the browser from your own discs." },
+      desc: "Metal Gear Solid (PS1) with the original English voices and the French text (cutscenes, Codec, in-game voices), or the original French or English game with just the mods. MGS2-style mods: Square fast-forwards the Codec, tranquilizer M9 and claymores (wolf dogs included), hold up a guard from behind to freeze him, standing PSG1 (found earlier), first-person leaning and shooting, keycard doors without equipping the card, a visible bandana, your own text in the life bar. And both discs in a single image. Everything is built in the browser from your own discs." },
     url: "https://soaresden.github.io/MGS1-VOSTFR/",
     repo: "MGS1-VOSTFR",
     platforms: ["ps1", "web"],
@@ -538,7 +538,7 @@ const PROJECTS = [
     url: "https://soaresden.github.io/ZeldaOracleCombinedFR/",
     repo: "ZeldaOracleCombinedFR",
     links: [
-      { label: "Patchs BPS (v1.0)", en: "BPS patches (v1.0)", url: "https://github.com/soaresden/ZeldaOracleCombinedFR/releases/latest" },
+      { label: "Patchs BPS (v1.2)", en: "BPS patches (v1.2)", url: "https://github.com/soaresden/ZeldaOracleCombinedFR/releases/latest" },
       { label: "Fork oracles-disasm (branche fr/crossworld1)", en: "oracles-disasm fork (fr/crossworld1 branch)", url: "https://github.com/soaresden/oracles-disasm/tree/fr/crossworld1" }
     ],
     platforms: ["gbc", "web"],
@@ -654,10 +654,14 @@ const PROJECTS = [
     console: "retroid",
     title: "LED Retroid 5",
     kind: "Batocera · Python",
-    desc: "Pilote les LED des sticks du Retroid Pocket 5 : couleurs par bouton gardées au redémarrage, ou niveau de batterie en couleur.",
-    en: { desc: "Controls the Retroid Pocket 5 stick LEDs: per-button colours kept after reboot, or the battery level as a colour." },
+    desc: "Pilote les LED des sticks du Retroid Pocket 5 : couleurs par bouton gardées au redémarrage, ou niveau de batterie en couleur. Proposé à Batocera lui-même : réglages appliqués en direct, mode batterie, luminosité en pourcentage et curseur de teinte.",
+    en: { desc: "Controls the Retroid Pocket 5 stick LEDs: per-button colours kept after reboot, or the battery level as a colour. Offered to Batocera itself: settings applied live, a battery mode, brightness as a percentage and a hue slider." },
     url: "https://github.com/soaresden/Retroid5_Led_Batocera",
     repo: "Retroid5_Led_Batocera",
+    links: [
+      { label: "Pull request Batocera (système)", en: "Batocera pull request (system)", url: "https://github.com/batocera-linux/batocera.linux/pull/17200" },
+      { label: "Pull request EmulationStation (menus)", en: "EmulationStation pull request (menus)", url: "https://github.com/batocera-linux/batocera-emulationstation/pull/2275" }
+    ],
     platforms: ["handheld"],
     art: "retroid", accent: "#a855f7"
   },
