@@ -544,13 +544,13 @@ const PROJECTS = [
     cat: "mods", game: "zelda", new: true,
     title: "Zelda Oracles Combined en 5 langues",
     kind: "Traduction + options · patcher en ligne",
-    desc: "Le hack « crossworld » qui réunit Oracle of Ages et Oracle of Seasons dans une seule ROM, en français, anglais, allemand, italien et espagnol (traductions officielles des ROMs européennes). Options de confort à cocher : suivi des codes, récompenses sur la carte, barre d'état en bas, boutique GBA… La ROM est fabriquée dans le navigateur à partir de ses propres jeux.",
+    desc: "Le hack « crossworld » qui réunit Oracle of Ages et Oracle of Seasons dans une seule ROM, en français, anglais, allemand, italien et espagnol (traductions officielles des ROMs européennes). Options de confort à cocher : suivi des codes et suivi 100 %, cœurs et récompenses sur la carte, barre d'état en bas, boutique GBA… Ou, au choix, les deux jeux séparés avec juste la barre en bas. La ROM est fabriquée dans le navigateur à partir de ses propres jeux.",
     en: { title: "Zelda Oracles Combined in 5 languages", kind: "Translation + options · online patcher",
-      desc: "The crossworld hack that merges Oracle of Ages and Oracle of Seasons into one ROM, in French, English, German, Italian and Spanish (official translations from the European ROMs). Comfort options to tick: secret tracker, rewards on the map, status bar at the bottom, GBA shop… The ROM is built in the browser from your own games." },
+      desc: "The crossworld hack that merges Oracle of Ages and Oracle of Seasons into one ROM, in French, English, German, Italian and Spanish (official translations from the European ROMs). Comfort options to tick: secret tracker and 100% tracker, hearts and rewards on the map, status bar at the bottom, GBA shop… Or, if you prefer, the two separate games with just the bottom bar. The ROM is built in the browser from your own games." },
     url: "https://soaresden.github.io/ZeldaOracleCombinedFR/",
     repo: "ZeldaOracleCombinedFR",
     links: [
-      { label: "Patchs BPS (v1.2)", en: "BPS patches (v1.2)", url: "https://github.com/soaresden/ZeldaOracleCombinedFR/releases/latest" },
+      { label: "Patchs BPS (v1.4)", en: "BPS patches (v1.4)", url: "https://github.com/soaresden/ZeldaOracleCombinedFR/releases/latest" },
       { label: "Fork oracles-disasm (branche fr/crossworld1)", en: "oracles-disasm fork (fr/crossworld1 branch)", url: "https://github.com/soaresden/oracles-disasm/tree/fr/crossworld1" }
     ],
     platforms: ["gbc", "web"],
