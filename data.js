@@ -505,6 +505,18 @@ const PROJECTS = [
     shot: "gt2cheat"
   },
   {
+    cat: "mods", game: "gt1", new: true,
+    title: "Assetto → Gran Turismo",
+    kind: "Convertisseur de voitures · PS1",
+    desc: "N'importe quelle voiture 3D dans le premier Gran Turismo, à la place d'une voiture du jeu : un mod Assetto Corsa ou un modèle glTF (Sketchfab), une fiche de caractéristiques, et son propre disque. Roues contrôlées et passages de roue comme les voitures d'origine, caractéristiques, nom, vignette du concessionnaire et page INFO dans les 6 langues. Gran Turismo 2 viendra ensuite.",
+    en: { title: "Assetto → Gran Turismo", kind: "Car converter · PS1",
+      desc: "Any 3D car in the first Gran Turismo, in place of a game car: an Assetto Corsa mod or a glTF model (Sketchfab), a spec sheet, and your own disc. Checked wheels and wheel arches like the original cars, specs, name, dealer thumbnail and INFO page in the 6 languages. Gran Turismo 2 comes next." },
+    url: "https://github.com/soaresden/Assetto-to-GT1-2-Converter",
+    repo: "Assetto-to-GT1-2-Converter",
+    platforms: ["ps1", "pc"],
+    shot: "assettogt"
+  },
+  {
     cat: "mods", game: "re1", wide: true, new: true,
     title: "RE1 Director's Cut · Hotkeys",
     kind: "Mod PS1 · patcher en ligne",
