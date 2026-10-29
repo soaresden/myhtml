@@ -76,8 +76,8 @@ const GAMES = [
   { id: "re1", name: "Resident Evil", short: "Resident Evil", icon: "🧟", color: "#991b1b",
     blurb: "Resident Evil Director's Cut sur PlayStation.", en: { blurb: "Resident Evil Director's Cut on PlayStation." } },
   { id: "zelda", name: "Zelda Game Boy Color", short: "Zelda GBC", icon: "🗡️", color: "#15803d", shot: "zeldaoracles",
-    blurb: "Oracle of Ages et Seasons réunis en une seule ROM, en 5 langues, sur Game Boy Color.",
-    en: { blurb: "Oracle of Ages and Seasons combined into one ROM, in 5 languages, on Game Boy Color." } }
+    blurb: "Oracle of Ages et Seasons réunis en une seule ROM, et le randomizer de Link's Awakening DX en français.",
+    en: { blurb: "Oracle of Ages and Seasons combined into one ROM, and the Link's Awakening DX randomizer in French." } }
 ];
 
 // Consoles : dans « Outils consoles », les outils d'une même console sont regroupés
@@ -89,8 +89,9 @@ const CONSOLES = [
   { id: "ps2", name: "PlayStation 2", short: "PS2", icon: "💿", color: "#1e40af", shot: "prism",
     blurb: "Homebrew et rétro-ingénierie sur PlayStation 2.",
     en: { blurb: "Homebrew and reverse engineering on PlayStation 2." } },
-  { id: "retroid", name: "Retroid Pocket", short: "Retroid", icon: "🎮", color: "#a855f7",
-    blurb: "Console portable sous Batocera.", en: { blurb: "A handheld running Batocera." } }
+  { id: "retroid", name: "Retroid Pocket · Batocera", short: "Retroid", icon: "🎮", color: "#a855f7", shot: "ngage",
+    blurb: "Ma console portable sous Batocera : ses LED et la N-Gage, proposées à Batocera lui-même.",
+    en: { blurb: "My handheld running Batocera: its LEDs and the N-Gage, offered to Batocera itself." } }
 ];
 
 const MX5 = "https://soaresden.github.io/MazdaMx5-nd-rf-ingames/";
@@ -550,7 +551,7 @@ const PROJECTS = [
     url: "https://soaresden.github.io/ZeldaOracleCombinedFR/",
     repo: "ZeldaOracleCombinedFR",
     links: [
-      { label: "Patchs BPS (v1.4)", en: "BPS patches (v1.4)", url: "https://github.com/soaresden/ZeldaOracleCombinedFR/releases/latest" },
+      { label: "Patchs BPS (v1.5)", en: "BPS patches (v1.5)", url: "https://github.com/soaresden/ZeldaOracleCombinedFR/releases/latest" },
       { label: "Fork oracles-disasm (branche fr/crossworld1)", en: "oracles-disasm fork (fr/crossworld1 branch)", url: "https://github.com/soaresden/oracles-disasm/tree/fr/crossworld1" }
     ],
     platforms: ["gbc", "web"],
@@ -568,6 +569,18 @@ const PROJECTS = [
     links: [{ label: "Jouer à la démo (patch)", en: "Play the demo (patch)", url: "https://github.com/soaresden/ZeldaGullsOfLife/releases/latest" }],
     platforms: ["gbc"],
     shot: "gullsoflife"
+  },
+  {
+    cat: "mods", game: "zelda", new: true,
+    title: "Link's Awakening DX Randomizer en français",
+    kind: "Contribution · LADXR",
+    desc: "Pour le randomizer LADXR : jouer sa partie dans la langue de sa propre ROM française (dialogues, menus, police, images avec du texte, et tous les textes ajoutés par le randomizer, jusqu'aux 140 objectifs du bingo). Et une nouvelle page web aux couleurs de Link's Awakening DX : fentes de cartouche pour les ROMs, bouton A pour lancer, onglets et interrupteurs.",
+    en: { title: "Link's Awakening DX Randomizer in French", kind: "Contribution · LADXR",
+      desc: "For the LADXR randomizer: play your seed in the language of your own French ROM (dialogue, menus, font, images with words, and every text the randomizer adds, down to the 140 bingo goals). And a new web page in Link's Awakening DX colours: cartridge slots for the ROMs, an A button to start, tabs and switches." },
+    url: "https://github.com/daid/LADXR/pull/206",
+    links: [{ label: "La nouvelle page (branche redesign)", en: "The new page (redesign branch)", url: "https://github.com/soaresden/LADXR/tree/redesign" }],
+    platforms: ["gbc", "web"],
+    shot: "ladxr"
   },
   {
     cat: "mods", game: "pokemon", new: true,
@@ -666,16 +679,30 @@ const PROJECTS = [
     console: "retroid",
     title: "LED Retroid 5",
     kind: "Batocera · Python",
-    desc: "Pilote les LED des sticks du Retroid Pocket 5 : couleurs par bouton gardées au redémarrage, ou niveau de batterie en couleur. Proposé à Batocera lui-même : réglages appliqués en direct, mode batterie, luminosité en pourcentage et curseur de teinte.",
-    en: { desc: "Controls the Retroid Pocket 5 stick LEDs: per-button colours kept after reboot, or the battery level as a colour. Offered to Batocera itself: settings applied live, a battery mode, brightness as a percentage and a hue slider." },
+    desc: "Pilote les LED des sticks du Retroid Pocket 5 : couleurs par bouton gardées au redémarrage, ou niveau de batterie en couleur. Une partie est intégrée à Batocera lui-même (couleurs et luminosité des LED du Retroid Pocket 5) ; le mode batterie avec ses paliers et des couleurs prêtes à l'emploi sont proposés.",
+    en: { desc: "Controls the Retroid Pocket 5 stick LEDs: per-button colours kept after reboot, or the battery level as a colour. Part of it is merged into Batocera itself (colours and brightness of the Retroid Pocket 5 LEDs); the battery mode with its levels and colour presets are proposed." },
     url: "https://github.com/soaresden/Retroid5_Led_Batocera",
     repo: "Retroid5_Led_Batocera",
     links: [
-      { label: "Pull request Batocera (système)", en: "Batocera pull request (system)", url: "https://github.com/batocera-linux/batocera.linux/pull/17200" },
-      { label: "Pull request EmulationStation (menus)", en: "EmulationStation pull request (menus)", url: "https://github.com/batocera-linux/batocera-emulationstation/pull/2275" }
+      { label: "Intégré : luminosité (Batocera)", en: "Merged: brightness (Batocera)", url: "https://github.com/batocera-linux/batocera.linux/pull/17200" },
+      { label: "Intégré : couleurs (menus)", en: "Merged: colours (menus)", url: "https://github.com/batocera-linux/batocera-emulationstation/pull/2275" },
+      { label: "Proposé : mode batterie", en: "Proposed: battery mode", url: "https://github.com/batocera-linux/batocera-emulationstation/pull/2284" }
     ],
     platforms: ["handheld"],
     art: "retroid", accent: "#a855f7"
+  },
+  {
+    cat: "consoles", new: true,
+    console: "retroid",
+    title: "N-Gage & Symbian sur Batocera",
+    kind: "Émulateur EKA2L1 · contribution",
+    desc: "Les jeux N-Gage et Symbian dans Batocera, lancés comme n'importe quelle console, avec le cadre du téléphone autour de l'écran : EKA2L1 remis à jour et un lanceur ajouté, testés sur le Retroid Pocket 5 (Asphalt, Ashen, Tony Hawk, Worms…). Les corrections côté émulateur sont intégrées à EKA2L1.",
+    en: { title: "N-Gage & Symbian on Batocera", kind: "EKA2L1 emulator · contribution",
+      desc: "N-Gage and Symbian games in Batocera, launched like any console, with the phone's frame around the screen: EKA2L1 updated and a launcher added, tested on the Retroid Pocket 5 (Asphalt, Ashen, Tony Hawk, Worms…). The emulator-side fixes are merged into EKA2L1." },
+    url: "https://github.com/batocera-linux/batocera.linux/pull/17241",
+    links: [{ label: "Intégré dans EKA2L1", en: "Merged into EKA2L1", url: "https://github.com/EKA2L1/EKA2L1/pull/916" }],
+    platforms: ["handheld"],
+    shot: "ngage"
   },
 
   // ── Applis Android ───────────────────────────────────────
@@ -790,6 +817,19 @@ const PROJECTS = [
     repo: "EDF-NoDropNoHarm",
     platforms: ["web"],
     shot: "hse"
+  },
+  {
+    cat: "outils", new: true,
+    title: "Filtres Gmail · extension",
+    kind: "Extension Brave / Chrome · contribution",
+    desc: "Dans Gmail : pourquoi ce mail a ce filtre (la phrase surlignée), ce spam est-il dangereux (note des ruses techniques, faux expéditeur, liens trompeurs), des filtres proposés qui n'attrapent aucun vrai mail, les doublons entre filtres, et d'où vient le spam semaine après semaine. Les pixels de suivi sont bloqués au passage.",
+    en: { title: "Gmail filters · extension", kind: "Brave / Chrome extension · contribution",
+      desc: "In Gmail: why this email got this filter (the phrase highlighted), is this spam dangerous (score of technical tricks, fake sender, misleading links), suggested filters that catch no real email, overlapping filters, and where the spam comes from week after week. Tracking pixels are blocked along the way." },
+    url: "https://github.com/soaresden/Gmail-Filters-Detection",
+    repo: "Gmail-Filters-Detection",
+    links: [{ label: "Pull request chez sandoche", en: "Pull request to sandoche", url: "https://github.com/sandoche/Gmail-Filters-Detection/pull/1" }],
+    platforms: ["web"],
+    shot: "gmailfilters"
   },
   {
     cat: "outils",
