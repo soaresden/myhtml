@@ -573,11 +573,12 @@ const PROJECTS = [
   {
     cat: "mods", game: "zelda", new: true,
     title: "Link's Awakening DX Randomizer en français",
-    kind: "Contribution · LADXR",
-    desc: "Pour le randomizer LADXR : jouer sa partie dans la langue de sa propre ROM française (dialogues, menus, police, images avec du texte, et tous les textes ajoutés par le randomizer, jusqu'aux 140 objectifs du bingo). Et une nouvelle page web aux couleurs de Link's Awakening DX : fentes de cartouche pour les ROMs, bouton A pour lancer, onglets et interrupteurs.",
-    en: { title: "Link's Awakening DX Randomizer in French", kind: "Contribution · LADXR",
-      desc: "For the LADXR randomizer: play your seed in the language of your own French ROM (dialogue, menus, font, images with words, and every text the randomizer adds, down to the 140 bingo goals). And a new web page in Link's Awakening DX colours: cartridge slots for the ROMs, an A button to start, tabs and switches." },
-    url: "https://github.com/daid/LADXR/pull/206",
+    kind: "Fork de LADXR",
+    desc: "Dans mon fork du randomizer LADXR : jouer sa partie dans la langue de sa propre ROM française (dialogues, menus, police, images avec du texte, et tous les textes ajoutés par le randomizer, jusqu'aux 140 objectifs du bingo). Et une nouvelle page web aux couleurs de Link's Awakening DX : fentes de cartouche pour les ROMs, bouton A pour lancer, onglets et interrupteurs.",
+    en: { title: "Link's Awakening DX Randomizer in French", kind: "LADXR fork",
+      desc: "In my fork of the LADXR randomizer: play your seed in the language of your own French ROM (dialogue, menus, font, images with words, and every text the randomizer adds, down to the 140 bingo goals). And a new web page in Link's Awakening DX colours: cartridge slots for the ROMs, an A button to start, tabs and switches." },
+    url: "https://github.com/soaresden/LADXR/tree/language-rom",
+    repo: "LADXR",
     links: [{ label: "La nouvelle page (branche redesign)", en: "The new page (redesign branch)", url: "https://github.com/soaresden/LADXR/tree/redesign" }],
     platforms: ["gbc", "web"],
     shot: "ladxr"
@@ -704,6 +705,18 @@ const PROJECTS = [
     platforms: ["handheld"],
     shot: "ngage"
   },
+  {
+    cat: "consoles", new: true,
+    title: "Zelda Manager",
+    kind: "Suivi 100 % · site web",
+    desc: "Mes classeurs Excel de 2015 devenus un site : tout ce qu'il faut pour finir à 100 % Ocarina of Time (Skulltulas Normal et Master Quest, quarts de cœur, quête de Biggoron…), Majora's Mask (masques, fées, quiz de Keaton, quête d'Anju et Kafei heure par heure) et Tri Force Heroes (défis, tenues, matériaux à farmer). Progression gardée dans le navigateur, export et import, français et anglais.",
+    en: { kind: "100% tracker · website",
+      desc: "My 2015 Excel workbooks turned into a website: everything needed to 100% Ocarina of Time (Normal and Master Quest Skulltulas, heart pieces, Biggoron's quest…), Majora's Mask (masks, fairies, Keaton's quiz, the Anju and Kafei quest hour by hour) and Tri Force Heroes (challenges, outfits, materials to farm). Progress kept in the browser, export and import, French and English." },
+    url: "https://soaresden.github.io/zelda-manager/",
+    repo: "zelda-manager",
+    platforms: ["web"],
+    shot: "zeldamanager"
+  },
 
   // ── Applis Android ───────────────────────────────────────
   {
@@ -725,11 +738,11 @@ const PROJECTS = [
   // ── Sur la route ─────────────────────────────────────────
   {
     cat: "route", also: ["android"], wide: true, new: true,
-    title: "FuelTrajetMap",
-    kind: "Carburant · trajet optimisé",
-    desc: "Les prix officiels des ~9 800 stations françaises sur une carte, et surtout l'optimiseur de pleins : où s'arrêter sur ton trajet et combien de litres mettre, selon ton véhicule. Mode pénurie, écran Android Auto, sans backend.",
-    en: { kind: "Fuel · optimised trip",
-      desc: "Official prices of the ~9,800 French fuel stations on a map, and above all the refuelling optimiser: where to stop on your trip and how many litres to put in, for your vehicle. Shortage mode, Android Auto screen, no backend." },
+    title: "FuelMap",
+    kind: "Carburant · trajet optimisé · Play Store",
+    desc: "Les prix officiels des ~9 800 stations françaises sur une carte, et surtout l'optimiseur de pleins : où s'arrêter sur ton trajet et combien de litres mettre, selon ton véhicule. Écran Android Auto avec guidage, carnet de pleins et bloc-notes dans la voiture, mode pénurie, sans backend. Bientôt sur le Play Store, avec FuelMap Plus (thèmes, curseurs) en option.",
+    en: { kind: "Fuel · optimised trip · Play Store",
+      desc: "Official prices of the ~9,800 French fuel stations on a map, and above all the refuelling optimiser: where to stop on your trip and how many litres to put in, for your vehicle. Android Auto screen with guidance, fuel log and notepad in the car, shortage mode, no backend. Coming to the Play Store, with FuelMap Plus (themes, cursors) as an option." },
     url: "https://soaresden.github.io/FuelTrajetMap/",
     repo: "FuelTrajetMap",
     platforms: ["web", "android"],
