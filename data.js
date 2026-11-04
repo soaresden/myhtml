@@ -777,13 +777,13 @@ const PROJECTS = [
   {
     cat: "media",
     title: "TriPhoto",
-    kind: "Python · Qt",
-    desc: "Range et dédoublonne des milliers de photos et vidéos en comparant leur contenu réel (dHash, durée, image par image). Tri chronologique fiable et frise interactive.",
-    en: { desc: "Sorts and deduplicates thousands of photos and videos by comparing their real content (dHash, duration, frame by frame). Reliable chronological sorting and an interactive timeline." },
+    kind: "Python · HTML",
+    desc: "Range et dédoublonne des milliers de photos et vidéos en comparant leur contenu réel (dHash, durée, image par image), sans jamais jeter la seule bonne copie. Interface web fluide, frise chronologique et thèmes, dont un Plongée.",
+    en: { kind: "Python · HTML", desc: "Sorts and deduplicates thousands of photos and videos by comparing their real content (dHash, duration, frame by frame), never trashing the only good copy. Smooth web UI, timeline and themes, a diving one included." },
     url: "https://github.com/soaresden/photoorganizer",
     repo: "photoorganizer",
     platforms: ["pc"],
-    art: "triphoto"
+    shot: "triphoto"
   },
   {
     cat: "media",
