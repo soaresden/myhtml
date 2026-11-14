@@ -358,6 +358,18 @@ const PROJECTS = [
   // ── Mods & traductions ───────────────────────────────────
   {
     cat: "mods", wide: true, new: true,
+    title: "Cool Boarders 2 Remix",
+    kind: "Remix PS1 · patcheur en ligne",
+    desc: "Cool Boarders 2 (PAL) remixé : Boss, Gray et Snowman en championnat, Jicchi, Nick et Kelly jouables, Hard + Mirror, boost à la SSX avec R2 sur les figures, classement à la Mario Kart, vue arrière… et un écran REMIX dans le jeu pour régler chaque mod. Le site fabrique le .chd à partir de ton propre disque ; un patcheur Batocera fait pareil sur la console.",
+    en: { title: "Cool Boarders 2 Remix", kind: "PS1 remix · online patcher",
+      desc: "Cool Boarders 2 (PAL) remixed: Boss, Gray and Snowman in the championship, Jicchi, Nick and Kelly playable, Hard + Mirror, an SSX style R2 boost earned with tricks, a Mario Kart style ranking, rear view… and an in-game REMIX screen to switch each mod. The site builds the .chd from your own disc; a Batocera patcher does the same on the console." },
+    url: "https://soaresden.github.io/CB2Remix/",
+    repo: "CB2Remix",
+    platforms: ["ps1", "web", "handheld"],
+    shot: "cb2remix", accent: "#d97706"
+  },
+  {
+    cat: "mods", wide: true, new: true,
     title: "La MX-5 RF dans les jeux",
     kind: "Mod voiture · générateur en ligne",
     desc: "Ma Mazda MX-5 RF Deep Crystal Blue convertie dans les jeux de voitures que j'aime, de la PS1 à la Xbox 360 : Gran Turismo 1 et 2, NFS Underground 1 et 2, NFS Most Wanted. La voiture est fabriquée dans le navigateur à partir de ses propres fichiers.",
