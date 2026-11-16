@@ -56,8 +56,8 @@ const CATEGORIES = [
 // un clic ouvre la page du jeu avec tous ses projets.
 const GAMES = [
   { id: "nfsmw", name: "Need for Speed Most Wanted", short: "NFS Most Wanted", icon: "🏁", color: "#65a30d", shot: "mx5",
-    blurb: "La version Xbox 360 sur Switch (portage nfsmw-nx) : ma voiture, la VF et les sauvegardes.",
-    en: { blurb: "The Xbox 360 version on Switch (nfsmw-nx port): my car, the French dub and the saves." } },
+    blurb: "La version Xbox 360 sur Switch (portage nfsmw-nx) et sur Batocera : ma voiture, la VF et les sauvegardes.",
+    en: { blurb: "The Xbox 360 version on Switch (nfsmw-nx port) and on Batocera: my car, the French dub and the saves." } },
   { id: "nfsu1", name: "Need for Speed Underground", short: "NFS Underground", icon: "🌃", color: "#2563eb", shot: "mx5_nfsu1",
     blurb: "La version Xbox d'origine, portée sur Switch : ma voiture, la VF et des outils pour le port.",
     en: { blurb: "The original Xbox version, ported to Switch: my car, the French version and tools for the port." } },
@@ -386,6 +386,19 @@ const PROJECTS = [
     ],
     platforms: ["ps1", "xbox", "xbox360", "switch", "web"],
     shot: "mx5_all"
+  },
+  {
+    cat: "consoles", also: ["mods"], game: "nfsmw", new: true, wide: true,
+    console: "retroid",
+    title: "NFS Most Wanted sur Batocera",
+    kind: "Portage natif · page d'installation",
+    desc: "La version Xbox 360 recompilée, en natif sur Batocera (Retroid Pocket 5, 60 FPS). On dépose son ISO sur la page, elle prépare tout : port USA, PAL anglaise ou espagnole, VF complète avec l'ISO Xbox française, Black Edition, icônes PlayStation, GameCube ou Xbox 360.",
+    en: { title: "NFS Most Wanted on Batocera", kind: "Native port · installation page",
+      desc: "The recompiled Xbox 360 version, native on Batocera (Retroid Pocket 5, 60 FPS). Drop your ISO on the page and it prepares everything: USA, PAL English or Spanish port, full French dub with the French Xbox ISO, Black Edition, PlayStation, GameCube or Xbox 360 icons." },
+    url: "https://soaresden.github.io/nfsmw-batocera/",
+    repo: "nfsmw-batocera",
+    platforms: ["xbox360", "handheld", "web"],
+    art: "mwbatocera", accent: "#ff8a1e"
   },
   {
     cat: "mods", game: "nfsmw", new: true,
