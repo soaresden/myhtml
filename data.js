@@ -746,6 +746,19 @@ const PROJECTS = [
 
   // ── Applis Android ───────────────────────────────────────
   {
+    cat: "android", wide: true, new: true,
+    title: "Di-Allô",
+    kind: "Téléphone · remplace le dialer",
+    desc: "Mon appli Téléphone complète, à la place de celle du constructeur : clavier musical et recherche T9, écran d'appel avec double appel, conférence, refus par SMS, notes et historique de la personne. Haut-parleur automatique dès qu'on éloigne le téléphone de l'oreille, décrocher en le portant à l'oreille, retourner pour couper la sonnerie. Stats et « Wrapped » de l'année, carte des contacts, widget favoris, et sauvegarde automatique des appels et des SMS/MMS.",
+    en: { kind: "Phone · replaces the dialer",
+      desc: "My full Phone app, replacing the manufacturer's one: musical keypad and T9 search, call screen with call waiting, conference, reply by SMS, notes and history of the person. Speakerphone switches on by itself when the phone leaves your ear, answer by raising it to your ear, flip it to silence the ringer. Stats and a yearly « Wrapped », contacts map, favourites widget, and automatic backup of calls and SMS/MMS." },
+    url: "https://github.com/soaresden/di-allo-dialerandroid",
+    repo: "di-allo-dialerandroid",
+    apk: "https://github.com/soaresden/di-allo-dialerandroid/releases/latest/download/Di-Allo.apk",
+    platforms: ["android"],
+    shot: "diallo", accent: "#16b871"
+  },
+  {
     cat: "android", new: true,
     title: "Bodycount",
     kind: "Appli Android · bêta Play Store",
