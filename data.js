@@ -749,12 +749,16 @@ const PROJECTS = [
     cat: "android", wide: true, new: true,
     title: "Di-Allô",
     kind: "Téléphone · remplace le dialer",
-    desc: "Mon appli Téléphone complète, à la place de celle du constructeur : clavier musical et recherche T9, écran d'appel avec double appel, conférence, refus par SMS, notes et historique de la personne. Haut-parleur automatique dès qu'on éloigne le téléphone de l'oreille, décrocher en le portant à l'oreille, retourner pour couper la sonnerie. Stats et « Wrapped » de l'année, carte des contacts, widget favoris, et sauvegarde automatique des appels et des SMS/MMS.",
+    desc: "Mon appli Téléphone complète, à la place de celle du constructeur. Clavier musical (37 instruments, composeur de mélodies) et recherche T9 sans saccade, écran d'appel avec double appel, conférence, refus par SMS, notes et historique. Enregistrement des appels en MP3, les deux voix, sans root ni Shizuku. 23 thèmes avec décors animés, choisis en direct dans un volet. Stats interactives et « Wrapped », carte des contacts, numérotation rapide, widgets, favoris numéro par numéro, haut-parleur automatique, sauvegarde des appels et SMS. 6 langues, et mises à jour automatiques depuis GitHub.",
     en: { kind: "Phone · replaces the dialer",
-      desc: "My full Phone app, replacing the manufacturer's one: musical keypad and T9 search, call screen with call waiting, conference, reply by SMS, notes and history of the person. Speakerphone switches on by itself when the phone leaves your ear, answer by raising it to your ear, flip it to silence the ringer. Stats and a yearly « Wrapped », contacts map, favourites widget, and automatic backup of calls and SMS/MMS." },
-    url: "https://github.com/soaresden/di-allo-dialerandroid",
+      desc: "My full Phone app, replacing the manufacturer's one. Musical keypad (37 instruments, melody composer) and lag-free T9 search, call screen with call waiting, conference, reply by SMS, notes and history. Call recording to MP3, both voices, no root or Shizuku. 23 themes with animated backgrounds, picked live from a side panel. Interactive stats and a yearly « Wrapped », contacts map, speed dial, widgets, per-number favourites, automatic speakerphone, call and SMS backup. 6 languages, and automatic updates from GitHub." },
+    url: "https://soaresden.github.io/di-allo-dialerandroid/docs/",
     repo: "di-allo-dialerandroid",
     apk: "https://github.com/soaresden/di-allo-dialerandroid/releases/latest/download/Di-Allo.apk",
+    links: [
+      { label: "Présentation", en: "Features", url: "https://soaresden.github.io/di-allo-dialerandroid/docs/" },
+      { label: "Nouveautés", en: "What's new", url: "https://github.com/soaresden/di-allo-dialerandroid/blob/main/CHANGELOG.md" }
+    ],
     platforms: ["android"],
     shot: "diallo", accent: "#16b871"
   },
