@@ -292,11 +292,11 @@ function openSheet(p){
    Le système de mise à jour de l'appli télécharge chaque nouvelle version : le chiffre d'une
    version, quelques jours après sa sortie, donne une idée du nombre d'installations actives. */
 async function fetchReleases(repo){
-  const key = "dl:" + repo;
+  const key = "dl2:" + repo;
   try { const c = JSON.parse(sessionStorage.getItem(key) || "null"); if (c && Date.now() - c.t < 10 * 60e3) return c.d; } catch {}
   const r = await fetch(`https://api.github.com/repos/soaresden/${repo}/releases?per_page=100`, { headers: { Accept: "application/vnd.github+json" } });
   if (!r.ok) throw new Error(r.status);
-  const d = (await r.json()).map((x) => ({ tag: x.tag_name, date: x.published_at, assets: x.assets.map((a) => ({ name: a.name, n: a.download_count })) }));
+  const d = (await r.json()).map((x) => ({ tag: x.tag_name, date: x.published_at, assets: x.assets.map((a) => ({ name: a.name, n: a.download_count, at: a.created_at })) }));
   try { sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), d })); } catch {}
   return d;
 }
@@ -307,13 +307,17 @@ const fmtDay = (d) => new Date(d).toLocaleDateString(EN ? "en-GB" : "fr-FR", { d
 async function loadDl(p){
   const box = $("#dl");
   if (!box) return;
-  let rel;
+  let rel, hist = [];
   try { rel = await fetchReleases(p.dl.repo); } catch { box.remove(); return; }
+  // Une seule publication GitHub, modifiée à chaque version : les chiffres des versions remplacées sont gardés dans dl-history.json
+  try { hist = (await fetch("dl-history.json", { cache: "no-cache" }).then((r) => r.json()))[p.dl.repo] || []; } catch {}
   if ($("#dl") !== box) return;
   const sum = (r, f) => r.assets.filter((a) => a.name.endsWith(".apk") && f(a.name)).reduce((s, a) => s + a.n, 0);
-  const rows = rel.filter((r) => r.assets.some((a) => a.name.includes(p.dl.match)))
-    .map((r) => ({ v: r.tag.replace(/^v/, ""), date: r.date, n: sum(r, (n) => n.includes(p.dl.match)), old: p.dl.old ? sum(r, (n) => n.includes(p.dl.old)) : 0 }))
-    .sort((a, b) => new Date(a.date) - new Date(b.date)).slice(-12);
+  // date d'une version = mise en ligne de son APK (la publication, elle, garde sa date de création)
+  const live = rel.filter((r) => r.assets.some((a) => a.name.includes(p.dl.match)))
+    .map((r) => ({ v: r.tag.replace(/^v/, ""), date: (r.assets.find((a) => a.name.includes(p.dl.match)) || {}).at || r.date, n: sum(r, (n) => n.includes(p.dl.match)), old: p.dl.old ? sum(r, (n) => n.includes(p.dl.old)) : 0 }));
+  const rows = [...hist.filter((h) => !live.some((l) => l.v === h.v)), ...live]
+    .sort((a, b) => new Date(a.date) - new Date(b.date) || a.v.localeCompare(b.v)).slice(-12);
   if (!rows.length) { box.remove(); return; }
   const total = rows.reduce((s, r) => s + r.n, 0), old = rows.reduce((s, r) => s + r.old, 0), last = rows[rows.length - 1];
   // une barre par version, la dernière étiquetée ; survol / toucher = détail en dessous
