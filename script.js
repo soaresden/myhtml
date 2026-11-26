@@ -275,6 +275,7 @@ function openSheet(p){
       <div class="sheet-kind">${g ? `${g.icon} ${escapeHtml(g.short)} · ` : `${catOf(p).icon} `}${escapeHtml(L(p, "kind"))}${p.new ? `<span class="new">${NEW()}</span>` : ""}</div>
       <h2 id="sheetTitle">${escapeHtml(L(p, "title"))}</h2>
       <p class="sheet-desc">${escapeHtml(L(p, "desc"))}</p>
+      ${p.dl ? `<div class="dl" id="dl"><div class="dl-lbl">${T("Chargement des téléchargements…", "Loading downloads…")}</div></div>` : ""}
       ${p.links ? `<div class="sublinks">${p.links.map((l) => `<a href="${l.url}" target="_blank" rel="noreferrer">${escapeHtml(EN && l.en ? l.en : l.label)}</a>`).join("")}</div>` : ""}
       <div class="sheet-foot">
         <div class="plats">${p.platforms.map((k) => `<span class="plat">${PLATFORMS[k]}</span>`).join("")}</div>
@@ -283,6 +284,61 @@ function openSheet(p){
     </div>`;
   sheet.showModal();
   sheet.querySelector(".actions a").focus();
+  if (p.dl) loadDl(p);
+}
+
+/* ── Téléchargements GitHub d'une appli (compteurs publics des Releases) ──
+   Aucun pisteur dans l'appli : on lit juste le nombre de téléchargements de chaque APK publié.
+   Le système de mise à jour de l'appli télécharge chaque nouvelle version : le chiffre d'une
+   version, quelques jours après sa sortie, donne une idée du nombre d'installations actives. */
+async function fetchReleases(repo){
+  const key = "dl:" + repo;
+  try { const c = JSON.parse(sessionStorage.getItem(key) || "null"); if (c && Date.now() - c.t < 10 * 60e3) return c.d; } catch {}
+  const r = await fetch(`https://api.github.com/repos/soaresden/${repo}/releases?per_page=100`, { headers: { Accept: "application/vnd.github+json" } });
+  if (!r.ok) throw new Error(r.status);
+  const d = (await r.json()).map((x) => ({ tag: x.tag_name, date: x.published_at, assets: x.assets.map((a) => ({ name: a.name, n: a.download_count })) }));
+  try { sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), d })); } catch {}
+  return d;
+}
+const fmtN = (n) => n.toLocaleString(EN ? "en-GB" : "fr-FR");
+// 2026-11-26-08f → 26/11·08
+const shortV = (v) => { const m = v.match(/^\d{4}-(\d{2})-(\d{2})-(\d+)/); return m ? `${m[2]}/${m[1]}·${m[3]}` : v; };
+const fmtDay = (d) => new Date(d).toLocaleDateString(EN ? "en-GB" : "fr-FR", { day: "numeric", month: "short" });
+async function loadDl(p){
+  const box = $("#dl");
+  if (!box) return;
+  let rel;
+  try { rel = await fetchReleases(p.dl.repo); } catch { box.remove(); return; }
+  if ($("#dl") !== box) return;
+  const sum = (r, f) => r.assets.filter((a) => a.name.endsWith(".apk") && f(a.name)).reduce((s, a) => s + a.n, 0);
+  const rows = rel.filter((r) => r.assets.some((a) => a.name.includes(p.dl.match)))
+    .map((r) => ({ v: r.tag.replace(/^v/, ""), date: r.date, n: sum(r, (n) => n.includes(p.dl.match)), old: p.dl.old ? sum(r, (n) => n.includes(p.dl.old)) : 0 }))
+    .sort((a, b) => new Date(a.date) - new Date(b.date)).slice(-12);
+  if (!rows.length) { box.remove(); return; }
+  const total = rows.reduce((s, r) => s + r.n, 0), old = rows.reduce((s, r) => s + r.old, 0), last = rows[rows.length - 1];
+  // une barre par version, la dernière étiquetée ; survol / toucher = détail en dessous
+  const W = Math.max(240, Math.floor(box.clientWidth - 30)), H = 120, top = 18, bottom = 22, ph = H - top - bottom;
+  const max = Math.max(1, ...rows.map((r) => r.n)), band = W / rows.length, bw = Math.min(34, band * .62);
+  const bars = rows.map((r, i) => {
+    const h = r.n ? Math.max(3, r.n / max * ph) : 0, x = i * band + (band - bw) / 2, y = top + ph - h, rad = Math.min(4, h / 2, bw / 2);
+    const shape = h ? `<path class="bar" d="M${x},${top + ph}V${y + rad}Q${x},${y} ${x + rad},${y}H${x + bw - rad}Q${x + bw},${y} ${x + bw},${y + rad}V${top + ph}Z"/>` : "";
+    const lbl = i === 0 || i === rows.length - 1 || rows.length <= 6 ? `<text x="${x + bw / 2}" y="${H - 6}" text-anchor="middle">${shortV(r.v)}</text>` : "";
+    const val = i === rows.length - 1 ? `<text class="val" x="${x + bw / 2}" y="${y - 5}" text-anchor="middle">${fmtN(r.n)}</text>` : "";
+    return `<g class="bar-g" data-i="${i}" tabindex="0">${shape}${lbl}${val}<rect class="hit" x="${i * band}" y="0" width="${band}" height="${H}"><title>${r.v} · ${fmtN(r.n)}</title></rect></g>`;
+  }).join("");
+  const read = (r) => `${r.v} · ${fmtDay(r.date)} · <b>${fmtN(r.n)}</b> ${T(r.n > 1 ? "téléchargements" : "téléchargement", r.n === 1 ? "download" : "downloads")}`;
+  const oldTxt = old ? " " + T(`Anciennes installations prévenues du passage au Play Store : ${fmtN(old)}.`, `Old installs told to move to the Play Store: ${fmtN(old)}.`) : "";
+  box.innerHTML = `
+    <div class="dl-top"><span class="dl-num">${fmtN(total)}</span><span class="dl-lbl">${T("téléchargements de l'APK", "APK downloads")}</span></div>
+    <svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${T("Téléchargements par version", "Downloads per version")}">
+      <line class="base" x1="0" x2="${W}" y1="${top + ph + .5}" y2="${top + ph + .5}"/>${bars}
+    </svg>
+    <div class="dl-read" id="dlRead">${read(last)}</div>
+    <div class="dl-note">${T("Par version, d'après les compteurs publics de GitHub. Chaque Di-Allô F se met à jour toute seule : quelques jours après une sortie, le chiffre d'une version ≈ les installations actives.", "Per version, from GitHub's public counters. Every Di-Allô F updates itself: a few days after a release, a version's count ≈ active installs.")}${oldTxt}</div>
+    <details><summary>${T("Tableau", "Table")}</summary><table><thead><tr><th>Version</th><th>Date</th><th>APK</th>${p.dl.old ? `<th>${T("Ancienne", "Old")}</th>` : ""}</tr></thead><tbody>${rows.slice().reverse().map((r) => `<tr><td>${r.v}</td><td>${fmtDay(r.date)}</td><td>${fmtN(r.n)}</td>${p.dl.old ? `<td>${fmtN(r.old)}</td>` : ""}</tr>`).join("")}</tbody></table></details>`;
+  const out = box.querySelector("#dlRead"), gs = box.querySelectorAll(".bar-g");
+  const pick = (g) => { gs.forEach((x) => x.classList.toggle("on", x === g)); out.innerHTML = read(rows[+g.dataset.i]); };
+  gs.forEach((g) => { g.addEventListener("pointerenter", () => pick(g)); g.addEventListener("focus", () => pick(g)); g.addEventListener("click", () => pick(g)); });
 }
 $("#tiles").addEventListener("click", (e) => {
   const tile = e.target.closest("button.tile");

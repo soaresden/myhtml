@@ -391,3 +391,25 @@ button { font: inherit; color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* ── Téléchargements GitHub dans la fiche (Di-Allô F) ── */
+.dl { --bar: #8e3fd8; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; gap: 6px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .dl { --bar: #a66ef0; } }
+:root[data-theme="dark"] .dl { --bar: #a66ef0; }
+.dl-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.dl-num { font: 800 1.9rem/1 var(--display); color: var(--ink); }
+.dl-lbl { color: var(--muted); font-size: .9rem; }
+.dl svg { display: block; max-width: 100%; height: auto; overflow: visible; }
+.dl .bar { fill: var(--bar); }
+.dl .bar-g.on .bar, .dl .bar-g:hover .bar { fill: color-mix(in srgb, var(--bar) 78%, var(--ink)); }
+.dl .hit { fill: transparent; cursor: pointer; }
+.dl .bar-g:focus { outline: none; }
+.dl .base { stroke: var(--line-strong); stroke-width: 1; }
+.dl text { fill: var(--muted); font: 500 11px var(--mono); }
+.dl text.val { fill: var(--ink); font-weight: 700; }
+.dl-read { font-size: .88rem; color: var(--ink); min-height: 1.4em; }
+.dl-note { font-size: .8rem; color: var(--muted); }
+.dl details summary { cursor: pointer; color: var(--muted); font-size: .82rem; }
+.dl table { width: 100%; border-collapse: collapse; font-size: .82rem; margin-top: 6px; }
+.dl th, .dl td { text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--line); }
+.dl th { color: var(--muted); font-weight: 600; }

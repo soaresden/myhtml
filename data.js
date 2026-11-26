@@ -18,6 +18,8 @@
 //   wide       projet phare (affiché sur l'accueil)
 //   new        badge « Nouveau »
 //   accent     couleur de la carte (sinon celle de la catégorie)
+//   dl         { repo, match, old? } : nombre de téléchargements GitHub + graphique par version, dans la fiche
+//              (match = texte dans le nom de l'APK compté, old = celui de l'APK « ancienne version » compté à part)
 
 const CATEGORIES = [
   { id: "plongee", label: "Plongée", short: "Plongée", icon: "🌊", color: "#0284c7",
@@ -760,7 +762,8 @@ const PROJECTS = [
       { label: "Nouveautés", en: "What's new", url: "https://github.com/soaresden/di-allo-dialerandroid/blob/main/CHANGELOG.md" }
     ],
     platforms: ["android"],
-    shot: "diallo-f", accent: "#8e3fd8"
+    shot: "diallo-f", accent: "#8e3fd8",
+    dl: { repo: "di-allo-dialerandroid", match: "github", old: "Ancienne" }
   },
   {
     cat: "android", wide: true, new: true,
