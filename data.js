@@ -747,20 +747,36 @@ const PROJECTS = [
   // ── Applis Android ───────────────────────────────────────
   {
     cat: "android", wide: true, new: true,
-    title: "Di-Allô",
-    kind: "Téléphone · remplace le dialer",
-    desc: "Mon appli Téléphone complète, à la place de celle du constructeur. Clavier musical (38 instruments, composeur de mélodies) et recherche T9 sans saccade, écran d'appel avec double appel, conférence, refus par SMS, notes et historique. Enregistrement des appels en MP3, les deux voix, sans root ni Shizuku. 23 thèmes avec décors animés, choisis en direct dans un volet. Stats interactives et « Wrapped », carte des contacts, numérotation rapide, widgets, favoris numéro par numéro, haut-parleur automatique, sauvegarde des appels et SMS. 6 langues, et mises à jour automatiques depuis GitHub.",
-    en: { kind: "Phone · replaces the dialer",
-      desc: "My full Phone app, replacing the manufacturer's one. Musical keypad (38 instruments, melody composer) and lag-free T9 search, call screen with call waiting, conference, reply by SMS, notes and history. Call recording to MP3, both voices, no root or Shizuku. 23 themes with animated backgrounds, picked live from a side panel. Interactive stats and a yearly « Wrapped », contacts map, speed dial, widgets, per-number favourites, automatic speakerphone, call and SMS backup. 6 languages, and automatic updates from GitHub." },
-    url: "https://soaresden.github.io/di-allo-dialerandroid/docs/",
+    title: "Di-Allô F",
+    kind: "Téléphone · version complète, GitHub",
+    desc: "La version complète de mon appli Téléphone : tout ce que fait Di-Allô, plus l'enregistrement des appels en MP3 (les deux voix, sans root ni Shizuku), la messagerie visuelle Free et la sauvegarde des SMS/MMS. Elle s'installe à côté de la version Play Store, avec son icône violette et ses mises à jour intégrées. Pour l'installer, suspendre temporairement Play Protect.",
+    en: { kind: "Phone · full version, GitHub",
+      desc: "The full version of my Phone app: everything Di-Allô does, plus call recording to MP3 (both voices, no root or Shizuku), Free visual voicemail and SMS/MMS backup. It installs next to the Play Store version, with its purple icon and built-in updates. To install it, temporarily pause Play Protect." },
+    url: "https://github.com/soaresden/di-allo-dialerandroid/releases/latest",
     repo: "di-allo-dialerandroid",
-    apk: "https://github.com/soaresden/di-allo-dialerandroid/releases/latest/download/Di-Allo.apk",
+    apk: "https://github.com/soaresden/di-allo-dialerandroid/releases/latest",
     links: [
       { label: "Présentation", en: "Features", url: "https://soaresden.github.io/di-allo-dialerandroid/docs/" },
       { label: "Nouveautés", en: "What's new", url: "https://github.com/soaresden/di-allo-dialerandroid/blob/main/CHANGELOG.md" }
     ],
     platforms: ["android"],
-    shot: "diallo", accent: "#16b871"
+    shot: "diallo-f", accent: "#8e3fd8"
+  },
+  {
+    cat: "android", wide: true, new: true,
+    title: "Di-Allô",
+    kind: "Téléphone · test Play Store",
+    desc: "Mon appli Téléphone, à la place de celle du constructeur. Clavier musical (38 instruments, composeur de mélodies) et recherche T9, double appel, conférence, notes d'appel, 23 thèmes avec décors animés, stats et « Wrapped », carte des contacts, widgets, haut-parleur automatique et gestes, sauvegarde du journal d'appels. 6 langues, sans pub ni compte. En test fermé sur le Play Store.",
+    en: { kind: "Phone · Play Store test",
+      desc: "My Phone app, replacing the manufacturer's one. Musical keypad (38 instruments, melody composer) and T9 search, call waiting, conference, call notes, 23 themes with animated backgrounds, stats and a yearly « Wrapped », contacts map, widgets, automatic speakerphone and gestures, call log backup. 6 languages, no ads, no account. In closed testing on the Play Store." },
+    url: "https://groups.google.com/g/diallodialer",
+    links: [
+      { label: "Activer le test Play Store", en: "Join the Play Store test", url: "https://play.google.com/apps/testing/fr.soaresden.diallo" },
+      { label: "Présentation", en: "Features", url: "https://soaresden.github.io/di-allo-dialerandroid/docs/" },
+      { label: "Confidentialité", en: "Privacy", url: "https://soaresden.github.io/di-allo-dialerandroid/docs/privacy.html" }
+    ],
+    platforms: ["android"],
+    shot: "diallo", accent: "#2f7bf6"
   },
   {
     cat: "android", new: true,
